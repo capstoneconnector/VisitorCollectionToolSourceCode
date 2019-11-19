@@ -39,7 +39,7 @@
 				if(checkRegistration($info, $email) == FALSE){
 					fputcsv($file, $registration);
 					echo "<script type='text/javascript'>";
-					echo "alert('Registration Successful!');";
+					echo "alert('Registration and Check In Successful!');";
 					echo "window.location = ('checkin.php');";
 					echo "</script>";
 				}
