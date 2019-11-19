@@ -25,7 +25,7 @@
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
 						$name = $_POST["name"];
-						$csv = "test.csv";
+						$csv = "event.csv";
 						if(($file = fopen($csv, "r+")) !== FALSE){
 							$info = readCSV($file);
 							$names = findName($name, $info);
@@ -43,7 +43,9 @@
 							echo '</table>';
 							}
 							else{
-								echo "<div class = 'table'>No users found, try again!</div>";
+								echo '<script language="javascript">';
+								echo 'alert("Name does not exist or you are already checked in!")';
+								echo '</script>';
 							}	
 						}
 							
