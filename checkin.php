@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src = "checkin.js"></script>
 		<link rel = "stylesheet" type = "text/css" href = "checkin.css">
 	</head>
@@ -30,8 +31,9 @@
 							$info = readCSV($file);
 							$names = findName($name, $info);
 							fclose($file);
-							echo '<table border = 1>';
 							if(sizeof($names) !== 0){
+								echo '<table border = 1>';
+								echo '<th>First Name</th><th>Last Name</th><th>Email</th>';
 								for ($i = 0; $i < sizeof($names); $i++){
 									echo '<tr>';
 									for ($j = 0; $j < 3; $j++){

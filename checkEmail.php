@@ -1,6 +1,6 @@
 <?php
 	include_once "readCSV.php";
-	$csv = "test.csv";
+	$csv = "event.csv";
 	$email = $_REQUEST["email"];
 	if(!empty($email)){
 		if(($file = fopen($csv, "r+")) !== FALSE){

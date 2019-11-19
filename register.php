@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="register.js"></script>
 		<link rel = "stylesheet" type = "text/css" href = "register.css">
 	</head>
@@ -30,7 +31,7 @@
 			$fname = $_POST["fname"];
 			$lname = $_POST["lname"];
 			$email = $_POST["email"];
-			$csv = "test.csv";
+			$csv = "event.csv";
 			$registration = [$fname, $lname, $email, 1];
 			
 			if(($file = fopen($csv, "r+")) !== FALSE){
@@ -65,8 +66,4 @@
 			echo '</script>';
 		}
 	}
-
-
-	
-
 ?>
