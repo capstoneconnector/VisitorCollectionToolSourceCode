@@ -32,7 +32,7 @@
 							$names = findName($name, $info);
 							fclose($file);
 							if(sizeof($names) !== 0){
-								echo '<table border = 1>';
+								echo '<table border = 3>';
 								echo '<th>First Name</th><th>Last Name</th><th>Email</th>';
 								for ($i = 0; $i < sizeof($names); $i++){
 									echo '<tr>';

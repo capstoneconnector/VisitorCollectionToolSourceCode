@@ -1,6 +1,6 @@
 #main{
 	margin: auto;
-	font-family: "Impact";
+	font-family: "Helvetica";
 	text-align: center;
 }
 
@@ -16,7 +16,7 @@
 .submit{
 	height: 40px;
 	width: 200px;
-	font-family: "Impact";
+	font-family: "Helvetica";
 	font-size: 16;
 	background: #8B8C8E;
 	border-color: #ABACAE;
