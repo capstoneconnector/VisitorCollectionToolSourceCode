@@ -1,7 +1,7 @@
 <?php
 function findName($fullName, $info)
     {
-        $name = explode(" ", $fullName);
+        $name = explode(" ", $fullName); //Split full name into first and last name
         $fname = $name [0];
         $lname =  $name [1];
         $matchL = array();
@@ -9,7 +9,7 @@ function findName($fullName, $info)
         {
             if ($info[$i][1] == $lname and $info[$i][3] == 0)
             {
-                array_push($matchL, $info[$i]);
+                array_push($matchL, $info[$i]); //Match all that have the same last name
             }
         }
         $matchF = array();
@@ -17,7 +17,7 @@ function findName($fullName, $info)
         {
             if ($matchL[$i][0] == $fname)
             {
-                array_push($matchF, $matchL[$i]);
+                array_push($matchF, $matchL[$i]); //Match all that have the same first name from the previous list
             }
         }
         return $matchF;

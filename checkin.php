@@ -29,17 +29,17 @@
 						$csv = "event.csv";
 						if(($file = fopen($csv, "r+")) !== FALSE){
 							$info = readCSV($file);
-							$names = findName($name, $info);
+							$names = findName($name, $info); //Fetch names that match name entered by user
 							fclose($file);
-							if(sizeof($names) !== 0){
+							if(sizeof($names) !== 0){ //Only creates table if there is content to write to it
 								echo '<table border = 3>';
 								echo '<th>First Name</th><th>Last Name</th><th>Email</th>';
 								for ($i = 0; $i < sizeof($names); $i++){
 									echo '<tr>';
 									for ($j = 0; $j < 3; $j++){
-										echo '<td>'.$names[$i][$j].'</td>';
+										echo '<td>'.$names[$i][$j].'</td>'; //Table creation markup
 									}
-								echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i][2]."')>This is me</button>";
+								echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i][2]."')>This is me</button>"; //Tie user email to the UI button to send to AJAX function
 								echo '</tr>';
 								}
 							echo '</table>';
