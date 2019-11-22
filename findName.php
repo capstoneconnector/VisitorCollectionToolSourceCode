@@ -20,6 +20,6 @@ function findName($fullName, $info)
                 array_push($matchF, $matchL[$i]); //Match all that have the same first name from the previous list
             }
         }
-        return $matchF;
+        return $matchF; //Return list that has names that match first and last name provided
 	}
 ?>

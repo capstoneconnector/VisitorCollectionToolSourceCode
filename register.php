@@ -36,7 +36,7 @@
 			
 			if(($file = fopen($csv, "r+")) !== FALSE){
 				$info = readCSV($file);
-				if(checkRegistration($info, $email) == FALSE){
+				if(checkRegistration($info, $email) == FALSE){ //If user is not already registered, their info is added to the csv
 					fputcsv($file, $registration);
 					echo "<script type='text/javascript'>";
 					echo "alert('Registration and Check In Successful!');";
