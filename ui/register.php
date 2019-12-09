@@ -1,8 +1,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="register.js"></script>
-		<link rel = "stylesheet" type = "text/css" href = "register.css">
+		<link rel = "stylesheet" type = "text/css" href = "/css/register.css">
 	</head>
 	<body>
 		<div id = "main">
@@ -16,7 +15,7 @@
 				<br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>
-			<form method = "post" action = "checkin.php">
+			<form method = "post" action = "/ui/checkin.php">
 				<button class = "submit">Back</button>
 			</form>
 		</div>
@@ -24,8 +23,9 @@
 </html>
 
 <?php
-	include_once "readCSV.php";
-	include_once "checkRegistration.php";
+	$root = $_SERVER['DOCUMENT_ROOT'];
+	include_once $root . "/php/readCSV.php";
+	include_once $root . "/php/checkRegistration.php";
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
 			$fname = $_POST["fname"];

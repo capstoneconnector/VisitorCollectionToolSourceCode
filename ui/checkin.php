@@ -1,8 +1,8 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src = "checkin.js"></script>
-		<link rel = "stylesheet" type = "text/css" href = "checkin.css">
+		<script src = "/js/checkin.js"></script>
+		<link rel = "stylesheet" type = "text/css" href = "/css/checkin.css">
 	</head>
 	<body>
 		<div id = "main">
@@ -20,8 +20,9 @@
 		<br><br><br>
 		<div class = "table">
 			<?php
-				include_once "findName.php";
-				include_once "readCSV.php";
+				$root = $_SERVER['DOCUMENT_ROOT'];
+				include_once $root . "/php/findName.php";
+				include_once $root . "/php/readCSV.php";
 
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
