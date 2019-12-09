@@ -9,10 +9,10 @@ function verifyUser(email) {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) { //If server returns correctly, callback function sets window back to checkin
        alert("Check in Successful");
-       window.location = ('checkin.php');
+       window.location = ("checkin.php");
       }
     };
-    xhttp.open("GET", "checkEmail.php?email=" + email, true); //AJAX call to checkEmail php script
+    xhttp.open("GET", "/php/checkEmail.php?email=" + email, true); //AJAX call to checkEmail php script
     xhttp.send();
   }
   }

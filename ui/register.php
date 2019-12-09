@@ -31,7 +31,7 @@
 			$fname = $_POST["fname"];
 			$lname = $_POST["lname"];
 			$email = $_POST["email"];
-			$csv = "event.csv";
+			$csv = $root . "/resources/event.csv";
 			$registration = [$fname, $lname, $email, 1];
 			
 			if(($file = fopen($csv, "r+")) !== FALSE){

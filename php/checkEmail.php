@@ -1,6 +1,7 @@
 <?php
-	include_once "readCSV.php";
-	$csv = "event.csv";
+	$root = $_SERVER['DOCUMENT_ROOT'];
+	include_once $root . "/php/readCSV.php";
+	$csv = $root . "/resources/event.csv";
 	$email = $_REQUEST["email"];
 	if(!empty($email)){
 		if(($file = fopen($csv, "r+")) !== FALSE){

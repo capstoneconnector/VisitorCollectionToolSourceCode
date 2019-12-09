@@ -27,7 +27,7 @@
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
 						$name = $_POST["name"];
-						$csv = "event.csv";
+						$csv = $root . "/resources/event.csv";
 						if(($file = fopen($csv, "r+")) !== FALSE){
 							$info = readCSV($file);
 							$names = findName($name, $info); //Fetch names that match name entered by user
