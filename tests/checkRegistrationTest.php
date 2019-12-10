@@ -1,5 +1,5 @@
 <?php
-	include_once "checkRegistration.php";
+	include_once "../php/checkRegistration.php";
 
 	class CheckRegistrationTest extends PHPUnit_Framework_TestCase{ //Run this file with phpunit command from command line
 		public function setUp(){

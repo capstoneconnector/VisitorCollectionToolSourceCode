@@ -1,5 +1,5 @@
 <?php
-	include_once "findName.php"; 
+	include_once "../php/findName.php"; 
 
 	class FindNameTest extends PHPUnit_Framework_TestCase{ //Run this file with phpunit command from command line
 		public function setUp(){
