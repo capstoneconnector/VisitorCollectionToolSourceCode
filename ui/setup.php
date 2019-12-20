@@ -18,5 +18,7 @@
 			<input type="hidden" name="name" value="">
 			<input type="submit" name="submit">
 		</form>
+
+		<a href="../php/ebinterface.php">ebinterface</a>
 	</body>
 </html>
