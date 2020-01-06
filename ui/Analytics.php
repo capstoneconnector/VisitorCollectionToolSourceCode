@@ -9,7 +9,7 @@
 	<div id = "main">
 		<div id ="menu">
 		<ul>
-	<li><a href='#'><span>Dashboard</span></a></li>
+	<li><a href='#'><span>Set Up</span></a></li>
 	<li><a href='Analytics.php'><span>Analytics</span></a></li>
 	<li class='last'><a href='manager.php'><span>Events</span></a></li>
 	<li 

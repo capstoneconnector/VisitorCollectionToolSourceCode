@@ -45,19 +45,18 @@
 				</table>
 			</div>
 			<div class="col-10">
-				<div id="UpdateEvent" class = "col-7">
-				<label>Name:</label><input type="text" name="name"/>
+				<form method = "post" div id="UpdateEvent" class = "col-7">
+				<label>Name:</label><input type="text" name="name" required/>
 				<br />
-				<label>Description:</label><input type="text" name="description"/>
+				<label>Description:</label><input type="text" name="description" required/>
 				<br />
-				<label>Date:</label><input type="text" name="date"/>
+				<label>Date:</label><input type="text" name="date" required/>
 				<br />
-				<label>PIN:</label><input type="text" name="pin"/>
-				<br />
-				<button onclick="AddForm">Save</button>
+				<input type = "submit" value = "Save">
 				<button onclick="UpdateEvent();">Cancel</button>
 				</div>
-			<div id = "SearchEvents">
+				</form>
+			<div id = "SearchEvents" class = "col-10">
 				<form>
 					<div class="col-sm">
 						<label for = "Search" class "control-label"> Search</label>
@@ -104,3 +103,21 @@
 	
 	</body>
 </html>
+<?php
+	include_once $root . "/db/connect.php";
+	if (!empty($_POST))
+	{
+		$name = $_POST["name"];
+		$description = $_POST["description"];
+		$date = $_POST["date"];
+	}
+	$stmt = $pdo->prepare("INSERT into event(Name, Date) values(?, ?)");
+	$stmt->bindParam(1, $name);
+	$stmt->bindParam(2, $date);
+	if ($stmt->execute())
+	{
+		echo '<script language="javascript">';
+		echo 'window.location=("manager.php")';
+		echo '</script>';
+	}
+?>
