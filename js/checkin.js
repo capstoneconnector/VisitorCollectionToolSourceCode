@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function verifyUser(email) {
   var confirmation = confirm("Check in user with email: " + email + "?");
   if(confirmation == true) {
@@ -8,7 +9,7 @@ function verifyUser(email) {
        window.location = ("checkin.php");
       }
     };
-    xhttp.open("GET", "/php/checkEmail.php?email=" + email, true); //AJAX call to checkEmail php script
+    xhttp.open("GET", "/php/checkAttendeeIn.php?userid=" + userid, true); //AJAX call to checkEmail php script
     xhttp.send();
   }
 }

@@ -8,17 +8,9 @@
 	<body>
 		<div id="main">
 			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
-			<?php
-			// Retrieve the name of the event from the setup.php page
-				if (!empty($_POST)) {
-					if ($_POST["event"]) {
-						echo "<h1>" . $_POST["event"] . "</h1>";
-					}	
-				}
-				else {
-					header("location: setup.php");
-				}
-			?>
+			
+			<!-- Use session var for event name -->
+
 			<h1>Check In</h1>
 			<form method="post">
 				<span id="prompt">Enter your name</span>
@@ -40,23 +32,20 @@
 				$root = $_SERVER['DOCUMENT_ROOT'];
 				include_once $root . "/php/findName.php";
 				include_once $root . "/php/readCSV.php";
-
-				if ($_POST["name"]) {
-					$name = $_POST["name"];
-					$csv = $root . "/resources/event.csv";
-					if (($file = fopen($csv, "r+")) !== FALSE) {
-						$info = readCSV($file);
-						$names = findName($name, $info); //Fetch names that match name entered by user
-						fclose($file);
-						if (sizeof($names) !== 0) { //Only creates table if there is content to write to it
+				$event = 3;
+				if(!empty($_POST)){
+					if(!empty($_POST["name"])){
+						$name = $_POST["name"];
+						$names = findName($name, $event); //Fetch names that match name entered by user
+						if(sizeof($names) !== 0){ //Only creates table if there is content to write to it
 							echo '<table border = 3>';
 							echo '<th>First Name</th><th>Last Name</th><th>Email</th>';
-							for ($i = 0; $i < sizeof($names); $i++) {
+							for ($i = 0; $i < sizeof($names); $i++){
 								echo '<tr>';
-								for ($j = 0; $j < 3; $j++) {
-									echo '<td>'.$names[$i][$j].'</td>'; //Table creation markup
-								}
-							echo "<td><button id = '". $i . "' onclick=verifyUser('".$names[$i][2]."')>This is me</button>"; //Tie user email to the UI button to send to AJAX function
+								echo '<td>' . $names[$i]['Fname'] . '</td>';
+								echo '<td>' . $names[$i]['Lname'] . '</td>'; 
+								echo '<td>' . $names[$i]['Email'] . '</td>';  //Table creation markup
+							echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]['Id']."','".$names[$i]['Email']."')>This is me</button>"; //Tie user email to the UI button to send to AJAX function
 							echo '</tr>';
 							}
 						echo '</table>';
