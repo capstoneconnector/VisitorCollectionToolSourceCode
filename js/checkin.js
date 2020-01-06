@@ -2,7 +2,7 @@ function register(){
 	window.location = ('register.php');
 }
 
-function verifyUser(email) {
+function verifyUser(userid, email) {
   var confirmation = confirm("Check in user with email: " + email + "?");
   if(confirmation == true){
     var xhttp = new XMLHttpRequest();
@@ -12,7 +12,7 @@ function verifyUser(email) {
        window.location = ("checkin.php");
       }
     };
-    xhttp.open("GET", "/php/checkEmail.php?email=" + email, true); //AJAX call to checkEmail php script
+    xhttp.open("GET", "/php/checkAttendeeIn.php?userid=" + userid, true); //AJAX call to checkEmail php script
     xhttp.send();
   }
   }

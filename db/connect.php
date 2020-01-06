@@ -2,7 +2,7 @@
 	$hostname = "localhost";
 	$username = "root";
 	$db = "icdb";
-	$password = "root";
+	$password = "";
 	$charset="utf8mb4";
 
 	$dsn = "mysql:host=$hostname;dbname=$db;charset=$charset";
