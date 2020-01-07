@@ -3,8 +3,12 @@ $API_KEY = "2GEOZ7XABZBZWS46A3";
 $PRI_TOKEN = "COKR3D7YQAPZM2GWLOTL";
 $PUB_TOKEN = "UKQY46DJTOTSARNGUAWH";
 $EVENT_ID = "86470394277";
-//header("Authorization: Bearer ".$pri_token);
+//header("Authorization: Bearer ".$pri_token); // If we can make this work, This would make some things simpler.
 
+/*
+arg: $requeset is the url extention after the endpoint
+arg: $data is extra aruments in the url. Must be a list of arguments eg ["arg=value", ...]
+*/
 function wrapRequestWtihData($request, $data) {
 	static $endpoint = "https://www.eventbriteapi.com/v3/";
 	static $my_token = "?token=COKR3D7YQAPZM2GWLOTL";
@@ -40,7 +44,7 @@ function getAllEvents($OAuthToken) {
 										);
 		$event_num++;
 	}
-	return $event_list;
+	return $events;
 }
 
 function getAllAttendees($event_id) {
@@ -56,23 +60,18 @@ $event_list_url = wrapRequest("events/".$EVENT_ID); 					//get one event's detai
 $attendee_list_url = wrapRequest("events/".$EVENT_ID."/attendees/");	//get the attendee list for a spesific event
 
 
+function testGetAllEvents() {
+	echo $attendee_list_url;
+	echo "<br>";
+	$events = getAllEvents($PRI_TOKEN);
 
-echo $attendee_list_url;
-echo "<br>";
-$events = getAllEvents($PRI_TOKEN);
-
-$attendees = getAllAttendees($events[0]["id"]);
-$attendee = $attendees[0];
-echo $attendee["profile"]["name"];
-echo "<br>";
-echo $attendee["id"];
-echo "<br>";	
-
-
-
-
-
-
+	$attendees = getAllAttendees($events[0]["id"]);
+	$attendee = $attendees[0];
+	echo $attendee["profile"]["name"];
+	echo "<br>";
+	echo $attendee["id"];
+	echo "<br>";	
+}
 
 function testGetAllEvents() {
 	$events = getAllEvents($PRI_TOKEN);
@@ -89,8 +88,6 @@ function testGetAllEvents() {
 <html>
 	<head></head>
 	<body>
-		<a href="../ui/setup.php">Setup page</a>
-		<br>
 		getAllEvents($OAuthToken) //Pri_token get all of the events of a user<br>
 		getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
 		getAttendeeInfo($attendee_id) // return entire attendee object<br>

@@ -56,10 +56,6 @@
 							echo '</script>';
 						}
 					}
-					
-					else{
-						echo "File Not Found!";
-					}
 				}
 			?>
 		</div>
