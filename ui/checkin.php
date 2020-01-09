@@ -1,30 +1,38 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src = "/js/checkin.js"></script>
-		<link rel = "stylesheet" type = "text/css" href = "/css/checkin.css">
+		<script src="/js/checkin.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/checkin.css">
+		<title>Check in</title>
 	</head>
 	<body>
-		<div id = "main">
+		<div id="main">
+			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
+			
+			<!-- Use session var for event name -->
+
 			<h1>Check In</h1>
-			<form method = "post">
-				<span id = "prompt">Enter your name</span>
+			<form method="post">
+				<span id="prompt">Enter your name</span>
 				<br>
-				<input class = "input" type = "text" name = "name">
+				<input class="input" type="text" name="name" required>
 				<br><br>
-				<input class = "submit" type = "submit" value = "Search">
+				<input class="submit" type="submit" value="Search">
 				<br><br>
+				<!-- keeps the same event name after submitting the form-->
+				<?php echo "<input type='hidden' name='event' value='" . $_POST["event"] . "'>" 
+				// I don't know how to access $_POST without php
+				?>
 			</form>
-			<button class = "submit" onclick="register('')">Register</button>
+			<button class="submit" onclick="window.location = 'register.php'">Register</button>
 		</div>
 		<br><br><br>
-		<div class = "table">
+		<div class="table">
 			<?php
 				$root = $_SERVER['DOCUMENT_ROOT'];
 				include_once $root . "/php/findName.php";
 				include_once $root . "/php/readCSV.php";
 				$event = 3;
-
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
 						$name = $_POST["name"];
@@ -46,14 +54,9 @@
 							echo '<script language="javascript">';
 							echo 'alert("Name does not exist or you are already checked in!")';
 							echo '</script>';
-						}	
+						}
 					}
-					else{
-						echo '<script language="javascript">';
-						echo 'alert("Some fields are empty, try again!")';
-						echo '</script>';
-					}	
-				}		
+				}
 			?>
 		</div>
 	</body>
