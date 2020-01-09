@@ -22,8 +22,7 @@
 			<?php
 				$root = $_SERVER['DOCUMENT_ROOT'];
 				include_once $root . "/php/findName.php";
-				include_once $root . "/php/readCSV.php";
-				$event = 3;
+				$event = 1;
 
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){

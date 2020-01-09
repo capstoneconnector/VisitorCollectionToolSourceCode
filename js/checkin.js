@@ -12,7 +12,7 @@ function verifyUser(userid, email) {
        window.location = ("checkin.php");
       }
     };
-    xhttp.open("GET", "/php/checkAttendeeIn.php?userid=" + userid, true); //AJAX call to checkEmail php script
+    xhttp.open("GET", "/db/checkAttendeeIn.php?userid=" + userid, true); //AJAX call to checkEmail php script
     xhttp.send();
   }
   }
