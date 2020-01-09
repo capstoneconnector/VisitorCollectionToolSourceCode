@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function verifyUser(email) {
   var confirmation = confirm("Check in user with email: " + email + "?");
   if(confirmation == true) {
