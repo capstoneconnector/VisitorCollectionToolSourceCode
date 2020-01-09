@@ -1,0 +1,30 @@
+#main{
+	margin: auto;
+	font-family: "Helvetica";
+	text-align: center;
+}
+
+
+.input{
+	margin:auto;
+	display: block;
+	height: 30;
+	width: 250;
+}
+
+.submit{
+	height: 40px;
+	width: 200px;
+	font-family: "Helvetica";
+	font-size: 16;
+	background: #8B8C8E;
+	border-color: #ABACAE;
+}
+
+body{
+	background: #25C9DB;
+}
+
+h1{
+	font-size: 50;
+}
