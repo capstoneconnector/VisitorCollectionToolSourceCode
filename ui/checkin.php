@@ -1,3 +1,8 @@
+<?php
+	$root = $_SERVER["DOCUMENT_ROOT"];
+	include_once $root . "/db/getEventInfo.php";
+	session_start();
+?>
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +14,13 @@
 		<div id="main">
 			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
 			
-			<!-- Use session var for event name -->
-
 			<h1>Check In</h1>
+			<br>
+			<?php
+				$event = getEventById($_SESSION["eventId"]); //Use session var for event name
+				echo "<h1>" . $event["Name"] . "</h1>";
+			?>
+
 			<form method="post">
 				<span id="prompt">Enter your name</span>
 				<br>
@@ -19,10 +28,10 @@
 				<br><br>
 				<input class="submit" type="submit" value="Search">
 				<br><br>
-				<!-- keeps the same event name after submitting the form-->
-				<?php echo "<input type='hidden' name='event' value='" . $_SESSION["event"] . "'>" 
-				// I don't know how to access $_POST without php
+				<?php 
+					echo "<input type='hidden' name='event' value='" . $_SESSION["event"] . "'>"; 
 				?>
+
 			</form>
 			<button class="submit" onclick="window.location = 'register.php'">Register</button>
 		</div>

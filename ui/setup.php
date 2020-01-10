@@ -1,3 +1,14 @@
+<?php
+$root = $_SERVER["DOCUMENT_ROOT"];
+include_once $root."/db/getEventInfo.php";
+session_start();
+
+if (isset($_POST["event"])) {
+	$_SESSION["eventId"] = $_POST["event"];
+	header("Location: checkin.php");
+}
+?>
+
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,20 +17,21 @@
 	</head>
 
 	<body id = "main">
-		<h1>Event Setup</h1>
 		<br>
-		<form action="checkin.php" method="POST">
-			<select name="event" class = "input">
-				<option disabled selected value> -- Select an event -- </option>";
-				<!-- Options need to be replaced with actual data from DB-->
-				<option value="event1">Event 1</option>
-				<option value="event2">Event 2</option>
+		<h1>Choose an Event</h1>
+		<br>
+		<form method="POST">
+			<select name="event" class="input" required>
+				<option disabled selected> -- Select an event -- </option>
+				<?php
+$events = getAllEvents();
+foreach ($events as $event) {
+	echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . "</option>";
+}
+				?>
 			</select>
-			<input type="hidden" name="name" value="">
 			<br><br>
-			<input type="submit" name="submit" class = "submit">
+			<input type="submit" name="submit" class="submit">
 		</form>
-
-		<a href="../php/ebinterface.php">ebinterface</a>
 	</body>
 </html>

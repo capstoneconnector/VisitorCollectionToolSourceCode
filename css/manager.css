@@ -104,7 +104,7 @@ body{
 #UpdateEvent {
 	display: none;
 	margin: auto;
-	position: relative;
+	vertical-align: left;
 }
 
 
