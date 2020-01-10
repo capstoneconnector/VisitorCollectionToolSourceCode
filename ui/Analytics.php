@@ -11,7 +11,7 @@
 	<div class = "container">
 	<div class = "row">
 		<div class="col-2">
-			<img src="/img/Innovation Connector Logo.png" width="150px"></img>
+			<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
 			<div id ="menu">
 				<ul>
 					<li><a href='setup.php'><span>Set Up</span></a></li>
@@ -29,6 +29,9 @@
 					</td>
 					<td>&nbsp;</td>
 			</div>
+			<?php
+			//Add Graphs and Charts
+			?>
 		</div>
 		</div>
 	</body>
