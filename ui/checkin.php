@@ -12,28 +12,23 @@
 	</head>
 	<body>
 		<div id="main">
-			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
-			
 			<h1>Check In</h1>
-			<br>
 			<?php
 				$event = getEventById($_SESSION["eventId"]); //Use session var for event name
-				echo "<h1>" . $event["Name"] . "</h1>";
+				echo "<h2>" . $event["Name"] . "</h2>";
 			?>
-
+			<br>
 			<form method="post">
 				<span id="prompt">Enter your name</span>
-				<br>
+				<br><br>
 				<input class="input" type="text" name="name" required>
 				<br><br>
 				<input class="submit" type="submit" value="Search">
 				<br><br>
-				<?php 
-					echo "<input type='hidden' name='event' value='" . $_SESSION["event"] . "'>"; 
-				?>
-
 			</form>
-			<button class="submit" onclick="window.location = 'register.php'">Register</button>
+			<button class="submit" onclick="window.location = 'register.php'">Registration Page</button>
+			<br><br><br>
+			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
 		</div>
 		<br><br><br>
 		<div class="table">
@@ -53,7 +48,7 @@
 								echo '<td>' . $names[$i]['Fname'] . '</td>';
 								echo '<td>' . $names[$i]['Lname'] . '</td>'; 
 								echo '<td>' . $names[$i]['Email'] . '</td>';  //Table creation markup
-							echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]['Id']."','".$names[$i]['Email']."')>This is me</button>"; //Tie user email to the UI button to send to AJAX function
+							echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]['Id']."','".$names[$i]['Email']."')>This is me</button>"; //Tie user email and id to the UI button to send to AJAX function
 							echo '</tr>';
 							}
 						echo '</table>';

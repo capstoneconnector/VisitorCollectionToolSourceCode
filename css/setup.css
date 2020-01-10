@@ -28,3 +28,7 @@ body{
 h1{
 	font-size: 50;
 }
+
+#placeholder{
+	text-align-last: center;
+}

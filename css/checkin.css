@@ -30,7 +30,11 @@ body{
 }
 
 h1{
-	font-size: 50;
+	font-size: 42;
+}
+
+h2{
+	font-size: 24;
 }
 
 .table table{

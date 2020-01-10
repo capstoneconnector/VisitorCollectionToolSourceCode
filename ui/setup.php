@@ -21,13 +21,13 @@ if (isset($_POST["event"])) {
 		<h1>Choose an Event</h1>
 		<br>
 		<form method="POST">
-			<select name="event" class="input" required>
+			<select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
 				<?php
-$events = getAllEvents();
-foreach ($events as $event) {
-	echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . "</option>";
-}
+					$events = getAllEvents();
+					foreach($events as $event){
+						echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . " : " . $event["Date"] . "</option>";
+					}
 				?>
 			</select>
 			<br><br>
