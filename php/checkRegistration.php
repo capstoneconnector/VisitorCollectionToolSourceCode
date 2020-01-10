@@ -1,10 +1,11 @@
 <?php
-	function checkRegistration($info,$email){ //Check if user is already registered for event by email
+	function checkRegistration($fname, $lname, $email, $event){ //Check if user is already registered for event
+		$root = $_SERVER['DOCUMENT_ROOT'];
+   		include_once $root . "/db/getAttendeeInfo.php";
 		$registered = FALSE;
-		for($i = 0; $i < sizeof($info); $i++){
-			if($email == $info[$i][2]){
-				$registered = TRUE;
-			}
+		$info = getAttendeeCount($fname, $lname, $email, $event);
+		if($info['num'] > 0){
+			$registered = TRUE;
 		}
 		return $registered;
 	}

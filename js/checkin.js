@@ -1,4 +1,4 @@
-function verifyUser(email) {
+function verifyUser(userid, email) {
   var confirmation = confirm("Check in user with email: " + email + "?");
   if(confirmation == true) {
     var xhttp = new XMLHttpRequest();

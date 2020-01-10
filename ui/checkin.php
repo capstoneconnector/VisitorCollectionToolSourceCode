@@ -20,7 +20,7 @@
 				<input class="submit" type="submit" value="Search">
 				<br><br>
 				<!-- keeps the same event name after submitting the form-->
-				<?php echo "<input type='hidden' name='event' value='" . $_POST["event"] . "'>" 
+				<?php echo "<input type='hidden' name='event' value='" . $_SESSION["event"] . "'>" 
 				// I don't know how to access $_POST without php
 				?>
 			</form>
@@ -31,7 +31,7 @@
 			<?php
 				$root = $_SERVER['DOCUMENT_ROOT'];
 				include_once $root . "/php/findName.php";
-				$event = 3;
+				$event = 1;
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
 						$name = $_POST["name"];
