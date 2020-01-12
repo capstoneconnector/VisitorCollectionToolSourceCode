@@ -9,7 +9,6 @@ body{
 }
 
 @charset "UTF-8";
-/* Some stylesheet reset */
 #menu > ul {
 	list-style: none;
 	margin: 0;
@@ -17,7 +16,7 @@ body{
 	vertical-align: baseline;
 	line-height: 1;
 }
-/* The container */
+
 #menu > ul {
 	display: block;
 	position: relative;
@@ -34,15 +33,12 @@ body{
 }
 /* General link styling */
 #menu > ul li a {
-  /* Layout */
-
 	display: block;
 	position: relative;
 	margin: 0;
 	border-top: 1px dotted #3a3a3a;
 	border-bottom: 1px dotted #1b1b1b;
 	padding: 11px 20px;
-	/* Typography */
 
 	font-family: Helvetica, Arial, sans-serif;
 	color: #d8d8d8;
@@ -51,7 +47,6 @@ body{
 	text-shadow: 0 1px 1px #000;
 	font-size: 13px;
 	font-weight: 300;
-  /* Background & effects */
 
   background: #282828;
 }
