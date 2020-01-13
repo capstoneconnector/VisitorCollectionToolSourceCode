@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +35,7 @@
 			$fname = $_POST["fname"];
 			$lname = $_POST["lname"];
 			$email = $_POST["email"];
-			$event = 1;
+			$event = $_SESSION['eventId'];
 			
 			if(checkRegistration($fname, $lname, $email, $event) == FALSE){ 
 				registerUser($fname, $lname, $email, $event);

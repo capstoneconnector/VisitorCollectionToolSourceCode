@@ -1,12 +1,12 @@
 <?php
-$root = $_SERVER["DOCUMENT_ROOT"];
-include_once $root."/db/getEventInfo.php";
-session_start();
+	$root = $_SERVER["DOCUMENT_ROOT"];
+	include_once $root."/db/getEventInfo.php";
+	session_start();
 
-if (isset($_POST["event"])) {
-	$_SESSION["eventId"] = $_POST["event"];
-	header("Location: checkin.php");
-}
+	if (isset($_POST["event"])) {
+		$_SESSION["eventId"] = $_POST["event"];
+		header("Location: checkin.php");
+	}
 ?>
 
 <html>
@@ -33,5 +33,7 @@ if (isset($_POST["event"])) {
 			<br><br>
 			<input type="submit" name="submit" class="submit">
 		</form>
+		<br><br><br>
+		<button class="submit" onclick="window.location = 'manager.php'">Manager Page</button>
 	</body>
 </html>

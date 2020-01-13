@@ -35,7 +35,7 @@
 			<?php
 				$root = $_SERVER['DOCUMENT_ROOT'];
 				include_once $root . "/php/findName.php";
-				$event = 1;
+				$event = $_SESSION['eventId'];
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
 						$name = $_POST["name"];
