@@ -11,11 +11,11 @@
 		<div id = "main">
 			<h1>Register</h1>
 			<form method = "post">
-				<span id = "field">First Name <input class = "input" type = "text" name = "fname" value="<?php echo isset($_POST["fname"]) ? $_POST["fname"] : ''?>"></span>
+				<span id = "field">First Name <input class = "input" type = "text" name = "fname" required value="<?php echo isset($_POST["fname"]) ? $_POST["fname"] : ''?>"></span>
 				<br><br>
-				<span id = "field">Last Name <input class = "input" type = "text" name = "lname" value="<?php echo isset($_POST["lname"]) ? $_POST["lname"] : ''?>"></span>
+				<span id = "field">Last Name <input class = "input" type = "text" name = "lname" required value="<?php echo isset($_POST["lname"]) ? $_POST["lname"] : ''?>"></span>
 				<br><br>
-				<span id = "field">Email <input class = "input" type = "email" name = "email" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''?>"></span>
+				<span id = "field">Email <input class = "input" type = "email" name = "email" required value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''?>"></span>
 				<br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>

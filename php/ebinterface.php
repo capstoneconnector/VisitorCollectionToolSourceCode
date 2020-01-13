@@ -33,8 +33,9 @@ function getAllEvents($OAuthToken) {
 	$contents = getJsonFromURL(wrapRequest("users/me/events"));
 	$events = $contents["events"];
 	
+	// add pagination
+	// works for now, but what to return the entire event object instead of parts of the event obejct
 	$event_list = [];
-
 	$event_num = 0;
 	foreach ($events as $event) {
 		$event_list[$event_num] = array("name"=>$event["name"]["text"], 
@@ -44,6 +45,7 @@ function getAllEvents($OAuthToken) {
 										);
 		$event_num++;
 	}
+
 	return $events;
 }
 
@@ -54,10 +56,6 @@ function getAllAttendees($event_id) {
 	return $attendees;
 }
 
-
-$my_events_url = wrapRequest("users/me/events");						//get all events' details
-$event_list_url = wrapRequest("events/".$EVENT_ID); 					//get one event's details
-$attendee_list_url = wrapRequest("events/".$EVENT_ID."/attendees/");	//get the attendee list for a spesific event
 
 
 function testGetAllEvents() {
@@ -88,9 +86,16 @@ function testGetAllEvents() {
 <html>
 	<head></head>
 	<body>
+		https://www.eventbriteapi.com/v3/users/me/events?token=COKR3D7YQAPZM2GWLOTL
 		getAllEvents($OAuthToken) //Pri_token get all of the events of a user<br>
 		getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
 		getAttendeeInfo($attendee_id) // return entire attendee object<br>
+
+
+		https://www.eventbriteapi.com/v3/users/me/events?token=OAUTH_TOKEN				//get all events' details
+		https://www.eventbriteapi.com/v3/events/EVENT_ID?token=OAUTH_TOKEN				//get one event's details
+		https://www.eventbriteapi.com/v3/events/EVENT_ID/attendees/?token=OAUTH_TOKEN	//get the attendee list for a spesific event
+
 	</body>
 
 </html>
