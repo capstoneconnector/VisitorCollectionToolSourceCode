@@ -7,17 +7,16 @@
 
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-		<title>Manager Dashboard</title>
-	</head>
 	<body>
 	<div class="container">
 		<div class="row">
 			<div class="col-2">
+		<title>Manager Dashboard</title>
+	</head>
 				<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
 				<div id ="menu">
 					<ul>
 						<li><a href='setup.php'><span>Set Up</span></a></li>
-						<li><a href='Analytics.php'<span>Analytics</span></a></li>
 						<li class='last'><a href='manager.php'><span>Events</span></a></li>
 					</ul>
 				</div>
@@ -42,17 +41,18 @@
 				</table>
 			</div>
 		</div>
-		<div class="row justify-content-center">
+		<div class="row">
 			<div class="col-10">
 				<form method = "post" div id="UpdateEvent" class = "col-7">
 				<label>Name:</label>
 				</br>
 				<input type="text" name="name" required />
 				</br>
-				<label>Description:</label>
-				</br>
-				<textarea name="description" cols="30" rows="3" required ></textarea>
-				</br>
+			<?php
+				//<label>Description:</label>
+				//</br>
+				//<textarea name="description" cols="30" rows="3" required ></textarea>
+				?></br>
 				<label>Date:</label>
 				</br>
 				<input type="text" name="date" required />
@@ -80,7 +80,7 @@
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
 						echo "<th>Name</th>";
-						echo "<th>Description</th>";
+						//echo "<th>Description</th>";
 						echo "<th>Date</th>";
 						echo "<th>Eventid</th>";
 					echo "</tr>";
