@@ -80,7 +80,7 @@
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
 						echo "<th>Name</th>";
-						//echo "<th>Description</th>";
+						//echo "<th>Description</th>" TODO - Description field in database;
 						echo "<th>Date</th>";
 						echo "<th>Eventid</th>";
 					echo "</tr>";
@@ -109,20 +109,22 @@
 	</body>
 </html>
 <?php
-	include_once $root . "/db/connect.php";
+	include_once $root . "/db/addEvent.php";
 	if (!empty($_POST))
 	{
 		$name = $_POST["name"];
 		$description = $_POST["description"];
 		$date = $_POST["date"];
-	}
-	$stmt = $pdo->prepare("INSERT into event(Name, Date) values(?, ?)");
-	$stmt->bindParam(1, $name);
-	$stmt->bindParam(2, $date);
-	if ($stmt->execute())
-	{
-		echo '<script language="javascript">';
-		echo 'window.location=("manager.php")';
-		echo '</script>';
+		if (addEvent($name, $date)){
+			echo '<script language="javascript">';
+			echo 'window.location=("manager.php")';
+			echo '</script>';
+		}
+
+		else{
+			echo '<script language="javascript">';
+			echo 'alert("DB Error"))';
+			echo '</script>';
+		}
 	}
 ?>
