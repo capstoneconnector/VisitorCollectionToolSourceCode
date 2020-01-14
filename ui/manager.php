@@ -71,34 +71,32 @@
 					</div>
 				</form>
 			<?php
-			$root = $_SERVER['DOCUMENT_ROOT'];
-			include_once $root . "/db/connect.php";
-			$stmt = $pdo->prepare("SELECT * from event");
-					if ($stmt -> execute())
-					{
+				$root = $_SERVER['DOCUMENT_ROOT'];
+				include_once $root . "/db/getEventInfo.php";
+				$events = getAllEvents();
+				if (!empty($events)){
 					echo "<table id = 'EventTable' class='table'>";
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
-						echo "<th>Name</th>";
-						//echo "<th>Description</th>" TODO - Description field in database;
-						echo "<th>Date</th>";
-						echo "<th>Eventid</th>";
+					echo "<th>Name</th>";
+					//echo "<th>Description</th>"; TODO - Description field in database
+					echo "<th>Date</th>";
+					echo "<th>Eventid</th>";
 					echo "</tr>";
 					echo "</thead>";
 					echo "<tbody>";
-						while($row = $stmt -> fetch())
-						{
-							echo "<tr>";
-							echo "<td>".$row['Name']."</td>";
-							echo "<td>".$row['Date']."</td>";
-							echo "<td>".$row['Eventid']."</td>";
-							//echo "<td>"."<input type = "submit" value = "Edit">";
-							//echo "<td>"."<button onclick = DeleteEvent('1')>Delete</button>";
-					echo "</tr>";
-						}
-						echo "</tbody>";
-						echo "</table>";
+					foreach($events as $row){
+						echo "<tr>";
+						echo "<td>".$row['Name']."</td>";
+						echo "<td>".$row['Date']."</td>";
+						echo "<td>".$row['Eventid']."</td>";
+						//echo "<td>"."<input type = "submit" value = "Edit">";
+						//echo "<td>"."<button onclick = DeleteEvent('1')>Delete</button>";
+						echo "</tr>";
 					}
+					echo "</tbody>";
+					echo "</table>";
+				}
 			?>
 			</div>
 		</div>
