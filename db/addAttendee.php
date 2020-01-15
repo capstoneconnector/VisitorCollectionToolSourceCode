@@ -6,6 +6,14 @@
 		$stmt->bindParam(2,$lname);
 		$stmt->bindParam(3,$email);
 		$stmt->bindParam(4,$event);
-		$stmt->execute();
+		
+		if($stmt->execute()){
+			return TRUE;
+		}
+
+		else{
+			return FALSE;
+		}
+
 	}
 ?>
