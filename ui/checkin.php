@@ -40,7 +40,7 @@
 					if(!empty($_POST["name"])){
 						$name = $_POST["name"];
 						$names = findName($name, $event); //Fetch names that match name entered by user
-						if(sizeof($names) !== 0){ //Only creates table if there is content to write to it
+						if(!empty($names)){ //Only creates table if there is content to write to it
 							echo '<table border = 3>';
 							echo '<th>First Name</th><th>Last Name</th><th>Email</th>';
 							for ($i = 0; $i < sizeof($names); $i++){
@@ -55,7 +55,7 @@
 						}
 						else{
 							echo '<script language="javascript">';
-							echo 'alert("Name does not exist or you are already checked in!")';
+							echo 'alert("Name not found, try again or ask for help!")';
 							echo '</script>';
 						}
 					}
