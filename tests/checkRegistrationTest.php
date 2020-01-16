@@ -1,5 +1,4 @@
 <?php
-	$root = $_SERVER["DOCUMENT_ROOT"];
 	include_once "../php/checkRegistration.php";
 
 	class CheckRegistrationTest extends PHPUnit_Framework_TestCase{ //Run this file with phpunit command from command line
