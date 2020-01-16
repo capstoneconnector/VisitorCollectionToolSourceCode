@@ -31,7 +31,6 @@
 						<td>&nbsp;</td>
 						<td align = "right">
 							<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
-							<button id = "btnExport" class = "btn btn-info" onclick = exportTableToExcel('EventTable');> Export </button>
 						</td>
 						<td width = "10">&nbsp;</td>
 					</tr>
@@ -48,11 +47,7 @@
 				</br>
 				<input type="text" name="name" required />
 				</br>
-			<?php
-				//<label>Description:</label>
-				//</br>
-				//<textarea name="description" cols="30" rows="3" required ></textarea>
-				?></br>
+				</br>
 				<label>Date:</label>
 				</br>
 				<input type="text" name="date" required />
@@ -79,7 +74,6 @@
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
 					echo "<th>Name</th>";
-					//echo "<th>Description</th>"; TODO - Description field in database
 					echo "<th>Date</th>";
 					echo "<th>Eventid</th>";
 					echo "</tr>";
@@ -90,8 +84,6 @@
 						echo "<td>".$row['Name']."</td>";
 						echo "<td>".$row['Date']."</td>";
 						echo "<td>".$row['Eventid']."</td>";
-						//echo "<td>"."<input type = "submit" value = "Edit">";
-						//echo "<td>"."<button onclick = DeleteEvent('1')>Delete</button>";
 						echo "</tr>";
 					}
 					echo "</tbody>";
