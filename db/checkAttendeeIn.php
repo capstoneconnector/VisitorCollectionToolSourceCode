@@ -1,5 +1,7 @@
 <?php
-	include_once "connect.php";
+	include_once "parseDBConfig.php";
+	$cfg = parseDBConfig();
+	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$userid = $_REQUEST["userid"];
 	if(!empty($userid)){
 		$stmt = $pdo->prepare("UPDATE attendee SET Attended = 1 WHERE Id = ?");

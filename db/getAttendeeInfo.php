@@ -1,6 +1,8 @@
 <?php
 	function getAttendeeInfoFromName($event, $fname, $lname){
-		$pdo = new PDO('mysql:host=localhost;dbname=icdb', "root", "");
+		include_once "parseDBConfig.php";
+		$cfg = parseDBConfig();
+		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$info = array();
 		$stmt = $pdo->prepare("SELECT Id, Fname, Lname, Email FROM attendee WHERE Eventid = ? AND Attended = 0 AND Fname LIKE CONCAT('%',?,'%') AND Lname LIKE CONCAT('%',?,'%')");
 	    $stmt->bindParam(1, $event);
@@ -15,7 +17,9 @@
 	}
 
 	function getAttendeeCount($fname, $lname, $email, $event){
-		$pdo = new PDO('mysql:host=localhost;dbname=icdb', "root", "");
+		include_once "parseDBConfig.php";
+		$cfg = parseDBConfig();
+		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$info = array();
 		$stmt = $pdo->prepare("SELECT COUNT(*) AS num FROM attendee WHERE Eventid = ? AND Fname = ? AND Lname = ? AND Email = ?");
 	    $stmt->bindParam(1, $event);

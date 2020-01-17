@@ -1,6 +1,8 @@
 <?php
 	function getAllEvents() {
-		$pdo = new PDO('mysql:host=localhost;dbname=icdb', "root", "");
+		include_once "parseDBConfig.php";
+		$cfg = parseDBConfig();
+		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event");
 		$info = array();
 		if($statement->execute()) {
@@ -12,7 +14,9 @@
 	}
 
 	function getEventById($id) {
-		$pdo = new PDO('mysql:host=localhost;dbname=icdb', "root", "");
+		include_once "parseDBConfig.php";
+		$cfg = parseDBConfig();
+		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event WHERE Eventid=?");
 		$statement->bindParam(1, $id);
 		$statement->execute();
