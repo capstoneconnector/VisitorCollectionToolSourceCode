@@ -22,8 +22,8 @@ body{
 	position: relative;
 	width: 150px;
 	/* The list elements which contain the links */
-
 }
+
 #menu > ul li {
 	display: block;
 	position: relative;
