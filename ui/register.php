@@ -19,7 +19,7 @@
 				<br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>
-			<form method = "post" action = "/ui/checkin.php">
+			<form method = "post" action = "checkin.php">
 				<button class = "submit">Back</button>
 			</form>
 		</div>
