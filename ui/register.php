@@ -27,9 +27,8 @@
 </html>
 
 <?php
-	$root = $_SERVER['DOCUMENT_ROOT'];
-	include_once $root . "/php/checkRegistration.php";
-	include_once $root . "/db/addAttendee.php";
+	require_once "../php/checkRegistration.php";
+	require_once "../db/dbInterface.php";
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
 			$fname = $_POST["fname"];

@@ -1,6 +1,5 @@
 <?php
-	$root = $_SERVER["DOCUMENT_ROOT"];
-	include_once $root."/db/getEventInfo.php";
+	require_once "../db/dbInterface.php";
 	session_start();
 
 	if (isset($_POST["event"])) {

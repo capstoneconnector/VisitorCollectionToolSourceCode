@@ -1,7 +1,6 @@
 <?php
-$root = $_SERVER["DOCUMENT_ROOT"];
-include_once $root."php/ebInterface.php";
-include_once $root."db/connect.php";
+require_once "../php/ebInterface.php";
+require_once "../db/connect.php";
 
 function importEvents($oAuthToken) {
 	$events = getAllEvents($oAuthToken);

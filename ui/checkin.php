@@ -1,6 +1,5 @@
 <?php
-	$root = $_SERVER["DOCUMENT_ROOT"];
-	include_once $root . "/db/getEventInfo.php";
+	require_once "../db/dbInterface.php";
 	session_start();
 ?>
 <html>
@@ -33,8 +32,7 @@
 		<br><br><br>
 		<div class="table">
 			<?php
-				$root = $_SERVER['DOCUMENT_ROOT'];
-				include_once $root . "/php/findName.php";
+				require_once "../php/findName.php";
 				$event = $_SESSION['eventId'];
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){
