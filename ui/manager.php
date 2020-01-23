@@ -67,7 +67,7 @@
 				</form>
 			<?php
 				$root = $_SERVER['DOCUMENT_ROOT'];
-				include_once $root . "/db/getEventInfo.php";
+				require_once $root . "/db/getEventInfo.php";
 				$events = getAllEvents();
 				if (!empty($events)){
 					echo "<table id = 'EventTable' class='table'>";
@@ -99,7 +99,7 @@
 	</body>
 </html>
 <?php
-	include_once $root . "/db/addEvent.php";
+	require_once $root . "/db/addEvent.php";
 	if (!empty($_POST))
 	{
 		$name = $_POST["name"];

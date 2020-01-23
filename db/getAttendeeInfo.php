@@ -1,6 +1,6 @@
 <?php
 	function getAttendeeInfoFromName($event, $fname, $lname){
-		include_once "parseDBConfig.php";
+		require_once "parseDBConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$info = array();
@@ -17,7 +17,7 @@
 	}
 
 	function getAttendeeCount($fname, $lname, $email, $event){
-		include_once "parseDBConfig.php";
+		require_once "parseDBConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$info = array();
