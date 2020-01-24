@@ -1,10 +1,9 @@
 <?php
-<<<<<<< HEAD
 	require_once "../db/getEventInfo.php";
-=======
-	require_once "../db/dbInterface.php";
->>>>>>> 08b2e90e14d19974a44d5f046e51dcd6a8fea951
 	session_start();
+	if(empty($_SESSION['logged'])){
+		header ('location: login.php');
+	}
 ?>
 <html>
 	<head>
