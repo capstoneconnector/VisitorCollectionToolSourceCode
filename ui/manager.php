@@ -3,6 +3,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<script src = "/js/manager.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 		<link rel = "stylesheet" type = "text/css" href = "/css/manager.css">
 
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -66,8 +67,7 @@
 					</div>
 				</form>
 			<?php
-				$root = $_SERVER['DOCUMENT_ROOT'];
-				require_once $root . "/db/getEventInfo.php";
+				require_once "../db/getEventInfo.php";
 				$events = getAllEvents();
 				if (!empty($events)){
 					echo "<table id = 'EventTable' class='table'>";
@@ -99,7 +99,7 @@
 	</body>
 </html>
 <?php
-	require_once $root . "/db/addEvent.php";
+	require_once "../db/addEvent.php";
 	if (!empty($_POST))
 	{
 		$name = $_POST["name"];
