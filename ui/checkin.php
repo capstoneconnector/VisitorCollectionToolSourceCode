@@ -18,11 +18,21 @@
 				<div class="col-2">
 				<title>Check In</title>
 	</head>
-					<div id ="menu">
-						<ul>
-							<li><a href='setup.php'><span>Set Up</span></a></li>
-							<li class='last'><a href='register.php'><span>Registration</span></a></li>
+					<div class="panel-group" id="menu">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+							<h4 class="panel-title">
+							<a data-toggle="collapse" href="#collapse1"></a>
+							</h4>
+							</div>
+							<ul>
+						<div id="collapse1" class="panel-collapse collapse">
+						<div class="panel-body"><li><a href='setup.php'><span>Set Up</span></a></li></div>
+						<div class="panel-footer"><li class='last'><a href='register.php'><span>Registration</span></a></li></div>
 						</ul>
+						</div>
+						</div>
+					</div>
 					</div>
 				</div>
 				<div id="main">
@@ -53,8 +63,6 @@
 				<input class="submit" type="submit" value="Check In">
 				<br><br>
 			</form>
-			<button class="submit" onclick="window.location = 'register.php'">Registration Page</button>
-			<br><br><br>
 			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
 		</div>
 		</div>

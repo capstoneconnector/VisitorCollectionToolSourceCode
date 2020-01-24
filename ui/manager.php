@@ -32,8 +32,8 @@
 						<td>&nbsp;</td>
 						<td align = "right">
 							<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
-							<button id = "btnAddEvent" class = "btn btn-info" onclick = exportTableToExcel();> Export </button>
 							<button id = "btnAddEvent" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
+							<button id = "btnAddEvent" class = "btn btn-info" onclick = AddAttendee(-1);> Add Attendee </button>
 						</td>
 						<td width = "10">&nbsp;</td>
 					</tr>
@@ -48,6 +48,9 @@
 				</br>
 				<input type="text" name="name" required />
 				</br>
+				<label>Description:</label>
+				</br>
+				<textarea rows=5 cols=25></textarea>
 				</br>
 				<label>Date:</label>
 				</br>
@@ -57,15 +60,21 @@
 				<button onclick="UpdateEvent();">Cancel</button>
 				</div>
 				</form>
-			<div id = "SearchEvents" class = "col-10">
+			<div id = "SearchEvents" >
 				<form>
-					<div class="col-sm">
+					<div class = "col-7">
 						<label for = "Search" class "control-label"> Search</label>
-					</div>
-					<div class="col-sm">
 						<input type = "text" class = "form-control" />
 					</div>
+					<div class = "col-1">
+						<label>EventId: </label>
+						<input type="text" name="EventId" />
+						<button id = "btnAddEvent" class = "btn btn-info" onclick = ExportAttendeeID;> Export </button>
+					</div>
+			</div>
 				</form>
+		</div>
+			<div id = "EventTable" class="col-10">
 			<?php
 				$root = $_SERVER['DOCUMENT_ROOT'];
 				include_once $root . "/db/getEventInfo.php";
@@ -91,6 +100,7 @@
 					echo "</table>";
 				}
 			?>
+			</div>
 			</div>
 			</div>
 		</div>
