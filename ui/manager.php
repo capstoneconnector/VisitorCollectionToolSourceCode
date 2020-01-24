@@ -56,7 +56,7 @@
 				<input type="text" name="name" required />
 				</br>
 				</br>
-				<label>Date:</label>
+				<label>Date (YYYY-MM-DD):</label>
 				</br>
 				<input type="text" name="date" required />
 				</br></br>
@@ -107,20 +107,26 @@
 </html>
 <?php
 	require_once "../db/addEvent.php";
-	if (!empty($_POST))
-	{
+	if (!empty($_POST)){
 		$name = $_POST["name"];
-		$description = $_POST["description"];
+		//$description = $_POST["description"];
 		$date = $_POST["date"];
-		if (addEvent($name, $date)){
-			echo '<script language="javascript">';
-			echo 'window.location=("manager.php")';
-			echo '</script>';
-		}
+		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date)){
+			if (addEvent($name, $date)){
+				echo '<script language="javascript">';
+				echo 'window.location=("manager.php")';
+				echo '</script>';
+			}
 
+			else{
+				echo '<script language="javascript">';
+				echo 'alert("DB Error"))';
+				echo '</script>';
+			}
+		}
 		else{
 			echo '<script language="javascript">';
-			echo 'alert("DB Error"))';
+			echo 'alert("Date Format Error: YYYY-MM-DD"))';
 			echo '</script>';
 		}
 	}
