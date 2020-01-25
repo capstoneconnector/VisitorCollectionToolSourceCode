@@ -1,6 +1,6 @@
 <?php
 	function getAllEvents() {
-		include_once "parseDBConfig.php";
+		require_once "parseDBConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event"); //Fetch all events
@@ -14,7 +14,7 @@
 	}
 
 	function getEventById($id) {
-		include_once "parseDBConfig.php";
+		require_once "parseDBConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event WHERE Eventid=?"); //Fetch specific event by id

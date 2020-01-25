@@ -1,0 +1,15 @@
+#main{
+	margin: auto;
+	font-family: "Helvetica";
+	text-align: center;
+	width: 100%;
+}
+
+#header{
+	font-size: 48;
+	font-weight: bold;
+	padding-left: 25px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-right: 25px;
+}

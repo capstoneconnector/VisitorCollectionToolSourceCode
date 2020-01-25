@@ -1,11 +1,8 @@
 <?php
-	$root = $_SERVER["DOCUMENT_ROOT"];
-	include_once $root."/db/getEventInfo.php";
+	require_once "../db/getEventInfo.php";
 	session_start();
-
-	if (isset($_POST["event"])) {
-		$_SESSION["eventId"] = $_POST["event"];
-		header("Location: checkin.php");
+	if(empty($_SESSION['logged'])){
+		header ('location: login.php');
 	}
 ?>
 
@@ -37,3 +34,10 @@
 		<button class="submit" onclick="window.location = 'manager.php'">Manager Page</button>
 	</body>
 </html>
+
+<?php
+	if (!empty($_POST["event"])) {
+		$_SESSION["eventId"] = $_POST["event"];
+		header('location: checkin.php');
+	}
+?>

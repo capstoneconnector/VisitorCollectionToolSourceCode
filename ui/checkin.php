@@ -1,7 +1,9 @@
 <?php
-	$root = $_SERVER["DOCUMENT_ROOT"];
-	include_once $root . "/db/getEventInfo.php";
+	require_once "../db/getEventInfo.php";
 	session_start();
+	if(empty($_SESSION['logged'])){
+		header ('location: login.php');
+	}
 ?>
 <html>
 	<head>
@@ -55,14 +57,13 @@
 			</form>
 			<button class="submit" onclick="window.location = 'register.php'">Registration Page</button>
 			<br><br><br>
-			<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
+			<button class="submit" onclick="window.location = 'login.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
 		</div>
 		</div>
 		<br><br><br>
 		<div class="table">
 			<?php
-				$root = $_SERVER['DOCUMENT_ROOT'];
-				include_once $root . "/php/findName.php";
+				require_once "../php/findName.php";
 				$event = $_SESSION['eventId'];
 				if(!empty($_POST)){
 					if(!empty($_POST["name"])){

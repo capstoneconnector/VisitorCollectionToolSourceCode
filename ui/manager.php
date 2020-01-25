@@ -1,8 +1,16 @@
+<?php
+	session_start();
+	if(empty($_SESSION['logged'])){
+		header ('location: login.php');
+	}
+?>
+
 <html>
 	<head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<script src = "/js/manager.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 		<link rel = "stylesheet" type = "text/css" href = "/css/manager.css">
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -49,7 +57,7 @@
 				<input type="text" name="name" required />
 				</br>
 				</br>
-				<label>Date:</label>
+				<label>Date (YYYY-MM-DD):</label>
 				</br>
 				<input type="text" name="date" required />
 				</br></br>
@@ -67,8 +75,7 @@
 					</div>
 				</form>
 			<?php
-				$root = $_SERVER['DOCUMENT_ROOT'];
-				include_once $root . "/db/getEventInfo.php";
+				require_once "../db/getEventInfo.php";
 				$events = getAllEvents();
 				if (!empty($events)){
 					echo "<table id = 'EventTable' class='table'>";
@@ -101,21 +108,27 @@
 	</body>
 </html>
 <?php
-	include_once $root . "/db/addEvent.php";
-	if (!empty($_POST))
-	{
+	require_once "../db/addEvent.php";
+	if (!empty($_POST)){
 		$name = $_POST["name"];
-		$description = $_POST["description"];
+		//$description = $_POST["description"];
 		$date = $_POST["date"];
-		if (addEvent($name, $date)){
-			echo '<script language="javascript">';
-			echo 'window.location=("manager.php")';
-			echo '</script>';
-		}
+		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date)){
+			if (addEvent($name, $date)){
+				echo '<script language="javascript">';
+				echo 'window.location=("manager.php")';
+				echo '</script>';
+			}
 
+			else{
+				echo '<script language="javascript">';
+				echo 'alert("DB Error"))';
+				echo '</script>';
+			}
+		}
 		else{
 			echo '<script language="javascript">';
-			echo 'alert("DB Error"))';
+			echo 'alert("Date Format Error: YYYY-MM-DD"))';
 			echo '</script>';
 		}
 	}
