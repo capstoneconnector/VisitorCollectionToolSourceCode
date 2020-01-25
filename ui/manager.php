@@ -60,7 +60,7 @@
 				<button onclick="UpdateEvent();">Cancel</button>
 				</div>
 				</form>
-			<div id = "SearchEvents" >
+			<div id = "SearchEvents" class="col-9">
 				<form>
 					<div class = "col-7">
 						<label for = "Search" class "control-label"> Search</label>
