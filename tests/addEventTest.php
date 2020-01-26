@@ -1,5 +1,5 @@
 <?php
-	include_once "../db/addEvent.php";
+	include_once "../db/dbInterface.php";
 
 	class AddEventTest extends PHPUnit_Framework_TestCase{ //Run this file with phpunit command from command line
 		public function setUp(){

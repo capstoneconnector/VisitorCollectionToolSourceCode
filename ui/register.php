@@ -48,7 +48,7 @@
 				<br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>
-			<form method = "post" action = "/ui/checkin.php">
+			<form method = "post" action = "checkin.php">
 				<button class = "submit">Back</button>
 			</form>
 		</div>
@@ -57,9 +57,8 @@
 </html>
 
 <?php
-	$root = $_SERVER['DOCUMENT_ROOT'];
-	include_once $root . "/php/checkRegistration.php";
-	include_once $root . "/db/addAttendee.php";
+	require_once "../php/checkRegistration.php";
+	require_once "../db/dbInterface.php";
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
 			$fname = $_POST["fname"];
