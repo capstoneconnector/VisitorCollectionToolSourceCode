@@ -17,7 +17,7 @@
 		require_once "parseDBConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
-		$statement = $pdo->prepare("SELECT * FROM event WHERE Date > DATE(NOW())"); //Fetch all events
+		$statement = $pdo->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events
 		$info = array();
 		if($statement->execute()) {
 	        while($row = $statement->fetch()) {
