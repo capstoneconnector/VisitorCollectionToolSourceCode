@@ -21,33 +21,41 @@ function UpdateEvent()
 	}
 	// maybe hide other divs that are not needed
 
-	function exportTableToExcel(tableID, filename = '')
-	{
+	function downloadCSV(csv, filename) {
+		var csvFile;
 		var downloadLink;
-		var dataType = 'application/vnd.ms-excel';
-		var tableSelect = document.getElementById(tableID);
-		var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-		
-		// Specify file name
-		filename = filename?filename+'.xls':'excel_data.xls';
-		// Create download link element
+
+		// CSV file
+		csvFile = new Blob([csv], {type: "text/csv"});
+
+		// Download link
 		downloadLink = document.createElement("a");
+
+		// File name
+		downloadLink.download = filename;
+
+		// Create a link to the file
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+
+		// Hide download link
+		downloadLink.style.display = "none";
+
+		// Add the link to DOM
 		document.body.appendChild(downloadLink);
-		if(navigator.msSaveOrOpenBlob)
-		{
-			var blob = new Blob(['\ufeff', tableHTML], 
-			{
-				type: dataType
-			});
-			navigator.msSaveOrOpenBlob( blob, filename);
-		}
-		else
-		{
-			// Create a link to the file
-			downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-			// Setting the file name
-			downloadLink.download = filename;
-			//triggering the function
-			downloadLink.click();
-		}
+
+		// Click download link
+		downloadLink.click();
 	}
+
+	function exportTableToCSV(filename) {
+	var csv = [];
+	var rows = document.querySelectorAll("#AttendeeTable tr");
+	for (var i = 0; i < rows.length; i++) {
+		var row = [], cols = rows[i].querySelectorAll("td, th");
+		for (var j = 0; j < cols.length; j++) 
+			row.push(cols[j].innerText);
+		csv.push(row.join(","));
+	}
+	// Download CSV file
+	downloadCSV(csv.join("\n"), filename);
+}

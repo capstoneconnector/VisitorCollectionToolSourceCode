@@ -11,13 +11,11 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<title>Manager Dashboard</title>
 	</head>
-	
 	<body>
 		<div class="container">
 			<div class="row">
 				<div class="col-2">
 					<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
-
 					
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">
@@ -25,10 +23,6 @@
 								<li class='last'><a href='manager.php'><span>Events</span></a></li>
 							</ul>
 						</div>
-					
-					
-					
-					
 				</div>
 				
 				<div class="col-10">
@@ -72,16 +66,16 @@
 				</div>
 				</form>
 			<div id = "SearchEvents" class="col-9">
-				<form>
+				<form method="post">
 					<div class = "col-10 float-left">
 						<label for = "Search" class "control-label"> Search</label>
 						<input type = "text" class = "form-control" />
 					</div>
 					<div class = "col-1 float-right">
 						<label>EventId: </label>
-						<input type="text" name="EventId" />
+						<input type="text" name="eventId"/>
 						</br></br>
-						<button id = "btnAddEvent" class = "btn btn-info" onclick = ExportAttendeeID;> Export </button>
+						<button type="submit" name="export" class = "btn btn-info"> Export </button>
 					</div>
 			</div>
 				</form>
@@ -100,11 +94,43 @@
 					echo "</tr>";
 					echo "</thead>";
 					echo "<tbody>";
-					foreach($events as $row){
+					foreach($events as $event){
 						echo "<tr>";
-						echo "<td>".$row['Name']."</td>";
-						echo "<td>".$row['Date']."</td>";
-						echo "<td>".$row['Eventid']."</td>";
+						echo "<td><a href = '?eventid=".$event['Eventid']."'>".$event['Name']."</a></td>";
+						echo "<td>".$event['Date']."</td>";
+						echo "<td>".$event['Eventid']."</td>";
+						echo "</tr>";
+					}
+					echo "</tbody>";
+					echo "</table>";
+				}
+			?>
+			</div>
+			
+			
+			<div id = "AttendeeTable" class="col-12" style="display: none;">
+			<?php
+				require_once "../db/dbInterface.php";
+				$attendees = getAttendeeInfoByEventId($_POST['eventId']);
+				if (!empty($attendees)){
+					echo "<table id = 'AttendeeTable' class='table'>";
+					echo '<thead class="thead-dark">';
+					echo "<tr>";
+					echo "<th>Fname</th>";
+					echo "<th>Lname</th>";
+					echo "<th>Email</th>";
+					echo "<th>Phone</th>";
+					echo "<th>Attended</th>";
+					echo "</tr>";
+					echo "</thead>";
+					echo "<tbody>";
+					foreach($attendees as $attendee){
+						echo "<tr>";
+						echo "<td>".$attendee['Fname']."</td>";
+						echo "<td>".$attendee['Lname']."</td>";
+						echo "<td>".$attendee['Email']."</td>";
+						echo "<td>".$attendee['Phone']."</td>";
+						echo "<td>".$attendee['Attended']."</td>";
 						echo "</tr>";
 					}
 					echo "</tbody>";
@@ -125,6 +151,8 @@
 	require_once "../db/dbInterface.php";
 	if (!empty($_POST))
 	{
+		if (isset($_POST['name']))
+		{
 		$name = $_POST["name"];
 		$description = $_POST["description"];
 		$date = $_POST["date"];
@@ -133,10 +161,16 @@
 			echo 'window.location=("manager.php")';
 			echo '</script>';
 		}
-
 		else{
 			echo '<script language="javascript">';
 			echo 'alert("DB Error"))';
+			echo '</script>';
+		}
+	}
+	if (isset($_POST["export"]))
+		{
+			echo '<script language="javascript">';
+			echo 'exportTableToCSV("attendee.csv")';
 			echo '</script>';
 		}
 	}
