@@ -29,41 +29,47 @@ function getJsonFromURL($url) {
 	return json_decode(file_get_contents($url), true);
 }
 
-function getAllEvents($OAuthToken) {
+function pullEbEvents($OAuthToken) {
 	$contents = getJsonFromURL(wrapRequest("users/me/events"));
 	$events = $contents["events"];
-	
-	// add pagination
-	// works for now, but what to return the entire event object instead of parts of the event obejct
-	$event_list = [];
-	$event_num = 0;
-	foreach ($events as $event) {
-		$event_list[$event_num] = array("name"=>$event["name"]["text"], 
-										"id"=>$event["id"], 
-										"event_url"=>$event["url"], 
-										"ticket_url"=>$event["resource_uri"]
-										);
-		$event_num++;
-	}
-
+	//add pagination
 	return $events;
 }
 
-function getAllAttendees($event_id) {
+function pullEbAttendees($event_id) {
 	$contents = getJsonFromURL(wrapRequest("events/".$event_id."/attendees/"));
 	$attendees = $contents["attendees"];
 	//add pagination
 	return $attendees;
 }
 
+function importEbEvents($oAuthToken) {
+	require_once "../db/dbInterface.php";
+
+	$events = pullEbEvents($oAuthToken);
+	foreach ($events as $event) {
+		addEvent($event["name"], $event["start"]["local"]);
+
+		$attendees = pullEbAttendees($event["id"]);
+		foreach ($attendees["attendees"] as $attendee) {
+			$profile = $attendee["profile"];
+			addAttendee($profile["first_name"], 
+						$profile["last_name"],
+						$profile["email"],
+						$attendee["event_id"]
+			);
+			
+		}
+	}
+}
 
 
-function testGetAllEvents() {
+function testPullEbEvents() {
 	echo $attendee_list_url;
 	echo "<br>";
-	$events = getAllEvents($PRI_TOKEN);
+	$events = pullEbEvents($PRI_TOKEN);
 
-	$attendees = getAllAttendees($events[0]["id"]);
+	$attendees = pullEbAttendees($events[0]["id"]);
 	$attendee = $attendees[0];
 	echo $attendee["profile"]["name"];
 	echo "<br>";
@@ -71,8 +77,8 @@ function testGetAllEvents() {
 	echo "<br>";	
 }
 
-function testGetAllEvents() {
-	$events = getAllEvents($PRI_TOKEN);
+function testPullEbEvents() {
+	$events = pullEbEvents($PRI_TOKEN);
 	echo $events[0]["name"];
 	echo "<br>";
 	echo $events[0]["id"];
@@ -87,7 +93,7 @@ function testGetAllEvents() {
 	<head></head>
 	<body>
 		https://www.eventbriteapi.com/v3/users/me/events?token=COKR3D7YQAPZM2GWLOTL
-		getAllEvents($OAuthToken) //Pri_token get all of the events of a user<br>
+		pullEbEvents($OAuthToken) //Pri_token get all of the events of a user<br>
 		getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
 		getAttendeeInfo($attendee_id) // return entire attendee object<br>
 
