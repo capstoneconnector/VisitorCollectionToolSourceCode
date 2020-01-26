@@ -19,7 +19,7 @@
 				<ul>
 					<li><a href='setup.php'><span>Set Up</span></a></li>
 					<li><a href='Analytics.php'<span>Analytics</span></a></li>
-					<li class='last'><a href='manager.php'><span>Events</span></a></li>
+					<li class='last'><a href='manager.php'><span>Manager</span></a></li>
 				</ul>
 			</div>
 		</div>
