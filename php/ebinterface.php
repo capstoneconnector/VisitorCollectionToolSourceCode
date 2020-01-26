@@ -7,40 +7,44 @@ $EVENT_ID = "86470394277";
 
 /*
 arg: $requeset is the url extention after the endpoint
-arg: $data is extra aruments in the url. Must be a list of arguments eg ["arg=value", ...]
+arg: $options is extra aruments in the url. Must be a list of arguments eg ["arg=value", ...]
 */
-function wrapRequestWtihData($request, $data) {
+function wrapUrlWtihData($request, $options) {
 	static $endpoint = "https://www.eventbriteapi.com/v3/";
-	static $my_token = "?token=COKR3D7YQAPZM2GWLOTL";
+	static $token_argument = "?token=COKR3D7YQAPZM2GWLOTL";
 
 	$args = "";
-	foreach ($data as $arg) {
-		$args += "?".$arg;
+	foreach ($options as $arg) {
+		$args += "&".$arg;
 	}
 
-	return $endpoint.$request.$my_token.$args;
+	return $endpoint.$request.$token_argument.$args;
 }
 
 function wrapRequest($request) {
-	return wrapRequestWtihData($request, []);
+	return wrapUrlWtihData($request, []);
 }
 
 function getJsonFromURL($url) {
 	return json_decode(file_get_contents($url), true);
 }
 
+function depaginate($page, $data_type) {
+	$result = array();
+	for ($i=0; i<$page["pagination"]["page_count"]; i++) {
+		$result += $page[$data_type];
+	}
+	return $result;
+}
+
 function pullEbEvents($OAuthToken) {
 	$contents = getJsonFromURL(wrapRequest("users/me/events"));
-	$events = $contents["events"];
-	//add pagination
-	return $events;
+	return depaginate($contents, "events");	 
 }
 
 function pullEbAttendees($event_id) {
 	$contents = getJsonFromURL(wrapRequest("events/".$event_id."/attendees/"));
-	$attendees = $contents["attendees"];
-	//add pagination
-	return $attendees;
+	return depaginate($contents, "attendees");
 }
 
 function importEbEvents($oAuthToken) {
@@ -48,7 +52,7 @@ function importEbEvents($oAuthToken) {
 
 	$events = pullEbEvents($oAuthToken);
 	foreach ($events as $event) {
-		addEvent($event["name"], $event["start"]["local"]);
+		addEvent($event["name"], $event["start"]["local"]);	// TODO date needs formatting
 
 		$attendees = pullEbAttendees($event["id"]);
 		foreach ($attendees["attendees"] as $attendee) {
