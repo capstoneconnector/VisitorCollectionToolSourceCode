@@ -1,17 +1,15 @@
 <?php
-$API_KEY = "2GEOZ7XABZBZWS46A3";
 $PRI_TOKEN = "COKR3D7YQAPZM2GWLOTL";
-$PUB_TOKEN = "UKQY46DJTOTSARNGUAWH";
-$EVENT_ID = "86470394277";
-//header("Authorization: Bearer ".$pri_token); // If we can make this work, This would make some things simpler.
 
 /*
 arg: $requeset is the url extention after the endpoint
-arg: $options is extra aruments in the url. Must be a list of arguments eg ["arg=value", ...]
+arg: $options is extra aruments in the url. Must be a list of arguments e.g. ["arg=value", ...]
 */
-function wrapUrlWtihData($request, $options) {
+function wrapUrlRequestWithOptions($request, $options) {
+	require_once "../php/parseConfig.php";
+	$config = parseConfig();
+	$token_argument = "?token=" . $config["PRIVATE_TOKEN"];
 	static $endpoint = "https://www.eventbriteapi.com/v3/";
-	static $token_argument = "?token=COKR3D7YQAPZM2GWLOTL";
 
 	$args = "";
 	foreach ($options as $arg) {
@@ -21,11 +19,11 @@ function wrapUrlWtihData($request, $options) {
 	return $endpoint.$request.$token_argument.$args;
 }
 
-function wrapRequest($request) {
-	return wrapUrlWtihData($request, []);
+function wrapUrlRequest($request) {
+	return wrapUrlRequestWithOptions($request, []);
 }
 
-function getJsonFromURL($url) {
+function getJsonFromUrl($url) {
 	return json_decode(file_get_contents($url), true);
 }
 
@@ -38,12 +36,12 @@ function depaginate($page, $data_type) {
 }
 
 function pullEbEvents($OAuthToken) {
-	$contents = getJsonFromURL(wrapRequest("users/me/events"));
+	$contents = getJsonFromUrl(wrapUrlRequest("users/me/events"));
 	return depaginate($contents, "events");	 
 }
 
 function pullEbAttendees($event_id) {
-	$contents = getJsonFromURL(wrapRequest("events/".$event_id."/attendees/"));
+	$contents = getJsonFromUrl(wrapUrlRequest("events/".$event_id."/attendees/"));
 	return depaginate($contents, "attendees");
 }
 
