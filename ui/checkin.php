@@ -66,7 +66,6 @@
 					<input class="submit" type="submit" value="Check In">
 					<br><br>
 					</form>
-					<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
 			</div>
 		</div>
 			<br><br><br>

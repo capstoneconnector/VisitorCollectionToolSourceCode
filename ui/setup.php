@@ -26,8 +26,7 @@
 			<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
 				<div id ="menu">
 					<ul>
-						<li><a href='Analytics.php'><span>Analytics</span></a></li>
-						<li class='last'><a href='manager.php'><span>Manager</span></a></li>
+						<li class='last'><a href='manager.php'><span>Events</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -60,7 +59,6 @@
 						<input type="submit" name="submit" class="submit">
 						</form>
 					<br><br><br>
-					<button class="submit" onclick="window.location = 'manager.php'">Manager Page</button>
 			</div>
 		</div>
 		</div>
