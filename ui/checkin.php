@@ -25,10 +25,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-2">
-					
 				</div>
 			</div>
-			
 			<div id="main">
 				<div class="col-10">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
@@ -36,22 +34,19 @@
 							<td>&nbsp;</td>
 							<td>
 								<div class="container mt-1" id="menu">
-									
-									
-									
 									<div class="dropdown">
-  <button type="button" class="btn btn-primary " data-toggle="dropdown">
-    <span class=""><i class="fas fa-bars fa-1x"></i></span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="setup.php">Set Up</a>
-    <a class="dropdown-item" href="register.php">Registration</a>
-  </div>
-</div>
-
+										<button type="button" class="btn btn-primary " data-toggle="dropdown">
+											<span class=""><i class="fas fa-bars fa-1x"></i></span>
+										</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="setup.php">Set Up</a>
+											<a class="dropdown-item" href="register.php">Registration</a>
+										</div>
+									</div>
 									</div>
 								</div>
 							</td>
+							<td width = "95">&nbsp;</td>
 							<td>
 								<h2>Check In</h2>
 							</td>
@@ -72,8 +67,8 @@
 					<br><br>
 					</form>
 					<button class="submit" onclick="window.location = 'setup.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
-				</div>
 			</div>
+		</div>
 			<br><br><br>
 			<div class="table">
 			<?php
@@ -105,6 +100,5 @@
 				}
 			?>
 			</div>
-		</div>
 	</body>
 </html>

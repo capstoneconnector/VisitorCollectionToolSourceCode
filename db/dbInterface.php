@@ -58,7 +58,7 @@ function getAttendeeInfoByEventId($eventId){
 	$cfg = parseDBConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$info = array();
-	$stmt = $pdo->prepare("SELECT Id, Fname, Lname, Email FROM attendee WHERE Eventid = $eventId"); //Find all attendees by eventId
+	$stmt = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone, Attended FROM attendee WHERE Eventid = $eventId"); //Find all attendees by eventId
 	$stmt->bindParam(1, $eventId);
 	if($stmt->execute()){
 		while($row = $stmt->fetch()){

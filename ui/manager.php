@@ -71,11 +71,10 @@
 						<label for = "Search" class "control-label"> Search</label>
 						<input type = "text" class = "form-control" />
 					</div>
-					<div class = "col-1 float-right">
-						<label>EventId: </label>
-						<input type="text" name="eventId"/>
-						</br></br>
+					<div class = "col-2 float-right">
+						</br>
 						<button type="submit" name="export" class = "btn btn-info"> Export </button>
+						</br></br>
 					</div>
 			</div>
 				</form>
@@ -85,7 +84,7 @@
 				require_once "../db/dbInterface.php";
 				$events = getAllEvents();
 				if (!empty($events)){
-					echo "<table id = 'EventTable' class='table'>";
+					echo "<table id = 'eventTable' class='table'>";
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
 					echo "<th>Name</th>";
@@ -96,41 +95,9 @@
 					echo "<tbody>";
 					foreach($events as $event){
 						echo "<tr>";
-						echo "<td><a href = '?eventid=".$event['Eventid']."'>".$event['Name']."</a></td>";
+						echo "<td><a href = 'attendee.php?eventid=".$event['Eventid']."'>".$event['Name']."</a></td>";
 						echo "<td>".$event['Date']."</td>";
 						echo "<td>".$event['Eventid']."</td>";
-						echo "</tr>";
-					}
-					echo "</tbody>";
-					echo "</table>";
-				}
-			?>
-			</div>
-			
-			
-			<div id = "AttendeeTable" class="col-12" style="display: none;">
-			<?php
-				require_once "../db/dbInterface.php";
-				$attendees = getAttendeeInfoByEventId($_POST['eventId']);
-				if (!empty($attendees)){
-					echo "<table id = 'AttendeeTable' class='table'>";
-					echo '<thead class="thead-dark">';
-					echo "<tr>";
-					echo "<th>Fname</th>";
-					echo "<th>Lname</th>";
-					echo "<th>Email</th>";
-					echo "<th>Phone</th>";
-					echo "<th>Attended</th>";
-					echo "</tr>";
-					echo "</thead>";
-					echo "<tbody>";
-					foreach($attendees as $attendee){
-						echo "<tr>";
-						echo "<td>".$attendee['Fname']."</td>";
-						echo "<td>".$attendee['Lname']."</td>";
-						echo "<td>".$attendee['Email']."</td>";
-						echo "<td>".$attendee['Phone']."</td>";
-						echo "<td>".$attendee['Attended']."</td>";
 						echo "</tr>";
 					}
 					echo "</tbody>";
@@ -167,11 +134,13 @@
 			echo '</script>';
 		}
 	}
+	
 	if (isset($_POST["export"]))
 		{
+									
 			echo '<script language="javascript">';
-			echo 'exportTableToCSV("attendee.csv")';
-			echo '</script>';
+			echo 'exportTableToCSV("event", "event.csv")';
+			echo '</script>';			
 		}
-	}
+	}	
 ?>

@@ -47,9 +47,9 @@ function UpdateEvent()
 		downloadLink.click();
 	}
 
-	function exportTableToCSV(filename) {
+	function exportTableToCSV(dbTable, tableName) {
 	var csv = [];
-	var rows = document.querySelectorAll("#AttendeeTable tr");
+	var rows = document.querySelectorAll("#" + dbTable + "Table tr");
 	for (var i = 0; i < rows.length; i++) {
 		var row = [], cols = rows[i].querySelectorAll("td, th");
 		for (var j = 0; j < cols.length; j++) 
@@ -57,5 +57,5 @@ function UpdateEvent()
 		csv.push(row.join(","));
 	}
 	// Download CSV file
-	downloadCSV(csv.join("\n"), filename);
+	downloadCSV(csv.join("\n"), tableName);
 }
