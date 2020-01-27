@@ -44,7 +44,6 @@
 							<td align = "right">
 								<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
 								<button id = "btnAddEvent" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
-								<button id = "btnAddEvent" class = "btn btn-info" onclick = AddAttendee(-1);> Add Attendee </button>
 							</td>
 							<td width = "10">&nbsp;</td>
 						</tr>
@@ -53,7 +52,6 @@
 						</tr>
 					</table>
 				</div>
-				
 			<div class="col-10">
 				<form method = "post" div id="UpdateEvent" class = "col-7">
 				<label>Name:</label>
@@ -78,11 +76,6 @@
 						<label for = "Search" class "control-label"> Search</label>
 						<input type = "text" class = "form-control" />
 					</div>
-					<div class = "col-2 float-right">
-						</br>
-						<button type="submit" name="export" class = "btn btn-info"> Export </button>
-						</br></br>
-					</div>
 			</div>
 				</form>
 		</div>
@@ -95,6 +88,7 @@
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
 					echo "<th>Name</th>";
+					echo "<th>Description</th>";
 					echo "<th>Date</th>";
 					echo "<th>Eventid</th>";
 					echo "</tr>";
@@ -103,6 +97,7 @@
 					foreach($events as $event){
 						echo "<tr>";
 						echo "<td><a href = 'attendee.php?eventid=".$event['Eventid']."'>".$event['Name']."</a></td>";
+						echo "<td>".$event['Description']."</td>";
 						echo "<td>".$event['Date']."</td>";
 						echo "<td>".$event['Eventid']."</td>";
 						echo "</tr>";
