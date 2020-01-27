@@ -1,8 +1,8 @@
 <?php
 	function verifyLogin($username, $password){
-		require_once "parseDBConfig.php";
+		require_once "../php/parseConfig.php";
 		$hashedpass = sha1($password);
-		$cfg = parseDBConfig();
+		$cfg = parseConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
 		$stmt->bindParam(1, $username);
