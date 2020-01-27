@@ -131,38 +131,26 @@
 		$name = $_POST["name"];
 		//$description = $_POST["description"];
 		$date = $_POST["date"];
-		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date)){
+		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
+		{
 			if (addEvent($name, $date)){
-				echo '<script language="javascript">';
-				echo 'window.location=("manager.php")';
-				echo '</script>';
-			}
-
-			else{
-				echo '<script language="javascript">';
-				echo 'alert("DB Error"))';
-				echo '</script>';
-			}
-			
-		if (addEvent($name, $date)){
 			echo '<script language="javascript">';
 			echo 'window.location=("manager.php")';
 			echo '</script>';
-		}
-		else{
+			}
+			else
+			{
 			echo '<script language="javascript">';
 			echo 'alert("Date Format Error: YYYY-MM-DD"))';
 			echo '</script>';
+			}
 		}
-	}
-	
-	if (isset($_POST["export"]))
-		{
-									
-			echo '<script language="javascript">';
-			echo 'exportTableToCSV("event", "event.csv")';
-			echo '</script>';			
+			if (isset($_POST["export"]))
+			{
+				echo '<script language="javascript">';
+				echo 'exportTableToCSV("event", "event.csv")';
+				echo '</script>';
+			}
 		}
-	}
 	}
 ?>
