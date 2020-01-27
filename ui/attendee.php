@@ -1,16 +1,8 @@
-<?php
-	session_start();
-	if(empty($_SESSION['logged'])){
-		header ('location: login.php');
-	}
-?>
-
 <html>
 	<head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<script src = "/js/manager.js"></script>
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 		<link rel = "stylesheet" type = "text/css" href = "/css/manager.css">
 
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -28,6 +20,7 @@
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href='setup.php'><span>Set Up</span></a></li>
+								<li class='last'><a href='manager.php'><span>Events</span></a></li>
 							</ul>
 						</div>
 				</div>
@@ -37,13 +30,11 @@
 						<tr>
 							<td width = "20">&nbsp;</td>
 							<td>
-								<h2>Events</h2>
+								<h2>Attendees</h2>
 							</td>
 							<td>&nbsp;</td>
 							
 							<td align = "right">
-								<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
-								<button id = "btnAddEvent" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
 								<button id = "btnAddEvent" class = "btn btn-info" onclick = AddAttendee(-1);> Add Attendee </button>
 							</td>
 							<td width = "10">&nbsp;</td>
@@ -64,7 +55,7 @@
 				</br>
 				<textarea rows=5 cols=25></textarea>
 				</br>
-				<label>Date (YYYY-MM-DD):</label>
+				<label>Date:</label>
 				</br>
 				<input type="text" name="date" required />
 				</br></br>
@@ -74,37 +65,54 @@
 				</form>
 			<div id = "SearchEvents" class="col-9">
 				<form method="post">
-					<div class = "col-10 float-left">
-						<label for = "Search" class "control-label"> Search</label>
-						<input type = "text" class = "form-control" />
-					</div>
-					<div class = "col-2 float-right">
-						</br>
-						<button type="submit" name="export" class = "btn btn-info"> Export </button>
-						</br></br>
+					<div class="col-12">
+						<div class = "col-10 float-left">
+							<label for = "Search" class "control-label"> Search</label>
+							<input type = "text" class = "form-control" />
+							</br>
+						</div>
+						<div class = "col-2 float-right">
+							</br>
+							<button type="submit" name="export" class = "btn btn-info"> Export </button>
+							</br>
+						</div>
 					</div>
 			</div>
 				</form>
 		</div>
-			<div id = "EventTable" class="col-12">
+			<div id = "AttendeeTable" class="col-12">
 			<?php
-				require_once "../db/getEventInfo.php";
-				$events = getAllEvents();
-				if (!empty($events)){
-					echo "<table id = 'eventTable' class='table'>";
+				require_once "../db/dbInterface.php";
+				
+				$attendees = [];
+				if (isset($_GET["eventid"])) {
+					$attendees = getAttendeeInfoByEventId($_GET['eventid']);
+					unset($_POST["eventid"]);
+				}
+				
+				//if (isset($_POST['eventid'])) {
+					//$attendees = getAttendeeInfoByEventId($_POST['eventid']);
+				//}
+
+				if (!empty($attendees)){
+					echo "<table id = 'attendeeTable' class='table'>";
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
-					echo "<th>Name</th>";
-					echo "<th>Date</th>";
-					echo "<th>Eventid</th>";
+					echo "<th>Fname</th>";
+					echo "<th>Lname</th>";
+					echo "<th>Email</th>";
+					echo "<th>Phone</th>";
+					echo "<th>Attended</th>";
 					echo "</tr>";
 					echo "</thead>";
 					echo "<tbody>";
-					foreach($events as $event){
+					foreach($attendees as $attendee){
 						echo "<tr>";
-						echo "<td><a href = 'attendee.php?eventid=".$event['Eventid']."'>".$event['Name']."</a></td>";
-						echo "<td>".$event['Date']."</td>";
-						echo "<td>".$event['Eventid']."</td>";
+						echo "<td>".$attendee['Fname']."</td>";
+						echo "<td>".$attendee['Lname']."</td>";
+						echo "<td>".$attendee['Email']."</td>";
+						echo "<td>".$attendee['Phone']."</td>";
+						echo "<td>".$attendee['Attended']."</td>";
 						echo "</tr>";
 					}
 					echo "</tbody>";
@@ -122,52 +130,31 @@
 	</body>
 </html>
 <?php
-<<<<<<< HEAD
-	require_once "../db/addEvent.php";
-	if (!empty($_POST)){
-=======
 	require_once "../db/dbInterface.php";
 	if (!empty($_POST))
 	{
 		if (isset($_POST['name']))
 		{
->>>>>>> Manager_Work
 		$name = $_POST["name"];
-		//$description = $_POST["description"];
+		$description = $_POST["description"];
 		$date = $_POST["date"];
-<<<<<<< HEAD
-		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date)){
-			if (addEvent($name, $date)){
-				echo '<script language="javascript">';
-				echo 'window.location=("manager.php")';
-				echo '</script>';
-			}
-
-			else{
-				echo '<script language="javascript">';
-				echo 'alert("DB Error"))';
-				echo '</script>';
-			}
-=======
 		if (addEvent($name, $date)){
 			echo '<script language="javascript">';
 			echo 'window.location=("manager.php")';
 			echo '</script>';
->>>>>>> Manager_Work
 		}
 		else{
 			echo '<script language="javascript">';
-			echo 'alert("Date Format Error: YYYY-MM-DD"))';
+			echo 'alert("DB Error"))';
 			echo '</script>';
 		}
 	}
-	
 	if (isset($_POST["export"]))
 		{
-									
 			echo '<script language="javascript">';
-			echo 'exportTableToCSV("event", "event.csv")';
-			echo '</script>';			
+			echo 'exportTableToCSV("attendee", "attendee.csv")';
+			echo '</script>';
+			unset($_POST["export"]);
 		}
 	}	
 ?>
