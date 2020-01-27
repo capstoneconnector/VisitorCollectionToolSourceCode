@@ -53,6 +53,21 @@ function getAttendeeInfoFromName($event, $fname, $lname){
     return $info;
 }
 
+function getAttendeeInfoByEventId($eventId){
+	include_once "parseDBConfig.php";
+	$cfg = parseDBConfig();
+	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
+	$info = array();
+	$stmt = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone, Attended FROM attendee WHERE Eventid = $eventId"); //Find all attendees by eventId
+	$stmt->bindParam(1, $eventId);
+	if($stmt->execute()){
+		while($row = $stmt->fetch()){
+			array_push($info, $row);
+		}
+	}
+	return $info;
+}
+
 function getAttendeeCount($fname, $lname, $email, $event){
 	include_once "../php/parseConfig.php";
 	$cfg = parseConfig();
