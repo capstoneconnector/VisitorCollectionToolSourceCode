@@ -1,6 +1,6 @@
 <?php
     function findName($name, $event){
-        require_once "../db/getAttendeeInfo.php";
+        require_once "../db/dbInterface.php";
         $names = explode(" ", $name);
         if(sizeof($names) == 2){
 	        $fname = $names[0];

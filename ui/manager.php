@@ -88,7 +88,7 @@
 		</div>
 			<div id = "EventTable" class="col-12">
 			<?php
-				require_once "../db/getEventInfo.php";
+				require_once "../db/dbInterface.php";
 				$events = getAllEvents();
 				if (!empty($events)){
 					echo "<table id = 'eventTable' class='table'>";
@@ -121,21 +121,16 @@
 	
 	</body>
 </html>
+
 <?php
-<<<<<<< HEAD
-	require_once "../db/addEvent.php";
-	if (!empty($_POST)){
-=======
 	require_once "../db/dbInterface.php";
 	if (!empty($_POST))
 	{
 		if (isset($_POST['name']))
 		{
->>>>>>> Manager_Work
 		$name = $_POST["name"];
 		//$description = $_POST["description"];
 		$date = $_POST["date"];
-<<<<<<< HEAD
 		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date)){
 			if (addEvent($name, $date)){
 				echo '<script language="javascript">';
@@ -148,12 +143,11 @@
 				echo 'alert("DB Error"))';
 				echo '</script>';
 			}
-=======
+			
 		if (addEvent($name, $date)){
 			echo '<script language="javascript">';
 			echo 'window.location=("manager.php")';
 			echo '</script>';
->>>>>>> Manager_Work
 		}
 		else{
 			echo '<script language="javascript">';
@@ -169,5 +163,6 @@
 			echo 'exportTableToCSV("event", "event.csv")';
 			echo '</script>';			
 		}
-	}	
+	}
+	}
 ?>

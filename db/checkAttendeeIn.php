@@ -1,6 +1,6 @@
 <?php
-	require_once "parseDBConfig.php";
-	$cfg = parseDBConfig();
+	require_once "parseConfig.php";
+	$cfg = parseConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$userid = $_REQUEST["userid"];
 	if(!empty($userid)){

@@ -1,5 +1,5 @@
 <?php
-	require_once "../db/getEventInfo.php";
+	require_once "../db/dbInterface.php";
 	session_start();
 	if(empty($_SESSION['logged'])){
 		header ('location: login.php');
@@ -52,32 +52,6 @@
 							<td width = "95">&nbsp;</td>
 							<td>
 								<h2>Check In</h2>
-<<<<<<< HEAD
-								</td>
-								<td>&nbsp;</td>
-								<td width = "10">&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan "2"></td>
-							</tr>
-						</table>
-			<?php
-				$event = getEventById($_SESSION["eventId"]); //Use session var for event name
-				echo "<h2>" . $event["Name"] . "</h2>";
-			?>
-			<br>
-			<form method="post">
-				<span id="prompt">Enter your name</span>
-				<br><br>
-				<input class="input" type="text" name="name" required>
-				<br><br>
-				<input class="submit" type="submit" value="Check In">
-				<br><br>
-			</form>
-			<button class="submit" onclick="window.location = 'register.php'">Registration Page</button>
-			<br><br><br>
-			<button class="submit" onclick="window.location = 'login.php'"><img src="../img/home_icon.png" alt="home icon" height="32"></button>
-=======
 							</td>
 							<td width = "45">&nbsp;</td>
 						</tr>
@@ -96,7 +70,6 @@
 					<br><br>
 					</form>
 			</div>
->>>>>>> Manager_Work
 		</div>
 			<br><br><br>
 			<div class="table">
