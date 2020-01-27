@@ -1,10 +1,8 @@
 <?php
-	require_once "../db/dbInterface.php";
+	require_once "../db/getEventInfo.php";
 	session_start();
-
-	if (isset($_POST["event"])) {
-		$_SESSION["eventId"] = $_POST["event"];
-		header("Location: checkin.php");
+	if(empty($_SESSION['logged'])){
+		header ('location: login.php');
 	}
 ?>
 
@@ -23,7 +21,7 @@
 			<select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
 				<?php
-					$events = getAllEvents();
+					$events = getAllEventsAfterCurrentDate();
 					foreach($events as $event){
 						echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . " : " . $event["Date"] . "</option>";
 					}
@@ -36,3 +34,10 @@
 		<button class="submit" onclick="window.location = 'manager.php'">Manager Page</button>
 	</body>
 </html>
+
+<?php
+	if (!empty($_POST["event"])) {
+		$_SESSION["eventId"] = $_POST["event"];
+		header('location: checkin.php');
+	}
+?>

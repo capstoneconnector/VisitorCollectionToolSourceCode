@@ -1,5 +1,8 @@
 <?php
 	session_start();
+	if(empty($_SESSION['logged'])){
+		header ('location: login.php');
+	}
 ?>
 
 <html>
@@ -28,7 +31,8 @@
 
 <?php
 	require_once "../php/checkRegistration.php";
-	require_once "../db/dbInterface.php";
+	require_once "../db/addAttendee.php";
+
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
 			$fname = $_POST["fname"];
