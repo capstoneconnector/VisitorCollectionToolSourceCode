@@ -15,7 +15,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
+					<img src="../img/Innovation_Connector_Logo.png" width="150px"></img>
 					
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">

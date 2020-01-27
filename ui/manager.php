@@ -60,7 +60,7 @@
 				</br>
 				<label>Description:</label>
 				</br>
-				<textarea rows=5 cols=25></textarea>
+				<textarea name = "description" form = "UpdateEvent" rows=5 cols=25></textarea>
 				</br>
 				<label>Date (YYYY-MM-DD):</label>
 				</br>
@@ -124,11 +124,11 @@
 		if (isset($_POST['name']))
 		{
 		$name = $_POST["name"];
-		//$description = $_POST["description"];
+		$description = $_POST["description"];
 		$date = $_POST["date"];
 		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
 		{
-			if (addEvent($name, $date)){
+			if (addEvent($name, $date, $description)){
 			echo '<script language="javascript">';
 			echo 'window.location=("manager.php")';
 			echo '</script>';
