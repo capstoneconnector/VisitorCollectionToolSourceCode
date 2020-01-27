@@ -82,7 +82,7 @@
 						$names = findName($name, $event); //Fetch names that match name entered by user
 						if(!empty($names)){ //Only creates table if there is content to write to it
 							echo '<table border = 3>';
-							echo '<th>First Name</th><th>Last Name</th><th>Email</th>';
+							echo '<th>First Name</th><th>Last Name</th><th>Email</th><th></th>';
 							for ($i = 0; $i < sizeof($names); $i++){
 								echo '<tr>';
 								echo '<td>' . $names[$i]['Fname'] . '</td>';
