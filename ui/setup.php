@@ -21,28 +21,9 @@
 			<div class="col-2">
 		<title>Event Setup</title>
 	</head>
-<<<<<<< HEAD
 
 	<body id = "main">
 		<br>
-		<h1>Choose an Event</h1>
-		<br>
-		<form method="POST">
-			<select id = "placeholder" name="event" class="input" required>
-				<option disabled selected> -- Select an event -- </option>
-				<?php
-					$events = getAllEventsAfterCurrentDate();
-					foreach($events as $event){
-						echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . " : " . $event["Date"] . "</option>";
-					}
-				?>
-			</select>
-			<br><br>
-			<input type="submit" name="submit" class="submit">
-		</form>
-		<br><br><br>
-		<button class="submit" onclick="window.location = 'manager.php'">Manager Page</button>
-=======
 			<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
 				<div id ="menu">
 					<ul>
@@ -82,7 +63,6 @@
 			</div>
 		</div>
 		</div>
->>>>>>> Manager_Work
 	</body>
 </html>
 
