@@ -30,7 +30,7 @@
 </html>
 
 <?php
-	require_once "../db/getUserInfo.php";
+	require_once "../db/dbInterface.php";
 	if(!empty($_POST)){
 		$username = $_POST['username'];
 		$password = $_POST['password'];

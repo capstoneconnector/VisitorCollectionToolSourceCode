@@ -21,6 +21,7 @@
 			<div class="col-2">
 		<title>Event Setup</title>
 	</head>
+<<<<<<< HEAD
 	<body id = "main">
 		<br>
 		<h1>Choose an Event</h1>
@@ -40,7 +41,47 @@
 		</form>
 		<br><br><br>
 		<button class="submit" onclick="window.location = 'manager.php'">Manager Page</button>
-
+=======
+			<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
+				<div id ="menu">
+					<ul>
+						<li class='last'><a href='manager.php'><span>Events</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-10">
+				<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
+					<tr>
+						<td width = "20">&nbsp;</td>
+						<td>
+							<h2>Choose an Event</h2>
+						</td>
+						<td width = "10">&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan "2"></td>
+					</tr>
+					</tr>
+				</table>
+				</br></br></br></br>
+						<form method="POST">
+							<select id = "placeholder" name="event" class="input" required>
+							<option disabled selected> -- Select an event -- </option>
+						<?php
+						$events = getAllEvents();
+						foreach($events as $event){
+							echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . " : " . $event["Date"] . "</option>";
+						}
+						?>
+							</select>
+					<br><br>
+						<input type="submit" name="submit" class="submit">
+						</form>
+					<br><br><br>
+			</div>
+		</div>
+		</div>
+>>>>>>> Manager_Work
 	</body>
 </html>
 

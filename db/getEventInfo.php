@@ -1,6 +1,6 @@
 <?php
 	function getAllEvents() {
-		require_once "parseDBConfig.php";
+		require_once "../php/parseConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event"); //Fetch all events
@@ -14,8 +14,8 @@
 	}
 
 	function getAllEventsAfterCurrentDate(){
-		require_once "parseDBConfig.php";
-		$cfg = parseDBConfig();
+		require_once "../php/parseConfig.php";
+		$cfg = parseConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events
 		$info = array();
@@ -28,7 +28,7 @@
 	}
 
 	function getEventById($id) {
-		require_once "parseDBConfig.php";
+		require_once "../php/parseConfig.php";
 		$cfg = parseDBConfig();
 		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 		$statement = $pdo->prepare("SELECT * FROM event WHERE Eventid=?"); //Fetch specific event by id

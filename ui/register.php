@@ -75,7 +75,7 @@
 
 <?php
 	require_once "../php/checkRegistration.php";
-	require_once "../db/addAttendee.php";
+	require_once "../db/dbInterface.php";
 
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){

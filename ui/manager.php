@@ -88,7 +88,7 @@
 		</div>
 			<div id = "EventTable" class="col-12">
 			<?php
-				require_once "../db/getEventInfo.php";
+				require_once "../db/dbInterface.php";
 				$events = getAllEvents();
 				if (!empty($events)){
 					echo "<table id = 'eventTable' class='table'>";
@@ -122,7 +122,6 @@
 	</body>
 </html>
 <?php
-
 	require_once "../db/dbInterface.php";
 	if (!empty($_POST))
 	{
