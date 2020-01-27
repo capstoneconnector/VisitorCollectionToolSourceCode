@@ -42,7 +42,7 @@
 											<span class=""><i class="fas fa-bars fa-1x"></i></span>
 										</button>
 										<div class="dropdown-menu">
-											<a class="dropdown-item" href="setup.php">Set Up</a>
+											<a class="dropdown-item" href="login.php">Set Up</a>
 											<a class="dropdown-item" href="register.php">Registration</a>
 										</div>
 									</div>
