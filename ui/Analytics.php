@@ -1,8 +1,9 @@
 <html>
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src = "/js/manager.js"></script>
-		<link rel = "stylesheet" type = "text/css" href = "/css/manager.css">
+		<script src = "/js/Analytics.js"></script>
+		<link rel = "stylesheet" type = "text/css" href = "/css/Analytics.css">
+		
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -17,7 +18,6 @@
 			<div id ="menu">
 				<ul>
 					<li><a href='setup.php'><span>Set Up</span></a></li>
-					<li><a href='Analytics.php'<span>Analytics</span></a></li>
 					<li class='last'><a href='manager.php'><span>Events</span></a></li>
 				</ul>
 			</div>
