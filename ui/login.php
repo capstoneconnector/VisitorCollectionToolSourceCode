@@ -20,13 +20,6 @@
 			<div class="row">
 				<div class="col-2">
 					<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
-					
-						<div id ="menu">
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href='setup.php'><span>Set Up</span></a></li>
-								<li><a href='manager.php'><span>Event</span></a></li>
-							</ul>
-						</div>
 				</div>
 				<div id = "main" class="col-10">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
