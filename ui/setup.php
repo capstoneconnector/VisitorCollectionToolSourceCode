@@ -24,8 +24,9 @@
 					
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href='manager.php'><span>Event</span></a></li>
-								<li><a href='Login.php'><span>Login</span></a></li>
+
+								<li><a href='manager.php'><span>Manager Dashboard</span></a></li>
+
 							</ul>
 						</div>
 				</div>
