@@ -8,9 +8,9 @@ function UpdateEvent()
 		var x = document.getElementById("UpdateEvent");
 		if (x.style.display === "")
 		{
-		x.style.display = "block";
-		y.style.display = "none";
-		btnAddEvent.disabled = true;
+			x.style.display = "block";
+			y.style.display = "none";
+			btnAddEvent.disabled = true;
 		}
 		else 
 		{
@@ -19,7 +19,28 @@ function UpdateEvent()
 			btnAddEvent.disabled = false;
 		}
 	}
-	// maybe hide other divs that are not needed
+	//hide other divs that are not needed
+
+	function AddAttendee() 
+	{
+		var btnAddAttendee = document.getElementById("btnAddAttendee");
+		var btnExport = document.getElementById("btnExport");
+		var y = document.getElementById("SearchAttendee");
+		var x = document.getElementById("AddAttendee");
+		if (x.style.display === "")
+		{
+			x.style.display = "block";
+			y.style.display = "none";
+			btnAddAttendee.disabled = true;
+		}
+		else 
+		{
+			x.style.display = "";
+			y.style.display = "block";
+			btnAddAttendee.disabled = false;
+		}
+	}
+//hide other divs
 
 	function downloadCSV(csv, filename) {
 		var csvFile;

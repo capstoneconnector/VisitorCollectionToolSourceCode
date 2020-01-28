@@ -35,7 +35,7 @@
 							<td>&nbsp;</td>
 							
 							<td align = "right">
-								<button id = "btnAddEvent" class = "btn btn-info" onclick = AddAttendee(-1);> Add Attendee </button>
+								<button id = "btnAddAttendee" class = "btn btn-info" onclick = AddAttendee(-1);> Add Attendee </button>
 							</td>
 							<td width = "10">&nbsp;</td>
 						</tr>
@@ -63,7 +63,7 @@
 				<button onclick="AddAttendee();">Cancel</button>
 				</div>
 				</form>
-			<div id = "SearchEvents" class="col-9">
+			<div id = "SearchAttendee" class="col-9">
 				<form method="post">
 					<div class="col-12">
 						<div class = "col-10 float-left">
