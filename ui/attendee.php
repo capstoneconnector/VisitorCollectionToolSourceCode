@@ -44,23 +44,23 @@
 						</tr>
 					</table>
 				</div>
-				
 			<div class="col-10">
-				<form method = "post" div id="UpdateEvent" class = "col-7">
-				<label>Name:</label>
+				<form method = "post" div id="AddAttendee" class = "col-7">
+				<label>First Name:</label>
 				</br>
-				<input type="text" name="name" required />
+				<input type="text" name="fname" required />
 				</br>
-				<label>Description:</label>
+				<label>Last Name:</label>
 				</br>
-				<textarea rows=5 cols=25></textarea>
+				<input type="text" name="lname" required />
 				</br>
-				<label>Date:</label>
+				<label>Email:</label>
 				</br>
-				<input type="text" name="date" required />
+				<input type="text" name="email" required />
+				
 				</br></br>
 				<input type = "submit" value = "Save">
-				<button onclick="UpdateEvent();">Cancel</button>
+				<button onclick="AddAttendee();">Cancel</button>
 				</div>
 				</form>
 			<div id = "SearchEvents" class="col-9">
@@ -89,11 +89,6 @@
 					$attendees = getAttendeeInfoByEventId($_GET['eventid']);
 					unset($_POST["eventid"]);
 				}
-				
-				//if (isset($_POST['eventid'])) {
-					//$attendees = getAttendeeInfoByEventId($_POST['eventid']);
-				//}
-
 				if (!empty($attendees)){
 					echo "<table id = 'attendeeTable' class='table'>";
 					echo '<thead class="thead-dark">';
