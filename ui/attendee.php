@@ -136,7 +136,7 @@
 		$eventid = $_GET["eventid"];
 		if (addAttendee($fname, $lname, $email, $eventid)){
 			echo '<script language="javascript">';
-			echo 'window.location=("attendee.php")';
+			echo 'window.location=("attendee.php?eventid='. $eventid . '")';
 			echo '</script>';
 		}
 		else{
