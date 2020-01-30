@@ -3,7 +3,6 @@
 	font-family: "Helvetica";
 	text-align: center;
 	transition: margin-left .5s; /* If you want a transition effect */
-	padding: 20px;
 }
 
 body{

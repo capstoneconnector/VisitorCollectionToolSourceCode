@@ -1,5 +1,5 @@
 <?php
-	require_once "parseConfig.php";
+	require_once "../php/parseConfig.php";
 	$cfg = parseConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$userid = $_REQUEST["userid"];
