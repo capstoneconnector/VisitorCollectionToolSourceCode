@@ -35,7 +35,7 @@
 							<td>&nbsp;</td>
 							
 							<td align = "right">
-								<button id = "btnAddAttendee" class = "btn btn-info" onclick = AddAttendee(-1);> Add Attendee </button>
+								<button id = "btnAddAttendee" class = "btn btn-info" onclick = UpdateAttendee(-1);> Add Attendee </button>
 							</td>
 							<td width = "10">&nbsp;</td>
 						</tr>
@@ -45,7 +45,7 @@
 					</table>
 				</div>
 			<div class="col-10">
-				<form method = "post" div id="AddAttendee" class = "col-7">
+				<form method = "post" div id="UpdateAttendee" class = "col-7" style="display:none">
 				<label>First Name:</label>
 				</br>
 				<input type="text" name="fname" required />
@@ -60,8 +60,8 @@
 				
 				</br></br>
 				<input type = "submit" value = "Save">
-				<button onclick="AddAttendee();">Cancel</button>
-				</div>
+				<button onclick="UpdateAttendee();">Cancel</button>
+			</div>
 				</form>
 			<div id = "SearchAttendee" class="col-9">
 				<form method="post">
@@ -85,7 +85,8 @@
 				require_once "../db/dbInterface.php";
 				
 				$attendees = [];
-				if (isset($_GET["eventid"])) {
+				if (isset($_GET["eventid"])) 
+				{
 					$attendees = getAttendeeInfoByEventId($_GET['eventid']);
 					unset($_POST["eventid"]);
 				}
@@ -121,21 +122,21 @@
 	</tbody>
 	</div>
 	</div>
-	
 	</body>
 </html>
 <?php
 	require_once "../db/dbInterface.php";
 	if (!empty($_POST))
 	{
-		if (isset($_POST['name']))
+		if (isset($_POST['fname']))
 		{
-		$name = $_POST["name"];
-		$description = $_POST["description"];
-		$date = $_POST["date"];
-		if (addEvent($name, $date)){
+		$fname = $_POST["fname"];
+		$lname = $_POST["lname"];
+		$email = $_POST["email"];
+		$eventid = $_GET["eventid"];
+		if (addAttendee($fname, $lname, $email, $eventid)){
 			echo '<script language="javascript">';
-			echo 'window.location=("manager.php")';
+			echo 'window.location=("attendee.php")';
 			echo '</script>';
 		}
 		else{

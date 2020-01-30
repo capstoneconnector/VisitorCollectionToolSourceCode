@@ -102,5 +102,11 @@ body{
 	vertical-align: left;
 }
 
+#UpdateAttendee {
+	display: none;
+	margin: auto;
+	vertical-align: left;
+}
+
 
 

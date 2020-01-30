@@ -46,8 +46,8 @@
 											<a class="dropdown-item" href="register.php">Registration</a>
 										</div>
 									</div>
-									</div>
 								</div>
+				</div>
 							</td>
 							<td width = "95">&nbsp;</td>
 							<td>
@@ -62,7 +62,7 @@
 					?>
 					<br>
 					<form method="post">
-					<span id="prompt">Enter your name</span>
+					<span id="prompt">Enter Your Name</span>
 					<br><br>
 					<input class="input" type="text" name="name" required>
 					<br><br>

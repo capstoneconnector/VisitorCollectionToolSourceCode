@@ -3,7 +3,6 @@
 function UpdateEvent() 
 	{
 		var btnAddEvent = document.getElementById("btnAddEvent");
-		var btnExport = document.getElementById("btnExport");
 		var y = document.getElementById("SearchEvents");
 		var x = document.getElementById("UpdateEvent");
 		if (x.style.display === "")
@@ -21,12 +20,11 @@ function UpdateEvent()
 	}
 	//hide other divs that are not needed
 
-	function AddAttendee() 
+	function UpdateAttendee() 
 	{
 		var btnAddAttendee = document.getElementById("btnAddAttendee");
-		var btnExport = document.getElementById("btnExport");
 		var y = document.getElementById("SearchAttendee");
-		var x = document.getElementById("AddAttendee");
+		var x = document.getElementById("UpdateAttendee");
 		if (x.style.display === "")
 		{
 			x.style.display = "block";

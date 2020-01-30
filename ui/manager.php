@@ -43,7 +43,7 @@
 							
 							<td align = "right">
 								<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
-								<button id = "btnAddEvent" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
+								<button id = "btnAddData" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
 							</td>
 							<td width = "10">&nbsp;</td>
 						</tr>
@@ -68,17 +68,19 @@
 				</br></br>
 				<input type = "submit" value = "Save">
 				<button onclick="UpdateEvent();">Cancel</button>
-				</div>
+				</br>
+			</div>
 				</form>
 			<div id = "SearchEvents" class="col-9">
 				<form method="post">
 					<div class = "col-10 float-left">
 						<label for = "Search" class "control-label"> Search</label>
 						<input type = "text" class = "form-control" />
+						</br>
 					</div>
 			</div>
 				</form>
-		</div>
+			</div>
 			<div id = "EventTable" class="col-12">
 			<?php
 				require_once "../db/dbInterface.php";
