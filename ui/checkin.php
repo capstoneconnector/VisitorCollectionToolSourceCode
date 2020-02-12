@@ -5,7 +5,7 @@
 		header ('location: login.php');
 	}
 ?>
-<html>
+<html lang="php">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="/js/checkin.js"></script>
@@ -48,14 +48,11 @@
 									</div>
 								</div>
 				</div>
-							</td>
 							<td width = "95">&nbsp;</td>
 							<td>
 								<h2>Check In</h2>
 							</td>
 							<td width = "45">&nbsp;</td>
-						</tr>
-					</table>
 					<?php
 						$event = getEventById($_SESSION["eventId"]); //Use session var for event name
 						echo "<h2>" . $event["Name"] . "</h2>";
@@ -64,8 +61,10 @@
 					<form method="post">
 					<span id="prompt">Enter Your Name</span>
 					<br><br>
-					<input class="input" type="text" name="name" required>
-					<br><br>
+                        <label>
+                            <input class="input" type="text" name="name" required>
+                        </label>
+                        <br><br>
 					<input class="submit" type="submit" value="Check In">
 					<br><br>
 					</form>

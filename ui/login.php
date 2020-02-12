@@ -3,7 +3,7 @@
 	$_SESSION['logged'] = NULL;
 ?>
 
-<html>
+<html lang="php">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
+					<img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
 				</div>
 				<div id = "main" class="col-10">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
@@ -32,17 +32,21 @@
 							<td width = "10">&nbsp;</td>
 						</tr>
 						<tr>
-							<td colspan "2"></td>
+							<td colspan "2">
 						</tr>
 					</table>
 					<form method = "post">
-						</br></br></br>
+						<br><br><br>
 						<div class = "field">Username</div>
-						<input type = "text" name = "username" required>
-						<br><br>
+                        <label>
+                            <input type = "text" name = "username" required>
+                        </label>
+                        <br><br>
 						<div class = "field">Password</div>
-						<input type = "password" name = "password" required>
-						<br><br>
+                        <label>
+                            <input type = "password" name = "password" required>
+                        </label>
+                        <br><br>
 						<input type = "submit" value = "Login">
 					</form>
 				</div>
@@ -63,7 +67,7 @@
 			echo "</script>";
 		}
 		else{
-			echo '<script language="javascript">';
+			echo '<script type="text/javascript">';
 			echo 'alert("Login failed, try again!")';
 			echo '</script>';
 		}
