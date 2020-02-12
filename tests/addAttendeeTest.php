@@ -15,4 +15,3 @@
 			$this->assertTrue(registerUser("James", "Person", "jperson@gmail.com", $this->eventid));
 		}
 	}
-?>

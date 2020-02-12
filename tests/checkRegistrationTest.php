@@ -17,4 +17,3 @@
 			$this->assertTrue(checkRegistration("Mary", "Jane", "mjane@gmail.com", $this->eventid));
 		}
 	}
-?>
