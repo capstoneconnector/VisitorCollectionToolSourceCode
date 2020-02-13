@@ -13,7 +13,7 @@ function wrapUrlRequestWithOptions($request, $options) {
 
 	$args = "";
 	foreach ($options as $arg) {
-		$args += "&".$arg;
+		$args .= "&".$arg;
 	}
 
 	return $endpoint.$request.$token_argument.$args;
@@ -29,7 +29,7 @@ function getJsonFromUrl($url) {
 
 function depaginate($page, $data_type) {
 	$result = array();
-	for ($i=0; i<$page["pagination"]["page_count"]; i++) {
+	for ($i=0; $i<$page["pagination"]["page_count"]; $i++) {
 		$result += $page[$data_type];
 	}
 	return $result;
@@ -67,10 +67,10 @@ function importEbEvents($oAuthToken) {
 
 
 function testPullEbEvents() {
-	echo $attendee_list_url;
+	//echo $attendee_list_url;
 	echo "<br>";
-	$events = pullEbEvents($PRI_TOKEN);
-
+	//$events = pullEbEvents($PRI_TOKEN);
+    $events = array();
 	$attendees = pullEbAttendees($events[0]["id"]);
 	$attendee = $attendees[0];
 	echo $attendee["profile"]["name"];
@@ -79,7 +79,7 @@ function testPullEbEvents() {
 	echo "<br>";	
 }
 
-function testPullEbEvents() {
+/*function testPullEbEvents() {
 	$events = pullEbEvents($PRI_TOKEN);
 	echo $events[0]["name"];
 	echo "<br>";
@@ -87,7 +87,7 @@ function testPullEbEvents() {
 	echo "<br>";
 	echo $events[0]["event_url"];
 	echo "<br>";
-}
+}*/
 ?>
 
 

@@ -5,7 +5,7 @@
 		header ('location: login.php');
 	}
 ?>
-<html>
+<html lang="php">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="/css/setup.css">
@@ -20,7 +20,7 @@
 	<div class="container">
 			<div class="row">
 				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
+					<img src="/img/Innovation_Connector_Logo.png" width="150px">
 					
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">
@@ -41,13 +41,12 @@
 							<td width = "10">&nbsp;</td>
 						</tr>
 						<tr>
-							<td colspan "2"></td>
+							<td colspan "2">
 						</tr>
 					</table>
-		</br></br></br>
-		</br>
+		<br><br><br><br>
 		<form method="POST">
-			<select id = "placeholder" name="event" class="input" required>
+            <label for="placeholder"></label><select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
 				<?php
 					$events = getAllEventsAfterCurrentDate();

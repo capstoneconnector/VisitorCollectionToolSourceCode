@@ -14,4 +14,3 @@
 			$this->assertTrue(addEvent("Test Event", "3000-01-01"));
 		}
 	}
-?>

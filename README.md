@@ -26,5 +26,5 @@ Objective: Create a system to create events and collect, store, and, analize ate
 
 # Useful Links
 
-[Project Details Ropo](https://github.com/IanShepard/VisitorCollectionTool)
+[Project Details Repository](https://github.com/IanShepard/VisitorCollectionTool)
 

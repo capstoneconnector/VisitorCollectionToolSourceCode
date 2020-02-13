@@ -5,7 +5,7 @@
 	}
 ?>
 
-<html>
+<html lang="php">
 	<head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,7 +23,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
+					<img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
 					
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">
@@ -48,38 +48,46 @@
 							<td width = "10">&nbsp;</td>
 						</tr>
 						<tr>
-							<td colspan "2"></td>
+							<td colspan "2">
 						</tr>
 					</table>
 				</div>
 			<div class="col-10">
-				<form method = "post" div id="UpdateEvent" class = "col-7">
-				<label>Name:</label>
-				</br>
-				<input type="text" name="name" required />
-				</br>
-				<label>Description:</label>
-				</br>
-				<textarea name = "description" form = "UpdateEvent" rows=5 cols=25></textarea>
-				</br>
-				<label>Date (YYYY-MM-DD):</label>
-				</br>
-				<input type="text" name="date" required />
-				</br></br>
-				<input type = "submit" value = "Save">
-				<button onclick="UpdateEvent();">Cancel</button>
-				</br>
-			</div>
+				<form method = "post" id="UpdateEvent" class = "col-7">
+                    <label>Name:</label>
+                    <br>
+                        <label>
+                            <input type="text" name="name" required />
+                        </label>
+                        <br>
+                    <label>Description:</label>
+                    <br>
+                        <label>
+                            <textarea name = "description" form = "UpdateEvent" rows=5 cols=25></textarea>
+                        </label>
+                        <br>
+                    <label>Date (YYYY-MM-DD):</label>
+                    <br>
+                        <label>
+                            <input type="text" name="date" required />
+                        </label>
+                        <br><br>
+                    <input type = "submit" value = "Save">
+                    <button onclick="UpdateEvent();">Cancel</button>
+                    <br>
 				</form>
+            </div>
+                <br>
 			<div id = "SearchEvents" class="col-9">
 				<form method="post">
 					<div class = "col-10 float-left">
-						<label for = "Search" class "control-label"> Search</label>
-						<input type = "text" class = "form-control" />
-						</br>
+                        <label>
+                            <input type = "text" class = "form-control" />
+                        </label>
+                        <br>
 					</div>
-			</div>
-				</form>
+
+                </form>
 			</div>
 			<div id = "EventTable" class="col-12">
 			<?php
@@ -111,12 +119,7 @@
 			</div>
 			</div>
 			</div>
-		</div>
-	</tbody>
-	</div>
-	</div>
-	
-	</body>
+    </body>
 </html>
 
 <?php
