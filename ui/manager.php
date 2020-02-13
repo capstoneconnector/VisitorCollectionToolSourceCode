@@ -77,14 +77,15 @@
                     <br>
 				</form>
             </div>
+                <br>
 			<div id = "SearchEvents" class="col-9">
 				<form method="post">
 					<div class = "col-10 float-left">
-						<label for = "Search" class<label>
+                        <label>
                             <input type = "text" class = "form-control" />
                         </label>
                         <br>
-					</div>"control-label"> Search>
+					</div>
 
                 </form>
 			</div>

@@ -48,6 +48,8 @@
                                     <h2>Registration</h2>
                                 </td>
                                 <td width = "45">&nbsp;</td>
+                            </tr>
+                        </table>
 			<form method = "post">
 				<label id = "field">First Name <input class = "input" type = "text" name = "fname" required value="<?php echo isset($_POST["fname"]) ? $_POST["fname"] : ''?>"></label>
 				<br><br>

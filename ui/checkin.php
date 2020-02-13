@@ -53,6 +53,8 @@
 								<h2>Check In</h2>
 							</td>
 							<td width = "45">&nbsp;</td>
+                         </tr>
+                    </table>
 					<?php
 						$event = getEventById($_SESSION["eventId"]); //Use session var for event name
 						echo "<h2>" . $event["Name"] . "</h2>";
