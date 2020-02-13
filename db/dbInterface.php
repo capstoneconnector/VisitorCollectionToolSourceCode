@@ -1,20 +1,32 @@
 <?php
+require_once "connect.php";
+
 function registerUser($fname, $lname, $email, $event){
-	include_once "../php/parseConfig.php";
+    include_once "../php/parseConfig.php";
+    addAttendee($fname, $lname, $email, $event);
+    //checkinAttendee();
 	$cfg = parseConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$stmt = $pdo->prepare("INSERT INTO attendee(Fname,Lname,Email,Eventid,Attended) VALUES(?,?,?,?,TRUE)"); //Add attendee to DB and set them as attended
 	$stmt->bindParam(1,$fname);
 	$stmt->bindParam(2,$lname);
 	$stmt->bindParam(3,$email);
-	$stmt->bindParam(4,$event);
-	
-	if($stmt->execute()){
-		return TRUE;
-	}
-	else{
-		return FALSE;
-	}
+    $stmt->bindParam(4,$event);
+
+	//return $stmt->execute();
+    if ($stmt->execute())
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function insertAttendee(Attendee $attendee): bool
+{
+    $pdo = newPDO();
+    $statement = $pdo->prepare("INSERT INTO attendee($attendee->getFname(), $attendee->getLname(), $attendee->getEmail(), $attendee->getPhone())");
+    return $statement->execute();
 }
 
 function addAttendee($fname, $lname, $email, $event){
@@ -22,19 +34,13 @@ function addAttendee($fname, $lname, $email, $event){
 	$cfg = parseConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$stmt = $pdo->prepare("INSERT INTO attendee(Fname, Lname, Email, Eventid, Attended) VALUES(?, ?, ?, ?, FALSE)"); //Add attendee to DB
-	$stmt->bindParam(1,$fname);
-	$stmt->bindParam(2,$lname);
-	$stmt->bindParam(3,$email);
-	$stmt->bindParam(4,$event);
-	
-	if($stmt->execute()){
-		return TRUE;
-	}
-	else{
-		return FALSE;
-	}
-}
+	$stmt->bindParam(1, $fname);
+	$stmt->bindParam(2, $lname);
+	$stmt->bindParam(3, $email);
+	$stmt->bindParam(4, $event);
 
+	return $stmt->execute();
+}
 
 function getAttendeeInfoFromName($event, $fname, $lname){
 	include_once "../php/parseConfig.php";
@@ -126,23 +132,24 @@ function getEventById($id) {
 }
 
 function verifyLogin($username, $password){
-		require_once "../php/parseConfig.php";
-		$hashedpass = sha1($password);
-		$cfg = parseConfig();
-		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
-		$stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
-		$stmt->bindParam(1, $username);
-		$stmt->bindParam(2, $hashedpass);
-		if($stmt->execute()){
-	        $info = $stmt->fetch();
-	        if($info['num'] == 1){
-	        	return TRUE;
-	        }
-	        else{
-	        	return FALSE;
-	        }
-	    }
-	}
+    require_once "../php/parseConfig.php";
+    $cfg = parseConfig();
+    $pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
+    $hashedpass = sha1($password);
+    $stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
+    $stmt->bindParam(1, $username);
+    $stmt->bindParam(2, $hashedpass);
+    if($stmt->execute())
+    {
+        $info = $stmt->fetch();
+        if($info['num'] == 1)
+        {
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+}
 
-
-?>
+// add -> insert, delete, update, get -> read,

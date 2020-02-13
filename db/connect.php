@@ -1,11 +1,17 @@
 <?php
-	$hostname = "localhost";
-	$username = "root";
-	$db = "icdb";
-	$password = "";
-	$charset="utf8mb4";
+function newPDO()
+{
+    require_once "../php/parseConfig.php";
 
-	$dsn = "mysql:host=$hostname;dbname=$db;charset=$charset";
+    $config = parseConfig();
 
-	$pdo = new PDO($dsn, $username, $password);
-?>
+    $hostname = $config["hostname"];
+    $username = $config["username"];
+    $db = $config["db"];
+    $password = $config["password"];
+    $charset = $config["charset"];
+
+    $dsn = "mysql:host=$hostname;dbname=$db;charset=$charset";
+
+    return new PDO($dsn, $username, $password);
+}
