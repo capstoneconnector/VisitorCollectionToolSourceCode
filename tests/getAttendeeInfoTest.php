@@ -16,4 +16,3 @@
 			$this->assertSame(getAttendeeCount("Tommy", "Cat", "tommythecat@gmail.com", $this->eventid)['num'], "0");
 		}
 	}
-?>

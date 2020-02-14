@@ -25,4 +25,3 @@
 			$this->assertEmpty(findName("John Doe", $this->eventid));
 		}
 	}
-?>
