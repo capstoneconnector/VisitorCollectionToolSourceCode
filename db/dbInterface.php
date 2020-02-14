@@ -1,5 +1,12 @@
 <?php
 require_once "connect.php";
+/*
+ * each table will have the following basic functionality
+ * get -> read, add -> insert, update, delete,
+ * TODO current get...() functions should be named read...()
+ * TODO current add...() functions should be named insert...()
+ */
+
 
 function registerUser($fname, $lname, $email, $event){
     include_once "../php/parseConfig.php";
@@ -22,10 +29,49 @@ function registerUser($fname, $lname, $email, $event){
     }
 }
 
+function readAttendeeById(int $id)
+{
+    $pdo = newPDO();
+    $properties = "Id, Fname, Lname, Email";
+    $table = "attendee";
+    $conditional = "attendee = {$id}";
+    $statement = $pdo->prepare("SELECT {$properties} from {$table} WHERE {$conditional}");
+
+    $attendees = array();
+    if($statement->execute())
+    {
+        while($row = $statement->fetch())
+        {
+            array_push($attendees, $row);
+        }
+    }
+    return $attendees;
+}
+
 function insertAttendee(Attendee $attendee): bool
 {
     $pdo = newPDO();
-    $statement = $pdo->prepare("INSERT INTO attendee($attendee->getFname(), $attendee->getLname(), $attendee->getEmail(), $attendee->getPhone())");
+    $table = "attendee(Fname, Lname, Email, Phone)";
+    $values = "values({$attendee->getFname()}, {$attendee->getLname()}, {$attendee->getEmail()}, {$attendee->getPhone()})";
+    $statement = $pdo->prepare("INSERT INTO {$table} {$values}");
+    return $statement->execute();
+}
+
+function updateAttendee(int $id, Attendee $attendee) // TODO implement the prepare statement to update existing attendee with new attendee
+{
+    $pdo = newPDO();
+
+    $conditional = "WHERE id={$id}";
+    $statement = $pdo->prepare("");
+    return $statement->execute();
+}
+
+function deleteAttendee($id) // TODO implement deleting attendee from database.
+{
+    $pdo = newPDO();
+
+    $conditional = "WEHRE id={$id}";
+    $statement = $pdo->prepare("");
     return $statement->execute();
 }
 
@@ -107,6 +153,49 @@ function addEvent($name, $date){
 	}
 }
 
+function readEventById($id)
+{
+    $pdo = newPDO();
+
+    $conditional = "eventId = {$id}";
+    $statement = $pdo->prepare("SELECT * FROM event WHERE {$conditional}");
+
+    return $info = $statement->fetch();
+}
+
+function insertEvent(Event $event)
+{
+    $pdo = newPDO();
+    $table = "event(Name, Description, Date, Ebid)";
+    $values = "values({$event->getName()}, {$event->getDescription()}, {$event->getDate()}, {$event->getEventbriteId()})";
+    $statement = $pdo->prepare("INSERT into {$table} {$values}");
+    return $statement->execute();
+}
+
+function updateEvent(int $id, Event $event) // TODO complete the prepare statement to update an event following the rough guide of $event and $values
+{
+    if ($currentEvent = getEventById($id))
+    {
+        $pdo = newPDO();
+
+        $event = "{$currentEvent} ";
+        $values = "values({$event->getName()}, {$event->getDescription()}, {$event->getDate()}, {$event->getEventbriteId()}, {$event->getAttendees()}";
+
+        $statement = $pdo->prepare("");
+        return $statement->execute();
+    } else {
+        return new InvalidArgumentException("event id does not exist in the database");
+    }
+}
+
+function deleteEvent($id) //TODO should this method also delete all of the attendance records associated with this event?
+{
+    $pdo = newPDO();
+
+    $statement = $pdo->prepare("");
+    return $statement->execute();
+}
+
 function getAllEvents() {
 	include_once "../php/parseConfig.php";
 	$cfg = parseConfig();
@@ -151,5 +240,3 @@ function verifyLogin($username, $password){
         }
     }
 }
-
-// add -> insert, delete, update, get -> read,

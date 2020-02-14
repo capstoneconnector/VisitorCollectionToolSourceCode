@@ -21,7 +21,7 @@ class Attendee
     {
         if ($id)
         {
-            $attendee = getAttendeeById($id);
+            $attendee = readAttendeeById($id);
 
             $this->id    = $id;
             $this->fname = $attendee["Fname"];
@@ -33,6 +33,28 @@ class Attendee
         return False;
     }
 
+    /**
+     * [WIP]
+     * This is a factory function for Attendee
+     * @param $id
+     * @return bool
+     */
+    /*
+    static public function fromId($id)
+    {
+        if ($id)
+        {
+            $attendee = readAttendeeById($id);
+
+            $this->id    = $id;
+            $this->fname = $attendee["Fname"];
+            $this->lname = $attendee["Lname"];
+            $this->email = $attendee["Email"];
+            $this->phone = $attendee["Phone"];
+            return self::__construct(fname, lname, email, phone);
+        }
+    }
+    */
     public function createNew(string $fname, string $lname, string $email, string $phone=null)
     {
         $this->fname = $fname;
@@ -43,51 +65,62 @@ class Attendee
 
     public function save()
     {
-        if ($id)
+        if ($attendee = readAttendeeById($this->getId()))
         {
-
+            return updateAttendee($this->getId(), $this);
+        } else {
+            return insertAttendee($this);
         }
-        return insertAttendee($this);
     }
 
-    /**
-     * @return int
-     */
+    public function delete()
+    {
+        deleteAttendee($this->getId());
+    }
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getFname(): string
     {
         return $this->fname;
     }
 
-    /**
-     * @return string
-     */
     public function getLname(): string
     {
         return $this->lname;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function getPhone(): string
     {
         return $this->phone;
+    }
+
+    public function setFname($fname): void
+    {
+        $this->fname = $fname;
+    }
+
+    public function setLname($lname): void
+    {
+        $this->lname = $lname;
+    }
+
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setPhone($phone): void
+    {
+        $this->phone = $phone;
     }
 
 }
