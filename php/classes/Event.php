@@ -3,12 +3,12 @@ require_once "../../db/dbInterface.php";
 
 class Event
 {
-    private string $name;
+    private $name;
     private $date;
-    private String $description;
-    private int $id;
-    private int $eventbriteId;
-    private array $attendees = array();
+    private $description;
+    private $id;
+    private $eventbriteId;
+    private $attendees = array();
 
     /**
      * Event constructor.
