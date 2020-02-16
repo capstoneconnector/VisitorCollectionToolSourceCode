@@ -57,24 +57,6 @@ function insertAttendee(Attendee $attendee): bool
     return $statement->execute();
 }
 
-function updateAttendee(int $id, Attendee $attendee) // TODO implement the prepare statement to update existing attendee with new attendee
-{
-    $pdo = newPDO();
-
-    $conditional = "WHERE id={$id}";
-    $statement = $pdo->prepare("");
-    return $statement->execute();
-}
-
-function deleteAttendee($id) // TODO implement deleting attendee from database.
-{
-    $pdo = newPDO();
-
-    $conditional = "WEHRE id={$id}";
-    $statement = $pdo->prepare("");
-    return $statement->execute();
-}
-
 function addAttendee($fname, $lname, $email, $event){
 	include_once "../php/parseConfig.php";
 	$cfg = parseConfig();
@@ -172,7 +154,7 @@ function insertEvent(Event $event)
     return $statement->execute();
 }
 
-function updateEvent(int $id, Event $event) // TODO complete the prepare statement to update an event following the rough guide of $event and $values
+function updateEvent(int $id, Event $event) // deprecated. use Event child class of DbClass for updateEvent()
 {
     if ($currentEvent = getEventById($id))
     {
@@ -186,14 +168,6 @@ function updateEvent(int $id, Event $event) // TODO complete the prepare stateme
     } else {
         return new InvalidArgumentException("event id does not exist in the database");
     }
-}
-
-function deleteEvent($id) //TODO should this method also delete all of the attendance records associated with this event?
-{
-    $pdo = newPDO();
-
-    $statement = $pdo->prepare("");
-    return $statement->execute();
 }
 
 function getAllEvents() {
@@ -240,3 +214,4 @@ function verifyLogin($username, $password){
         }
     }
 }
+
