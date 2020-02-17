@@ -1,20 +1,60 @@
 <?php
+require_once "connect.php";
+/*
+ * each table will have the following basic functionality
+ * get -> read, add -> insert, update, delete,
+ * TODO current get...() functions should be named read...()
+ * TODO current add...() functions should be named insert...()
+ */
+
+
 function registerUser($fname, $lname, $email, $event){
-	include_once "../php/parseConfig.php";
+    include_once "../php/parseConfig.php";
+    addAttendee($fname, $lname, $email, $event);
+    //checkinAttendee();
 	$cfg = parseConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$stmt = $pdo->prepare("INSERT INTO attendee(Fname,Lname,Email,Eventid,Attended) VALUES(?,?,?,?,TRUE)"); //Add attendee to DB and set them as attended
 	$stmt->bindParam(1,$fname);
 	$stmt->bindParam(2,$lname);
 	$stmt->bindParam(3,$email);
-	$stmt->bindParam(4,$event);
-	
-	if($stmt->execute()){
-		return TRUE;
-	}
-	else{
-		return FALSE;
-	}
+    $stmt->bindParam(4,$event);
+
+	//return $stmt->execute();
+    if ($stmt->execute())
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function readAttendeeById(int $id)
+{
+    $pdo = newPDO();
+    $properties = "Id, Fname, Lname, Email";
+    $table = "attendee";
+    $conditional = "attendee = {$id}";
+    $statement = $pdo->prepare("SELECT {$properties} from {$table} WHERE {$conditional}");
+
+    $attendees = array();
+    if($statement->execute())
+    {
+        while($row = $statement->fetch())
+        {
+            array_push($attendees, $row);
+        }
+    }
+    return $attendees;
+}
+
+function insertAttendee(Attendee $attendee): bool
+{
+    $pdo = newPDO();
+    $table = "attendee(Fname, Lname, Email, Phone)";
+    $values = "values({$attendee->getFname()}, {$attendee->getLname()}, {$attendee->getEmail()}, {$attendee->getPhone()})";
+    $statement = $pdo->prepare("INSERT INTO {$table} {$values}");
+    return $statement->execute();
 }
 
 function addAttendee($fname, $lname, $email, $event){
@@ -22,19 +62,13 @@ function addAttendee($fname, $lname, $email, $event){
 	$cfg = parseConfig();
 	$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
 	$stmt = $pdo->prepare("INSERT INTO attendee(Fname, Lname, Email, Eventid, Attended) VALUES(?, ?, ?, ?, FALSE)"); //Add attendee to DB
-	$stmt->bindParam(1,$fname);
-	$stmt->bindParam(2,$lname);
-	$stmt->bindParam(3,$email);
-	$stmt->bindParam(4,$event);
-	
-	if($stmt->execute()){
-		return TRUE;
-	}
-	else{
-		return FALSE;
-	}
-}
+	$stmt->bindParam(1, $fname);
+	$stmt->bindParam(2, $lname);
+	$stmt->bindParam(3, $email);
+	$stmt->bindParam(4, $event);
 
+	return $stmt->execute();
+}
 
 function getAttendeeInfoFromName($event, $fname, $lname){
 	include_once "../php/parseConfig.php";
@@ -101,6 +135,41 @@ function addEvent($name, $date){
 	}
 }
 
+function readEventById($id)
+{
+    $pdo = newPDO();
+
+    $conditional = "eventId = {$id}";
+    $statement = $pdo->prepare("SELECT * FROM event WHERE {$conditional}");
+
+    return $info = $statement->fetch();
+}
+
+function insertEvent(Event $event)
+{
+    $pdo = newPDO();
+    $table = "event(Name, Description, Date, Ebid)";
+    $values = "values({$event->getName()}, {$event->getDescription()}, {$event->getDate()}, {$event->getEventbriteId()})";
+    $statement = $pdo->prepare("INSERT into {$table} {$values}");
+    return $statement->execute();
+}
+
+function updateEvent(int $id, Event $event) // deprecated. use Event child class of DbClass for updateEvent()
+{
+    if ($currentEvent = getEventById($id))
+    {
+        $pdo = newPDO();
+
+        $event = "{$currentEvent} ";
+        $values = "values({$event->getName()}, {$event->getDescription()}, {$event->getDate()}, {$event->getEventbriteId()}, {$event->getAttendees()}";
+
+        $statement = $pdo->prepare("");
+        return $statement->execute();
+    } else {
+        return new InvalidArgumentException("event id does not exist in the database");
+    }
+}
+
 function getAllEvents() {
 	include_once "../php/parseConfig.php";
 	$cfg = parseConfig();
@@ -126,23 +195,23 @@ function getEventById($id) {
 }
 
 function verifyLogin($username, $password){
-		require_once "../php/parseConfig.php";
-		$hashedpass = sha1($password);
-		$cfg = parseConfig();
-		$pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
-		$stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
-		$stmt->bindParam(1, $username);
-		$stmt->bindParam(2, $hashedpass);
-		if($stmt->execute()){
-	        $info = $stmt->fetch();
-	        if($info['num'] == 1){
-	        	return TRUE;
-	        }
-	        else{
-	        	return FALSE;
-	        }
-	    }
-	}
+    require_once "../php/parseConfig.php";
+    $cfg = parseConfig();
+    $pdo = new PDO('mysql:host=' . $cfg['hostname'] . ';dbname=' . $cfg['db'], $cfg['username'], $cfg['password']);
+    $hashedpass = sha1($password);
+    $stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
+    $stmt->bindParam(1, $username);
+    $stmt->bindParam(2, $hashedpass);
+    if($stmt->execute())
+    {
+        $info = $stmt->fetch();
+        if($info['num'] == 1)
+        {
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+}
 
-
-?>
