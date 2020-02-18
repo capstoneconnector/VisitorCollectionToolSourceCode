@@ -1,116 +1,57 @@
 <?php
-require_once "../../db/dbInterface.php";
 
 
-class Attendee
+class Attendee extends Entry
 {
+
     private $id;
-    private $fname;
-    private $lname;
+    private $firstName;
+    private $lastName;
     private $email;
     private $phone;
+    private $registered;
 
-    /**
-     * If $id is provided, then Attendee is created with information from DB
-     * If $id is not provided then an empty Attendee object is created with no values set. Use createNew() to create a new Attendee with new parameters
-     *
-     * Attendee constructor.
-     * @param int $id
-     */
-    public function __construct(int $id=0)
+    public function __construct($id)
     {
-        if ($id)
-        {
-            $attendee = readAttendeeById($id);
-
-            $this->id    = $id;
-            $this->fname = $attendee["Fname"];
-            $this->lname = $attendee["Lname"];
-            $this->email = $attendee["Email"];
-            $this->phone = $attendee["Phone"];
-            return True;
-        }
-        return False;
     }
 
-    /**
-     * [WIP]
-     * This is a factory function for Attendee
-     * @param $id
-     * @return bool
-     */
-    /*
-    static public function fromId($id)
+    public function addToEvent($eventId)
     {
-        if ($id)
-        {
-            $attendee = readAttendeeById($id);
-
-            $this->id    = $id;
-            $this->fname = $attendee["Fname"];
-            $this->lname = $attendee["Lname"];
-            $this->email = $attendee["Email"];
-            $this->phone = $attendee["Phone"];
-            return self::__construct(fname, lname, email, phone);
-        }
-    }
-    */
-    public function createNew(string $fname, string $lname, string $email, string $phone=null)
-    {
-        $this->fname = $fname;
-        $this->lname = $lname;
-        $this->email = $email;
-        $this->phone = $phone;
     }
 
-    public function save()
-    {
-        if ($attendee = readAttendeeById($this->getId()))
-        {
-            return updateAttendee($this->getId(), $this);
-        } else {
-            return insertAttendee($this);
-        }
-    }
-
-    public function delete()
-    {
-        deleteAttendee($this->getId());
-    }
-
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getFname(): string
+    public function getFirstName()
     {
-        return $this->fname;
+        return $this->firstName;
     }
 
-    public function getLname(): string
+    public function getLastName()
     {
-        return $this->lname;
+        return $this->lastName;
     }
 
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function getPhone(): string
+    public function getPhone()
     {
         return $this->phone;
     }
 
-    public function setFname($fname): void
+    public function setFirstName($firstName): void
     {
-        $this->fname = $fname;
+        $this->firstName = $firstName;
     }
 
-    public function setLname($lname): void
+    public function setLastName($lastName): void
     {
-        $this->lname = $lname;
+        $this->lastName = $lastName;
     }
 
     public function setEmail($email): void
@@ -122,5 +63,4 @@ class Attendee
     {
         $this->phone = $phone;
     }
-
 }

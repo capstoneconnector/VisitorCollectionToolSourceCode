@@ -48,7 +48,7 @@ function readAttendeeById(int $id)
     return $attendees;
 }
 
-function insertAttendee(Attendee $attendee): bool
+function insertAttendee(AttendeeOld $attendee): bool
 {
     $pdo = newPDO();
     $table = "attendee(Fname, Lname, Email, Phone)";

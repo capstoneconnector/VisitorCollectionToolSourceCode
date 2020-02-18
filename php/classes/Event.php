@@ -3,10 +3,10 @@ require_once "../../db/dbInterface.php";
 
 class Event
 {
+    private $id;
     private $name;
     private $date;
     private $description;
-    private $id;
     private $eventbriteId;
     private $attendees = array();
 
@@ -58,7 +58,7 @@ class Event
 
     public function delete() // TODO Should this also delete all of the attendance records associated with this event?
     {
-        deleteEvent($this->getId()); // TODO finish implementation for deleteEvent() in db/dbInterface.php
+        //deleteEvent($this->getId()); // TODO finish implementation for deleteEvent() in db/dbInterface.php
     }
 
     /**
@@ -73,7 +73,7 @@ class Event
      * Returns the removed attendee
      * Returns an Exception if the attendee is not in the array
      *
-     * @param Attendee $attendee
+     * @param AttendeeOld $attendee
      * @return array|Exception
      */
     public function removeAttendee(Attendee $attendee)

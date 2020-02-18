@@ -3,7 +3,7 @@
 
 interface DbManagerInterface
 {
-    public function readById(int $id);
+    public function readById(array $ids);
     public function insert();
     public function update();
     public function delete();

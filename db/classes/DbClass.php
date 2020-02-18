@@ -1,30 +1,31 @@
 <?php
 require_once "../connect.php";
 
-abstract class DbClass implements DbManagerInterface
+abstract class DbClass
 {
-    protected $tableName;
-    protected $attributeNames = array();
-    protected $attributeDbNames = array();
-    protected $keyAttribute;
-    protected $keyDbAttribute;
+    private $tableSummaries;
 
     public function __construct()
     {
-
+        $this->tableSummaries = TableSummary::getTableSummaries();
     }
 
     /**
-     * Pulls an entry from a table using the ID of the entry and returns an array
+     * Pulls an entry from a table using the id(s) of the entry and returns an array
      *
-     * @param int $id
-     * The row entry of the corresponding id
+     * @param int $ids
+     * The row entry of the corresponding id(s)
      * @return array
-     * The full row data of the corresponding id pulled from the db of the class with corresponding name
+     * The full row data of the corresponding id(s) pulled from the db of the class with corresponding name
      */
-    function readById(int $id)
+    function readById(array $ids)
     {
-        $conditional = $this->keyDbAttribute . "=" . $id;
+        //$conditional = join(", ", $this->getColumnEqualsValuePair($this->keyAttributes));
+        $conditional = "";
+        for ($index=0; $index<count($ids); $index++)
+            {
+                $conditional .= $this->keyAttributes[$index] . "=" . $ids[$index] . " ";
+            }
         $statement = newPDO()->prepare("SELECT * FROM {$this->tableName} WHERE {$conditional}");
 
         $tableResult = array();
@@ -36,7 +37,7 @@ abstract class DbClass implements DbManagerInterface
             }
             return $tableResult;
         } else {
-            trigger_error("Select statment failed. Could not retrieve entry from DB");
+            trigger_error("Select statment failed. Could not retrieve entry from database");
         }
     }
 
@@ -50,11 +51,15 @@ abstract class DbClass implements DbManagerInterface
      * @return bool
      * returns true if the insertion was successful; otherwise returns false.
      */
-    function insert()
+    function insertNew(Entry $entry)
     {
-        $columns = join(", ", $this->attributeDbNames);
-        $values = join(", ", $this->getValuesOfAttributes($this->attributeNames));
-        $statement = newPDO()->prepare("INSERT INTO {$this->tableName}({$columns}) VALUES ({$values})");
+        $tableType = $this->tableSummaries[get_class($entry)];
+
+        $columns = join(", ", $tableType["dbAttributes"]);
+        $values = join(", ", $this->getValuesOfAttributes($entry, $tableType["attributes"]));
+
+        $statement = newPDO()->prepare("INSERT INTO {$tableType["dbTableName"]}({$columns}) VALUES ({$values})");
+
         return $statement->execute();
     }
 
@@ -67,15 +72,27 @@ abstract class DbClass implements DbManagerInterface
      */
     function update()
     {
-        if (!empty($this->getValueOfAttribute($this->keyAttribute)))
+        if (!empty($this->getValueOfAttribute($this->keyAttributes)))
         {
-            $columnValuePair = array();
-            foreach ($this->attributeNames as $attrName) {
-                array_push($columnValuePair, $attrName . "=" . $this->getValueOfAttribute($attrName));
-            }
+            $columnValuePair = $this->getColumnEqualsValuePair($this->attributeNames);
 
             $values = join(", ", $columnValuePair);
-            $conditional = $this->keyDbAttribute . "=" . $this->getValueOfAttribute($this->keyAttribute);
+            $conditional = $this->DbKeyAttributes . "=" . $this->getValuesOfAttributes($this->keyAttributes);
+            $statement = newPDO()->prepare("UPDATE {$this->tableName} SET {$values} WHERE {$conditional}");
+            return $statement->execute();
+        } else {
+            trigger_error("Entry does not exist!");
+        }
+    }
+
+    function updateNew()
+    {
+        if (!empty($this->getValueOfAttribute($this->keyAttributes)))
+        {
+            $columnValuePair = $this->getColumnEqualsValuePair($this->attributeNames);
+
+            $values = join(", ", $columnValuePair);
+            $conditional = $this->DbKeyAttributes . "=" . $this->getValuesOfAttributes($this->keyAttributes);
             $statement = newPDO()->prepare("UPDATE {$this->tableName} SET {$values} WHERE {$conditional}");
             return $statement->execute();
         } else {
@@ -88,6 +105,18 @@ abstract class DbClass implements DbManagerInterface
         // TODO: Implement delete() method.
     }
 
+    function save()
+    {
+        if (!empty($this->getValuesOfAttributes($this->keyAttributes)))
+        {
+            $this->update();
+        } else {
+            $this->insert();
+            // TODO set the subclass id(s) to the newly created entry id(s)
+            //see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
+        }
+    }
+
     /**
      * Takes a class defined attribute <name> and returns get<name>() for that attribute in that class.
      * Example: an attribute named "email" will return getEmail().
@@ -95,10 +124,10 @@ abstract class DbClass implements DbManagerInterface
      * @param string $attributeName
      * @return mixed
      */
-    private function getValueOfAttribute(string $attributeName)
+    private function getValueOfAttribute(Entry $entry, string $attributeName)
     {
         $attributeFunctionName = "get".ucfirst($attributeName);
-        return $this->$attributeFunctionName();
+        return $entry->$attributeFunctionName();
     }
 
     /**
@@ -107,14 +136,24 @@ abstract class DbClass implements DbManagerInterface
      * @param array $attributeNames
      * @return array
      */
-    private function getValuesOfAttributes(array $attributeNames)
+    private function getValuesOfAttributes(Entry $entry, array $attributeNames)
     {
         $attributeValues = array();
         foreach ($attributeNames as $attrName)
         {
-            array_push($attributeValues, $this->getValueOfAttribute($attrName));
+            array_push($attributeValues, $this->getValueOfAttribute($entry, $attrName));
         }
 
         return $attributeValues;
+    }
+
+    private function getColumnEqualsValuePair(array $attributeNames)
+    {
+        $columnValuePair = array();
+        foreach ($attributeNames as $attrName) {
+            array_push($columnValuePair, $attrName . "=" . $this->getValueOfAttribute($attrName));
+        }
+
+        return $columnValuePair;
     }
 }

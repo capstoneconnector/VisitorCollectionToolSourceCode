@@ -1,15 +1,19 @@
 <?php
 
 
-class Attendance
+class Attendance extends Entry
 {
+    const TABLE_NAME = "Attendance";
+    const KEY_ATTRIBUTES = array("attendeeId", "eventId");
+    const ATTRIBUTE_NAMES = array("attendeeId", "eventId", "registered", "walkIn", "attended");
+    const DB_KEY_ATTRIBUTES = array("Attendeeid", "Eventid");
+    const DB_ATTRIBUTE_NAMES = array("Attendeeid", "Eventid", "Registered", "Walkin", "Attended");
+
     private $attendeeId;
     private $eventId;
     private $registered;
     private $walkIn;
     private $attended;
-
-
 
     private function __constructor(int $attendeeId,
                                    int $eventId,
@@ -17,6 +21,12 @@ class Attendance
                                    bool $walkin,
                                    bool $attended)
     {
+        parent::__construct(self::TABLE_NAME,
+                            self::KEY_ATTRIBUTES,
+                            self::ATTRIBUTE_NAMES,
+                            self::DB_KEY_ATTRIBUTES,
+                            self::DB_ATTRIBUTE_NAMES);
+
         $this->attendeeId = $attendeeId;
         $this->eventId = $eventId;
         $this->registered = $registered;
@@ -38,37 +48,32 @@ class Attendance
         return 0;
     }
 
-    public function save()
-    {
-        return 0;
-    }
-
     public function delete()
     {
 
     }
 
-    public function getAttendeeId()
+    public function getAttendeeId() : int
     {
         return new $this->attendeeId;
     }
 
-    public function getEventId()
+    public function getEventId() : int
     {
         return new $this->eventId;
     }
 
-    public function getRegistered()
+    public function getRegistered() : bool
     {
         return new $this->registered;
     }
 
-    public function getWalkIn()
+    public function getWalkIn() : bool
     {
         return new $this->walkIn;
     }
 
-    public function getAttended()
+    public function getAttended() : bool
     {
         return new $this->attended;
     }
