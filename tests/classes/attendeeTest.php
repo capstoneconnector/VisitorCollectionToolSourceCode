@@ -22,4 +22,5 @@ class attendeeTest extends PHPUnit_Framework_TestCase
     function testGetFname(){
         $this->assertSame("Bob", $this->attendee->getFname());
     }
+
 }

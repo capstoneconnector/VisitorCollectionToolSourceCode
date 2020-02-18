@@ -49,9 +49,9 @@
             <label for="placeholder"></label><select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
 				<?php
-					$events = getAllEventsAfterCurrentDate();
+					$events = getSetupEvents();
 					foreach($events as $event){
-						echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . " : " . $event["Date"] . "</option>";
+						echo "<option value='" . $event->id . "''>" . $event->name . " : " . $event->date . "</option>";
 					}
 				?>
 			</select>

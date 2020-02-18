@@ -1,10 +1,10 @@
 <?php
 require_once "../connect.php";
 
-abstract class DbClass implements DbManagerInterface
+class DbClass implements DbManagerInterface
 {
-    protected $tableName;
-    protected $attributeNames = array();
+    const ATTENDEE_TABLE_NAME = "attendee";
+    const ATTRIBUTE_NAMES = array();
     protected $attributeDbNames = array();
     protected $keyAttribute;
     protected $keyDbAttribute;
@@ -36,7 +36,7 @@ abstract class DbClass implements DbManagerInterface
             }
             return $tableResult;
         } else {
-            trigger_error("Select statment failed. Could not retrieve entry from DB");
+            trigger_error("Selection statement failed. Could not retrieve entry from DB");
         }
     }
 
@@ -116,5 +116,29 @@ abstract class DbClass implements DbManagerInterface
         }
 
         return $attributeValues;
+    }
+
+    static function getAllEventsAfterCurrentDate(){
+        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
+
+    static function getAttendeesForEvent($eventid){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
+        $pdo->bindParam(1, $eventid);
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
     }
 }

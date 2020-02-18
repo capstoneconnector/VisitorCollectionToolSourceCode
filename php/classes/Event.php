@@ -36,8 +36,9 @@ class Event
      * @param null $eventbriteId
      */
 
-    public function createNew($name, $date, $description, $eventbriteId=null)
+    public function createNew($id, $name, $date, $description, $eventbriteId=null)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->date = $date;
         $this->description = $description;
@@ -139,5 +140,9 @@ class Event
     public function setDescription(String $description): void
     {
         $this->description = $description;
+    }
+
+    public function populateAttendeeList(){
+        $attendees = DbClass::getAttendeesForEvent($this->id);
     }
 }
