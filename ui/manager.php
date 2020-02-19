@@ -52,42 +52,40 @@
 						</tr>
 					</table>
 				</div>
-			<div class="col-10">
-				<form method = "post" id="UpdateEvent" class = "col-7">
-                    <label>Name:</label>
-                    <br>
-                        <label>
-                            <input type="text" name="name" required />
-                        </label>
+			    <div class="col-10">
+				    <form method = "post" id="UpdateEvent" class="col-7">
+                        <label>Name:</label>
                         <br>
-                    <label>Description:</label>
-                    <br>
+                            <label>
+                                <input type="text" name="name" required />
+                            </label>
+                            <br>
+                        <label>Description:</label>
+                        <br>
                         <label>
                             <textarea name = "description" form = "UpdateEvent" rows=5 cols=25></textarea>
                         </label>
                         <br>
-                    <label>Date (YYYY-MM-DD):</label>
-                    <br>
+                        <label>Date (YYYY-MM-DD):</label>
+                        <br>
                         <label>
                             <input type="text" name="date" required />
                         </label>
                         <br><br>
-                    <input type = "submit" value = "Save">
-                    <button onclick="UpdateEvent();">Cancel</button>
-                    <br>
-				</form>
-            </div>
+                        <input type = "submit" value = "Save">
+                        <button onclick="UpdateEvent();">Cancel</button>
+                        </br></br>
+				    </form>
+                </div>
                 <br>
-			<div id = "SearchEvents" class="col-9">
-				<form method="post">
-					<div class = "col-10 float-left">
-                        <label>
-                            <input type = "text" class = "form-control" />
-                        </label>
-                        <br>
-					</div>
-
-                </form>
+                <div id = "SearchEvents" class="col-12">
+                        <form method="post">
+                            <div class="col-10">
+                                <label for = "Search" class "control-label">Search Events:</label>
+                                <input type = "text" class = "form-control" />
+                            </div>
+                        </form>
+                </div>
 			</div>
 			<div id = "EventTable" class="col-12">
 			<?php
@@ -116,9 +114,8 @@
 					echo "</table>";
 				}
 			?>
-			</div>
-			</div>
-			</div>
+            </div>
+        </div>
     </body>
 </html>
 
