@@ -12,20 +12,19 @@
 		google.charts.load('current', {'packages':['corechart']});
 		// Set a callback to run when the Google Visualization API is loaded.
 		google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart2);
 		// Callback that creates and populates a data table,
 		// instantiates the pie chart, passes in the data and
 		// draws it.
 		function drawChart() {
 		// Create the data table.
 		var data = new google.visualization.DataTable();
-		data.addColumn('string', 'Topping');
-		data.addColumn('number', 'Slices');
+		data.addColumn('string', 'Events');
+		data.addColumn('number', 'Attendees');
 		data.addRows([
-			['Mushrooms', 3],
-			['Onions', 1],
-			['Olives', 1],
-			['Zucchini', 1],
-			['Pepperoni', 2]
+			['Coding Connector class 1', 3],
+			['Coding Connector class 2', 4],
+            ['Coding Connector class 3', 2],
 		]);
 		// Set chart options
 		var options = {'title':'This is an example chart',
@@ -35,6 +34,24 @@
 		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 		chart.draw(data, options);
 		}
+    function drawChart2() {
+        // Create the data table.
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'Attendee');
+        data2.addColumn('number', 'Attendance');
+        data2.addRows([
+            ['John Smith', 3],
+            ['Jane Doe', 5],
+            ['Mike Wazowski', 1],
+        ]);
+        // Set chart options
+        var options2 = {'title':'This is another example chart',
+            'width':400,
+            'height':300};
+        // Instantiate and draw our chart, passing in some options.
+        var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+        chart2.draw(data2, options2);
+    }
 		</script>
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -68,7 +85,9 @@
 				<!--Div that will hold the pie chart-->
 					<div id="chart_div">
 					</div>
-		</div>
-	</div>
+                    <div id="chart_div2">
+                    </div>
+		    </div>
+	    </div>
 	</body>
 </html>
