@@ -1,6 +1,4 @@
 <?php
-require_once "../../db/dbInterface.php";
-
 
 class Attendee
 {
@@ -55,8 +53,9 @@ class Attendee
         }
     }
     */
-    public function createNew(string $fname, string $lname, string $email, string $phone=null)
+    public function createNew(int $id, string $fname, string $lname, string $email, string $phone=null)
     {
+        $this->id = $id;
         $this->fname = $fname;
         $this->lname = $lname;
         $this->email = $email;
