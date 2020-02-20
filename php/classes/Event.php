@@ -1,5 +1,5 @@
 <?php
-require_once "../../db/dbInterface.php";
+require_once "../db/dbInterface.php";
 
 class Event
 {
@@ -90,7 +90,7 @@ class Event
 
     public function getName(): string
     {
-        return new $this->name;
+        return $this->name;
     }
 
     /**
@@ -98,22 +98,22 @@ class Event
      */
     public function getDate()
     {
-        return new $this->date;
+        return $this->date;
     }
 
     public function getDescription(): String
     {
-        return new $this->description;
+        return $this->description;
     }
 
     public function getId(): int
     {
-        return new $this->id;
+        return $this->id;
     }
 
     public function getEventbriteId(): int
     {
-        return new $this->eventbriteId;
+        return $this->eventbriteId;
     }
 
     /**

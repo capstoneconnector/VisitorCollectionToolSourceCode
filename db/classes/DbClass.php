@@ -1,5 +1,6 @@
 <?php
-require_once "../connect.php";
+require_once "../db/connect.php";
+require_once "../db/classes/DbManagerInterface.php";
 
 class DbClass implements DbManagerInterface
 {
@@ -132,7 +133,7 @@ class DbClass implements DbManagerInterface
     static function getAttendeesForEvent($eventid){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
-        $pdo->bindParam(1, $eventid);
+        $statement->bindParam(1, $eventid);
         $info = array();
         if($statement->execute()) {
             while($row = $statement->fetch()) {
