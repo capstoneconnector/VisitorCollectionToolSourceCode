@@ -1,5 +1,5 @@
 <?php
-	require_once "../db/getEventInfo.php";
+	require_once "../php/getEvents.php";
 	session_start();
 	if(empty($_SESSION['logged'])){
 		header ('location: login.php');
@@ -49,9 +49,10 @@
             <label for="placeholder"></label><select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
 				<?php
-					$events = getAllEventsAfterCurrentDate();
+					$events = getSetupEvents();
+					var_dump($events);
 					foreach($events as $event){
-						echo "<option value='" . $event["Eventid"] . "''>" . $event["Name"] . " : " . $event["Date"] . "</option>";
+						echo "<option value='" . $event->getId() . "''>" . $event->getName() . " : " . $event->getDate() . "</option>";
 					}
 				?>
 			</select>

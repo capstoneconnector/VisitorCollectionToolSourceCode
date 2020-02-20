@@ -1,7 +1,8 @@
 <?php
-require_once "../connect.php";
+require_once "../db/connect.php";
+require_once "../db/classes/DbManagerInterface.php";
 
-abstract class DbClass
+class DbClass implements DbManagerInterface
 {
     private $tableSummaries;
 
@@ -37,7 +38,7 @@ abstract class DbClass
             }
             return $tableResult;
         } else {
-            trigger_error("Select statment failed. Could not retrieve entry from database");
+            trigger_error("Selection statement failed. Could not retrieve entry from DB");
         }
     }
 
@@ -51,6 +52,14 @@ abstract class DbClass
      * @return bool
      * returns true if the insertion was successful; otherwise returns false.
      */
+    function insert()
+    {
+        $columns = join(", ", $this->attributeDbNames);
+        $values = join(", ", $this->getValuesOfAttributes($this->attributeNames));
+        $statement = newPDO()->prepare("INSERT INTO {$this->tableName}({$columns}) VALUES ({$values})");
+        return $statement->execute();
+    }
+
     function insertNew(Entry $entry)
     {
         $tableType = $this->tableSummaries[get_class($entry)];
@@ -72,9 +81,12 @@ abstract class DbClass
      */
     function update()
     {
-        if (!empty($this->getValueOfAttribute($this->keyAttributes)))
+        if (!empty($this->getValueOfAttribute($this->keyAttribute)))
         {
-            $columnValuePair = $this->getColumnEqualsValuePair($this->attributeNames);
+            $columnValuePair = array();
+            foreach ($this->attributeNames as $attrName) {
+                array_push($columnValuePair, $attrName . "=" . $this->getValueOfAttribute($attrName));
+            }
 
             $values = join(", ", $columnValuePair);
             $conditional = $this->DbKeyAttributes . "=" . $this->getValuesOfAttributes($this->keyAttributes);
@@ -155,5 +167,29 @@ abstract class DbClass
         }
 
         return $columnValuePair;
+    }
+
+    static function getAllEventsAfterCurrentDate(){
+        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
+
+    static function getAttendeesForEvent($eventid){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
+        $statement->bindParam(1, $eventid);
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
     }
 }
