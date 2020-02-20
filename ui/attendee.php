@@ -20,7 +20,7 @@
 						<div id ="menu">
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href='setup.php'><span>Set Up</span></a></li>
-								
+								<li><a href='Analytics.php'><span>Analytics</span></a></li>
 								<li class='last'><a href='manager.php'><span>Events</span></a></li>
 							</ul>
 						</div>
@@ -74,16 +74,15 @@
 				<form method="post">
 					<div class="col-12">
 						<div class = "col-10 float-left">
-                            <label>
-                                <input type = "text" class = "form-control" />
-                            </label>
                             <br>
-						</div>"control-label"> Search
+                                <label for = "Search" class "control-label">Search Attendees:</label>
+                                <input type = "text" class = "form-control" />
+                            <br>
+						</div>
 
                         <div class = "col-2 float-right">
-							<br>
+                            <br><br>
 							<button type="submit" name="export" class = "btn btn-info"> Export </button>
-							<br>
 						</div>
 					</div>
 				</form>
