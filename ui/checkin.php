@@ -89,7 +89,7 @@
 										echo '<td>' . $names[$i]->getFname() . '</td>';
 										echo '<td>' . $names[$i]->getLname() . '</td>';
 										echo '<td>' . $names[$i]->getEmail() . '</td>';  //Table creation markup
-									echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]->getId()."','".$names[$i]->getEmail()."')>This is me</button>"; //Tie user email and id to the UI button to send to AJAX function
+									echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]->getId()."','".$names[$i]->getEmail()."','". $event->getId()."')>This is me</button>"; //Tie user email and id to the UI button to send to AJAX function
 									echo '</tr>';
 									}
 								echo '</table>';

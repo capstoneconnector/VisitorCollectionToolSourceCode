@@ -1,6 +1,7 @@
 <?php
 	require_once "../php/getEvents.php";
 	session_start();
+	$_SESSION["eventId"] = NULL;
 	if(empty($_SESSION['logged'])){
 		header ('location: login.php');
 	}
@@ -50,7 +51,6 @@
 				<option disabled selected> -- Select an event -- </option>
 				<?php
 					$events = getSetupEvents();
-					var_dump($events);
 					foreach($events as $event){
 						echo "<option value='" . $event->getId() . "''>" . $event->getName() . " : " . $event->getDate() . "</option>";
 					}
