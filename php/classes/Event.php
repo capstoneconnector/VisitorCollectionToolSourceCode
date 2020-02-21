@@ -1,5 +1,6 @@
 <?php
-require_once "../db/dbInterface.php";
+require_once "../db/classes/DbClass.php";
+require_once "../php/classes/Attendee.php";
 
 class Event
 {
@@ -121,7 +122,7 @@ class Event
      */
     public function getAttendees(): array
     {
-        return new $this->attendees;
+        return $this->attendees;
     }
 
     public function setName(string $name)
@@ -143,6 +144,13 @@ class Event
     }
 
     public function populateAttendeeList(){
-        $attendees = DbClass::getAttendeesForEvent($this->id);
+        $attendees = [];
+        $dbAttendees = DbClass::getAttendeesForEvent($this->id);
+        foreach($dbAttendees as $row){
+            $attendee = new Attendee();
+            $attendee->createNew($row["Id"], $row["Fname"], $row["Lname"], $row["Email"], $row["Phone"]);
+            array_push($attendees, $attendee);
+        }
+        $this->attendees = $attendees;
     }
 }

@@ -192,4 +192,41 @@ class DbClass implements DbManagerInterface
         }
         return $info;
     }
+
+    static function getEventByID($id) {
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT * FROM event WHERE Eventid=?"); //Fetch specific event by id
+        $statement->bindParam(1, $id);
+        $statement->execute();
+        return $info = $statement->fetch();
+    }
+
+    static function checkAttendanceByID($attendeeID, $eventID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE"); //Find all attendees with similar first and last names entered
+        $statement->bindParam(1, $attendeeID);
+        $statement->bindParam(2, $eventID);
+        if($statement->execute()){
+            $result = $statement->fetch();
+            if($result['num'] > 0){
+                return TRUE;
+            }
+            else{
+                return FALSE;
+            }
+        }
+    }
+
+    static function setAttendedTrue($attendeeID, $eventID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("UPDATE attendance SET Attended = TRUE WHERE Eventid = ? AND Attendeeid = ?");
+        $statement->bindParam(1, $eventID);
+        $statement->bindParam(2, $attendeeID);
+        if($statement->execute()){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
 }

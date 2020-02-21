@@ -73,21 +73,23 @@
 					<br><br><br>
 					<div class="table">
 					<?php
+                        require_once "../php/getEventInfo.php";
 						require_once "../php/findName.php";
 						$event = $_SESSION['eventId'];
 						if(!empty($_POST)){
 							if(!empty($_POST["name"])){
 								$name = $_POST["name"];
+								$event = getEvent($_SESSION["eventId"]);
 								$names = findName($name, $event); //Fetch names that match name entered by user
 								if(!empty($names)){ //Only creates table if there is content to write to it
 									echo '<table border = 3>';
 									echo '<th>First Name</th><th>Last Name</th><th>Email</th><th></th>';
 									for ($i = 0; $i < sizeof($names); $i++){
 										echo '<tr>';
-										echo '<td>' . $names[$i]['Fname'] . '</td>';
-										echo '<td>' . $names[$i]['Lname'] . '</td>'; 
-										echo '<td>' . $names[$i]['Email'] . '</td>';  //Table creation markup
-									echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]['Id']."','".$names[$i]['Email']."')>This is me</button>"; //Tie user email and id to the UI button to send to AJAX function
+										echo '<td>' . $names[$i]->getFname() . '</td>';
+										echo '<td>' . $names[$i]->getLname() . '</td>';
+										echo '<td>' . $names[$i]->getEmail() . '</td>';  //Table creation markup
+									echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]->getId()."','".$names[$i]->getEmail()."','". $event->getId()."')>This is me</button>"; //Tie user email and id to the UI button to send to AJAX function
 									echo '</tr>';
 									}
 								echo '</table>';
