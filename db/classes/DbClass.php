@@ -15,6 +15,8 @@ class DbClass implements DbManagerInterface
 
     }
 
+
+
     /**
      * Pulls an entry from a table using the ID of the entry and returns an array
      *
@@ -130,10 +132,10 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
-    static function getAttendeesForEvent($eventid){
+    static function getAttendeesForEvent($eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
-        $statement->bindParam(1, $eventid);
+        $statement->bindParam(1, $eventID);
         $info = array();
         if($statement->execute()) {
             while($row = $statement->fetch()) {
@@ -153,7 +155,7 @@ class DbClass implements DbManagerInterface
 
     static function checkAttendanceByID($attendeeID, $eventID){
         $pdo = newPDO();
-        $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE"); //Find all attendees with similar first and last names entered
+        $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE");
         $statement->bindParam(1, $attendeeID);
         $statement->bindParam(2, $eventID);
         if($statement->execute()){
@@ -164,6 +166,9 @@ class DbClass implements DbManagerInterface
             else{
                 return FALSE;
             }
+        }
+        else{
+            return FALSE;
         }
     }
 
@@ -179,4 +184,86 @@ class DbClass implements DbManagerInterface
             return FALSE;
         }
     }
+
+    public static function doesAttendeeExist($fname, $lname, $email){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendee WHERE Fname = ? AND Lname = ? AND Email = ?");
+        $statement->bindParam(1, $fname);
+        $statement->bindParam(2, $lname);
+        $statement->bindParam(3, $email);
+        if($statement->execute()){
+            $result = $statement->fetch();
+            if($result['num'] > 0){
+                return TRUE;
+            }
+            else{
+                return FALSE;
+            }
+        }
+        else{
+            return FALSE;
+        }
+    }
+
+    public static function addAttendee($fname, $lname, $email, $phone){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO attendee(Fname, Lname, Phone, Email) VALUES(?,?,?,?)");
+        $statement->bindParam(1, $fname);
+        $statement->bindParam(2, $lname);
+        $statement->bindParam(3, $phone);
+        $statement->bindParam(4, $email);
+        if($statement->execute()){
+            return $pdo->lastInsertId();
+        }
+        else{
+            return NULL;
+        }
+    }
+
+    public static function getAttendeeByName($fname, $lname, $email){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT * FROM attendee WHERE Fname = ? AND Lname = ? AND Email = ?");
+        $statement->bindParam(1, $fname);
+        $statement->bindParam(2, $lname);
+        $statement->bindParam(3, $email);
+        if($statement->execute()) {
+            return $statement->fetch();
+        }
+        else{
+            return NULL;
+        }
+    }
+
+    public static function isAttendeeRegistered($attendeeID, $eventID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Registered = TRUE");
+        $statement->bindParam(1, $attendeeID);
+        $statement->bindParam(2, $eventID);
+        if($statement->execute()){
+            $result = $statement->fetch();
+            if($result['num'] > 0){
+                return TRUE;
+            }
+            else{
+                return FALSE;
+            }
+        }
+        else{
+            return FALSE;
+        }
+    }
+
+    public static function addWalkinRegistration($attendeeID, $eventID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, TRUE, FALSE)");
+        $statement->bindParam(1, $attendeeID);
+        $statement->bindParam(2, $eventID);
+        if($statement->execute()){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
 }
+

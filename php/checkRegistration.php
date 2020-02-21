@@ -1,11 +1,11 @@
 <?php
-	function checkRegistration($fname, $lname, $email, $event){ //Check if user is already registered for event
-   		require_once "../db/dbInterface.php";
-		$registered = FALSE;
-		$info = getAttendeeCount($fname, $lname, $email, $event);
-		if($info['num'] > 0){
-			$registered = TRUE;
-		}
-		return $registered;
-	}
-?>
+require_once "../db/classes/DbClass.php";
+function checkRegistration($attendee, $event){ //Check if user is already registered for event
+    if(DbClass::isAttendeeRegistered($attendee->getId(), $event->getId())){
+        return TRUE;
+    }
+    else{
+        return FALSE;
+    }
+
+}

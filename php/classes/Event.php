@@ -63,12 +63,9 @@ class Event
         deleteEvent($this->getId()); // TODO finish implementation for deleteEvent() in db/dbInterface.php
     }
 
-    /**
-     * returns the number of attendees in the event after adding the new attendee
-     */
-    public function addAttendee(Attendee $attendee) : int
+    public function addAttendee(Attendee $attendee)
     {
-        return array_push($this->attendees, $attendee);
+       array_push($this->attendees, $attendee);
     }
 
     /**
