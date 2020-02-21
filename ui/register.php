@@ -89,7 +89,6 @@
             }
 			else{
 			    $attendee = getAttendeeFromAttributes($fname, $lname, $email);
-			    var_dump($attendee);
             }
 			if(checkRegistration($attendee, $event) == FALSE){
 				registerAttendee($attendee, $event);
