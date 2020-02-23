@@ -10,3 +10,12 @@ function getEvent($id){
     return $event;
 
 }
+
+function getEventNew($id){
+    $dbEvent = DbClass::getEventByID($id);
+    $event = new Event();
+    $event->createNew($dbEvent["Eventid"], $dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"]);
+    $event->populateAttendeeList();
+    return $event;
+
+}

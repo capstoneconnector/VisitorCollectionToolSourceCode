@@ -3,30 +3,34 @@
 
 class TableSummary
 {
-    private string $tableName;
-    private array $keyAttributes;
-    private array $attributes;
-    private string $dbTableName;
-    private array $dbKeyAttributes;
-    private array $dbAttributes;
+    private $tableName;
+    private $primaryAttributes;
+    private $secondaryAttributes;
+    private $attributes;
+    private $dbTableName;
+    private $dbPrimaryAttributes;
+    private $dbSecondaryAttributes;
+    private $dbAttributes;
 
-    private static array $tableNames = array("Event", "Attendee");
+    private static $tableNames = array("Event", "Attendee");
 
     private function __construct(string $tableName,
-                                array $keyAttributes,
+                                array $primaryAttributes,
+                                array $secondaryAttributes,
                                 array $attributes,
                                 string $dbTableName,
-                                array $dbKeyAttributes,
+                                array $dbPrimaryAttributes,
+                                array $dbSecondaryAttributes,
                                 array $dbAttributes)
     {
         $this->tableName = $tableName;
-        $this->keyAttributes = $keyAttributes;
+        $this->primaryAttributes = $primaryAttributes;
+        $this->secondaryAttributes = $secondaryAttributes;
         $this->attributes = $attributes;
         $this->dbTableName = $dbTableName;
-        $this->dbKeyAttributes = $dbKeyAttributes;
+        $this->dbPrimaryAttributes = $dbPrimaryAttributes;
+        $this->dbSecondaryAttributes = $dbSecondaryAttributes;
         $this->dbAttributes = $dbAttributes;
-
-        array_push(self::$tableNames, $this->tableName);
     }
 
     public static function getTableSummaries() : array
@@ -44,40 +48,83 @@ class TableSummary
     public static function getAttendeeSummary() : TableSummary
     {
         $tableName = "Attendee";
-        $keyAttributes = array("id");
+        $primaryAttributes = array("id");
+        $socondaryAttrubutes = array("email");
         $attributes = array("id", "firstName", "lastName", "email", "phone");
         $dbTableName = "attendee";
-        $dbKeyAttributes = array("Id");
+        $dbPrimaryAttributes = array("Id");
+        $dbSecondaryAttributes = array("Email");
         $dbAttributes = array("Id", "Fname", "Lname", "Phone", "Email");
 
         return new TableSummary
         (
             $tableName,
-            $keyAttributes,
+            $primaryAttributes,
+            $socondaryAttrubutes,
             $attributes,
             $dbTableName,
-            $dbKeyAttributes,
+            $dbPrimaryAttributes,
+            $dbSecondaryAttributes,
             $dbAttributes
         );
     }
 
-    public static function getEventSummery() : TableSummary
+    public static function getEventSummary() : TableSummary
     {
         $tableName = "Event";
-        $keyAttributes = array("id");
+        $primaryAttributes = array("id");
+        $secondaryAttributes = array("eventbriteId");
         $attributes = array("id", "name", "date", "description", "eventbriteId");
         $dbTableName = "event";
-        $dbKeyAttributes = array("Eventid");
+        $dbPrimaryAttributes = array("Eventid");
+        $dbSecondaryAttributes = array("Ebid");
         $dbAttributes = array("Eventid", "Name", "Date", "Description", "Ebid");
 
         return new TableSummary
         (
             $tableName,
-            $keyAttributes,
+            $primaryAttributes,
+            $secondaryAttributes,
             $attributes,
             $dbTableName,
-            $dbKeyAttributes,
+            $dbPrimaryAttributes,
+            $dbSecondaryAttributes,
             $dbAttributes
         );
+    }
+
+    public function getTableNames(): string
+    {
+        return $this->tableName;
+    }
+
+    public function getTableName(): string
+    {
+        return $this->tableName;
+    }
+
+    public function getPrimaryAttributes(): array
+    {
+        return $this->primaryAttributes;
+    }
+
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    public function getDbTableName(): string
+    {
+        return $this->dbTableName;
+    }
+
+    public function getDbPrimaryAttributes(): array
+    {
+        return $this->dbPrimaryAttributes;
+    }
+
+    public function getDbAttributes(): array
+    {
+        return $this->dbAttributes;
     }
 }

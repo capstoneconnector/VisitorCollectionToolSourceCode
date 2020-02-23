@@ -1,8 +1,9 @@
 <?php
+require_once "Entry.php";
 require_once "../db/classes/DbClass.php";
 require_once "../php/classes/Attendee.php";
 
-class Event
+class Event extends Entry
 {
     private $id;
     private $name;
@@ -19,13 +20,16 @@ class Event
     {
         if ($id)
         {
-            $event = readEventById($id);
-
             $this->id = $id;
-            $this->name = $event["Name"];
-            $this->date = $event["date"];
-            $this->description = $event["Description"];
-            $this->eventbriteId = $event["ebid"];
+            $dbEvent = DbClass::getEventByID($id);
+
+            $this->name = $dbEvent["Name"];
+            $this->date = $dbEvent["Date"];
+            $this->description = $dbEvent["Description"];
+            if (!isset($dbEvent["Ebid"])) {
+                $this->eventbriteId = $dbEvent["Ebid"];
+            }
+            $this->populateAttendeeList();
         }
     }
 
@@ -37,8 +41,9 @@ class Event
      * @param null $eventbriteId
      */
 
-    public function createNew($id, $name, $date, $description, $eventbriteId=null)
+    public function createNew($id, string $name, string $date, string $description, int $eventbriteId=null)
     {
+        //unset($this->id);
         $this->id = $id;
         $this->name = $name;
         $this->date = $date;
@@ -72,21 +77,34 @@ class Event
     }
 
     /**
-     * Returns the removed attendee
-     * Returns an Exception if the attendee is not in the array
+     * returns true if removal is sucessful. Returns false if there is no attendee to be removed. or the removal failed.
      *
-     * @param AttendeeOld $attendee
-     * @return array|Exception
+     * @param Attendee $attendee
+     * @return bool
      */
     public function removeAttendee(Attendee $attendee)
     {
         $index = array_search($attendee, $this->attendees);
         if ($index)
         {
-            return array_splice($this->attendees, $index);
+            $this->attendees = array_splice($this->attendees, $index, $index);
+            return true;
         } else {
-            return new Exception(); // TODO more descriptive exception for attendee not it array
+            return false;
         }
+    }
+
+    public function populateAttendeeList()
+    {
+        $attendees = [];
+        $dbAttendees = DbClass::getAttendeesForEvent($this->id);
+        foreach($dbAttendees as $row)
+        {
+            $attendee = new Attendee($row["Id"]);
+            $attendee->createNew($row["Id"], $row["Fname"], $row["Lname"], $row["Email"], $row["Phone"]);
+            array_push($attendees, $attendee);
+        }
+        $this->attendees = $attendees;
     }
 
     public function getName(): string
@@ -107,12 +125,12 @@ class Event
         return $this->description;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getEventbriteId(): int
+    public function getEventbriteId()
     {
         return $this->eventbriteId;
     }
@@ -141,16 +159,5 @@ class Event
     public function setDescription(String $description): void
     {
         $this->description = $description;
-    }
-
-    public function populateAttendeeList(){
-        $attendees = [];
-        $dbAttendees = DbClass::getAttendeesForEvent($this->id);
-        foreach($dbAttendees as $row){
-            $attendee = new Attendee();
-            $attendee->createNew($row["Id"], $row["Fname"], $row["Lname"], $row["Email"], $row["Phone"]);
-            array_push($attendees, $attendee);
-        }
-        $this->attendees = $attendees;
     }
 }

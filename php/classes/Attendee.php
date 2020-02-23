@@ -1,4 +1,6 @@
 <?php
+require_once "Entry.php";
+require_once "../../db/classes/DbClass.php";
 
 class Attendee extends Entry
 {
@@ -19,7 +21,7 @@ class Attendee extends Entry
     {
         if ($id)
         {
-            $attendee = readAttendeeById($id);
+            $attendee = DbClass::readByIdNew($this, $id);
 
             $this->id    = $id;
             $this->fname = $attendee["Fname"];
@@ -97,7 +99,7 @@ class Attendee extends Entry
         return $this->email;
     }
 
-    public function getPhone(): string
+    public function getPhone()
     {
         return $this->phone;
     }
