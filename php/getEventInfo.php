@@ -8,5 +8,4 @@ function getEvent($id){
     $event->createNew($dbEvent["Eventid"], $dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"]);
     $event->populateAttendeeList();
     return $event;
-
 }

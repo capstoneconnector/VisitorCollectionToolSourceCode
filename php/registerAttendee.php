@@ -1,8 +1,8 @@
 <?php
 require_once "../db/classes/DbClass.php";
 
-function registerAttendee($attendee, $event){
-    if(DbClass::addWalkinRegistration($attendee->getId(), $event->getId())) {
+function registerAttendee($attendee, $event, $walkIn){
+    if(DbClass::addRegistration($attendee->getId(), $event->getId(), $walkIn)) {
         $event->addAttendee($attendee);
     }
     else{

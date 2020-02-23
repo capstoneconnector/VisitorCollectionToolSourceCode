@@ -62,9 +62,14 @@
                     <label>Email:</label>
                     <br>
                     <label>
-                        <input type="text" name="email" required />
+                        <input type="email" name="email" required />
                     </label>
-
+                    <br>
+                    <label>Phone Number:</label>
+                    <br>
+                    <label>
+                        <input type="text" name="phone" required />
+                    </label>
                     <br><br>
                     <input type = "submit" value = "Save">
                     <button onclick="UpdateAttendee();">Cancel</button>
@@ -90,33 +95,36 @@
 		</div>
 			<div id = "AttendeeTable" class="col-12">
 			<?php
-				require_once "../db/dbInterface.php";
-				
+				require_once "../php/getEventInfo.php";
+                require_once "../php/getAttendanceRecord.php";
 				$attendees = [];
 				if (isset($_GET["eventid"])) 
 				{
-					$attendees = getAttendeeInfoByEventId($_GET['eventid']);
+				    $event = getEvent($_GET["eventid"]);
 					unset($_POST["eventid"]);
 				}
-				if (!empty($attendees)){
+				if (!empty($event)){
 					echo "<table id = 'attendeeTable' class='table'>";
 					echo '<thead class="thead-dark">';
 					echo "<tr>";
-					echo "<th>Fname</th>";
-					echo "<th>Lname</th>";
+					echo "<th>First Name</th>";
+					echo "<th>Last Name</th>";
 					echo "<th>Email</th>";
-					echo "<th>Phone</th>";
+					echo "<th>Phone Number</th>";
+                    echo "<th>Walk-in</th>";
 					echo "<th>Attended</th>";
 					echo "</tr>";
 					echo "</thead>";
 					echo "<tbody>";
-					foreach($attendees as $attendee){
+					foreach($event->getAttendees() as $attendee){
+					    $attendance = getAttendanceRecord($event, $attendee);
 						echo "<tr>";
-						echo "<td>".$attendee['Fname']."</td>";
-						echo "<td>".$attendee['Lname']."</td>";
-						echo "<td>".$attendee['Email']."</td>";
-						echo "<td>".$attendee['Phone']."</td>";
-						echo "<td>".$attendee['Attended']."</td>";
+						echo "<td>".$attendee->getFname()."</td>";
+						echo "<td>".$attendee->getLname()."</td>";
+						echo "<td>".$attendee->getEmail()."</td>";
+						echo "<td>".$attendee->getPhone()."</td>";
+						echo "<td>".$attendance->getWalkIn()."</td>";
+                        echo "<td>".$attendance->getAttended()."</td>";
 						echo "</tr>";
 					}
 					echo "</tbody>";
@@ -128,7 +136,12 @@
     </body>
 </html>
 <?php
-	require_once "../db/dbInterface.php";
+	require_once "../php/registerAttendee.php";
+    require_once "../php/checkAttendeeExists.php";
+    require_once "../php/createAttendee.php";
+    require_once "../php/getAttendeeInfo.php";
+    require_once "../php/getEventInfo.php";
+    require_once "../php/checkRegistration.php";
 	if (!empty($_POST))
 	{
 		if (isset($_POST['fname']))
@@ -136,15 +149,24 @@
 		$fname = $_POST["fname"];
 		$lname = $_POST["lname"];
 		$email = $_POST["email"];
+		$phone = $_POST["phone"];
 		$eventid = $_GET["eventid"];
-		if (addAttendee($fname, $lname, $email, $eventid)){
-			echo '<script language="javascript">';
-			echo 'window.location=("attendee.php?eventid='. $eventid . '")';
-			echo '</script>';
+		$event = getEvent($_GET["eventid"]);
+        if(!checkAttendeeExists($fname, $lname, $email)){
+            $attendee = createAttendee($fname, $lname, $email, $phone);
+        }
+        else{
+            $attendee = getAttendeeFromAttributes($fname, $lname, $email);
+        }
+        if(checkRegistration($attendee, $event) == FALSE){
+            registerAttendee($attendee, $event, FALSE);
+            echo '<script language="javascript">';
+            echo 'window.location=("attendee.php?eventid='. $eventid . '")';
+            echo '</script>';
 		}
 		else{
 			echo '<script language="javascript">';
-			echo 'alert("DB Error"))';
+			echo 'alert("Attendee already registered for this event!"))';
 			echo '</script>';
 		}
 	}

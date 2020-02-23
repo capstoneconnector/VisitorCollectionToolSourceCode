@@ -278,11 +278,12 @@ class DbClass implements DbManagerInterface
         }
     }
 
-    public static function addWalkinRegistration($attendeeID, $eventID){
+    public static function addRegistration($attendeeID, $eventID, $walkIn){
         $pdo = newPDO();
-        $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, TRUE, FALSE)");
+        $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, ?, FALSE)");
         $statement->bindParam(1, $attendeeID);
         $statement->bindParam(2, $eventID);
+        $statement->bindParam(3, $walkIn);
         if($statement->execute()){
             return TRUE;
         }
@@ -294,12 +295,12 @@ class DbClass implements DbManagerInterface
     public static function checkPasswordMatch($username, $password){
         $pdo = newPDO();
         $hashedPassword = sha1($password);
-        $stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
-        $stmt->bindParam(1, $username);
-        $stmt->bindParam(2, $hashedPassword);
-        if($stmt->execute())
+        $statement = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
+        $statement->bindParam(1, $username);
+        $statement->bindParam(2, $hashedPassword);
+        if($statement->execute())
         {
-            $info = $stmt->fetch();
+            $info = $statement->fetch();
             if($info['num'] == 1)
             {
                 return TRUE;
@@ -310,6 +311,19 @@ class DbClass implements DbManagerInterface
         }
         else{
             return FALSE;
+        }
+    }
+
+    public static function getAttendance($eventID, $attendeeID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT * FROM attendance WHERE Eventid = ? AND Attendeeid = ?");
+        $statement->bindParam(1, $eventID);
+        $statement->bindParam(2, $attendeeID);
+        if($statement->execute()){
+            return $statement->fetch();
+        }
+        else{
+            return NULL;
         }
     }
 }

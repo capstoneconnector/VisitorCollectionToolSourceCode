@@ -11,7 +11,7 @@ class Attendance
 
 
 
-    private function __constructor(int $attendeeId,
+    public function __construct(int $attendeeId,
                                    int $eventId,
                                    bool $registered,
                                    bool $walkin,
@@ -50,27 +50,27 @@ class Attendance
 
     public function getAttendeeId()
     {
-        return new $this->attendeeId;
+        return $this->attendeeId;
     }
 
     public function getEventId()
     {
-        return new $this->eventId;
+        return $this->eventId;
     }
 
     public function getRegistered()
     {
-        return new $this->registered;
+        return $this->registered;
     }
 
     public function getWalkIn()
     {
-        return new $this->walkIn;
+        return $this->walkIn;
     }
 
     public function getAttended()
     {
-        return new $this->attended;
+        return $this->attended;
     }
 
     public function setAttendeeId(int $attendeeId): void
