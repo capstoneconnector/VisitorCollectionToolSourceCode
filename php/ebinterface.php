@@ -74,9 +74,8 @@ function importEbEvents(string $oAuthToken)
         foreach ($eventbriteAttendees as $eventbriteAttendee) {
             $eventbriteProfile = $eventbriteAttendee["profile"];
             $attendee = new Attendee();
-            $attendee->createNew
+            $attendee->create
             (
-                1,
                 $eventbriteProfile["first_name"],
                 $eventbriteProfile["last_name"],
                 $eventbriteProfile["email"],

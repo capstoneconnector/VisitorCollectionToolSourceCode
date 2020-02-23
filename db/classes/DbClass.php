@@ -1,9 +1,7 @@
 <?php
-//require_once "../db/connect.php";
-//require_once "../db/classes/DbManagerInterface.php";
+require_once "../db/connect.php";
+require_once "../db/classes/DbManagerInterface.php";
 
-require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/connect.php";
-require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/classes/DbManagerInterface.php";
 require_once "TableSummary.php";
 
 class DbClass implements DbManagerInterface
