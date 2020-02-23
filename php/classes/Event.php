@@ -105,7 +105,7 @@ class Event extends Entry
         return $this->date;
     }
 
-    public function getDescription(): String
+    public function getDescription()
     {
         return $this->description;
     }

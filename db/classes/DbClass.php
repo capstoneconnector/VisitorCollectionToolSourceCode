@@ -30,6 +30,7 @@ class DbClass implements DbManagerInterface
      * @param Entry $table
      * @param array $ids
      * @return array
+     * The full row data of the corresponding id pulled from the db of the class with corresponding name
      */
     public static function readById(Entry $table, array $ids)
     {
@@ -283,6 +284,17 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
+    public static function getAllEvents(){
+        $statement = newPDO()->prepare("SELECT * FROM event"); //Fetch all events
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
+
     public static function getAttendeesForEvent($eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
@@ -371,6 +383,20 @@ class DbClass implements DbManagerInterface
         }
     }
 
+    public static function addEvent($name, $description, $date){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO event(Name, Description, Date) VALUES(?,?,?)");
+        $statement->bindParam(1, $name);
+        $statement->bindParam(2, $description);
+        $statement->bindParam(3, $date);
+        if($statement->execute()){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
+
     public static function getAttendeeByName($fname, $lname, $email){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT * FROM attendee WHERE Fname = ? AND Lname = ? AND Email = ?");
@@ -414,6 +440,55 @@ class DbClass implements DbManagerInterface
         }
         else{
             return FALSE;
+        }
+    }
+
+    public static function addRegistration($attendeeID, $eventID, $walkIn){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, ?, FALSE)");
+        $statement->bindParam(1, $attendeeID);
+        $statement->bindParam(2, $eventID);
+        $statement->bindParam(3, $walkIn);
+        if($statement->execute()){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
+
+    public static function checkPasswordMatch($username, $password){
+        $pdo = newPDO();
+        $hashedPassword = sha1($password);
+        $statement = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
+        $statement->bindParam(1, $username);
+        $statement->bindParam(2, $hashedPassword);
+        if($statement->execute())
+        {
+            $info = $statement->fetch();
+            if($info['num'] == 1)
+            {
+                return TRUE;
+            }
+            else {
+                return FALSE;
+            }
+        }
+        else{
+            return FALSE;
+        }
+    }
+
+    public static function getAttendance($eventID, $attendeeID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT * FROM attendance WHERE Eventid = ? AND Attendeeid = ?");
+        $statement->bindParam(1, $eventID);
+        $statement->bindParam(2, $attendeeID);
+        if($statement->execute()){
+            return $statement->fetch();
+        }
+        else{
+            return NULL;
         }
     }
 }

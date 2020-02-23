@@ -91,7 +91,7 @@
 			    $attendee = getAttendeeFromAttributes($fname, $lname, $email);
             }
 			if(checkRegistration($attendee, $event) == FALSE){
-				registerAttendee($attendee, $event);
+				registerAttendee($attendee, $event, TRUE);
 				echo "<script type='text/javascript'>";
 				echo "alert('Registration Successful!');";
 				echo "window.location = ('checkin.php');";
