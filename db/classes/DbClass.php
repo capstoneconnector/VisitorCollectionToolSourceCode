@@ -122,7 +122,18 @@ class DbClass implements DbManagerInterface
     }
 
     static function getAllEventsAfterCurrentDate(){
-        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events
+        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events on or after current date
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
+
+    public static function getAllEvents(){
+        $statement = newPDO()->prepare("SELECT * FROM event"); //Fetch all events
         $info = array();
         if($statement->execute()) {
             while($row = $statement->fetch()) {
@@ -220,6 +231,20 @@ class DbClass implements DbManagerInterface
         }
     }
 
+    public static function addEvent($name, $description, $date){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO event(Name, Description, Date) VALUES(?,?,?)");
+        $statement->bindParam(1, $name);
+        $statement->bindParam(2, $description);
+        $statement->bindParam(3, $date);
+        if($statement->execute()){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
+
     public static function getAttendeeByName($fname, $lname, $email){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT * FROM attendee WHERE Fname = ? AND Lname = ? AND Email = ?");
@@ -282,6 +307,9 @@ class DbClass implements DbManagerInterface
             else {
                 return FALSE;
             }
+        }
+        else{
+            return FALSE;
         }
     }
 }

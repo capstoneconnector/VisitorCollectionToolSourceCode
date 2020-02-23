@@ -89,7 +89,7 @@
 			</div>
 			<div id = "EventTable" class="col-12">
 			<?php
-				require_once "../db/dbInterface.php";
+				require_once "../php/getEvents.php";
 				$events = getAllEvents();
 				if (!empty($events)){
 					echo "<table id = 'eventTable' class='table'>";
@@ -104,10 +104,10 @@
 					echo "<tbody>";
 					foreach($events as $event){
 						echo "<tr>";
-						echo "<td><a href = 'attendee.php?eventid=".$event['Eventid']."'>".$event['Name']."</a></td>";
-						echo "<td>".$event['Description']."</td>";
-						echo "<td>".$event['Date']."</td>";
-						echo "<td>".$event['Eventid']."</td>";
+						echo "<td><a href = 'attendee.php?eventid=".$event->getId()."'>".$event->getName()."</a></td>";
+						echo "<td>".$event->getDescription()."</td>";
+						echo "<td>".$event->getDate()."</td>";
+						echo "<td>".$event->getId()."</td>";
 						echo "</tr>";
 					}
 					echo "</tbody>";
@@ -120,7 +120,7 @@
 </html>
 
 <?php
-	require_once "../db/dbInterface.php";
+	require_once "../php/createEvent.php";
 	if (!empty($_POST))
 	{
 		if (isset($_POST['name']))
@@ -130,7 +130,7 @@
 		$date = $_POST["date"];
 		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
 		{
-			if (addEvent($name, $date, $description)){
+			if (createEvent($name, $description, $date)){
 			echo '<script language="javascript">';
 			echo 'window.location=("manager.php")';
 			echo '</script>';

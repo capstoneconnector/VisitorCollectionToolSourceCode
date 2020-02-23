@@ -99,7 +99,7 @@ class Event
         return $this->date;
     }
 
-    public function getDescription(): String
+    public function getDescription()
     {
         return $this->description;
     }
