@@ -1,7 +1,11 @@
 <?php
 require_once "Entry.php";
-require_once "../db/classes/DbClass.php";
-require_once "../php/classes/Attendee.php";
+//require_once "../db/classes/DbClass.php";
+//require_once "../php/classes/Attendee.php";
+
+require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/classes/DbClass.php";
+require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/php/classes/Attendee.php";
+
 
 class Event extends Entry
 {
@@ -20,15 +24,9 @@ class Event extends Entry
     {
         if ($id)
         {
-            $this->id = $id;
             $dbEvent = DbClass::getEventByID($id);
-
-            $this->name = $dbEvent["Name"];
-            $this->date = $dbEvent["Date"];
-            $this->description = $dbEvent["Description"];
-            if (!isset($dbEvent["Ebid"])) {
-                $this->eventbriteId = $dbEvent["Ebid"];
-            }
+            $this->createNew($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
+            $this->id = $id;
             $this->populateAttendeeList();
         }
     }
@@ -53,19 +51,13 @@ class Event extends Entry
         }
     }
 
-    public function save()
+    public function create(string $name, string $date, string $description="", int $eventbriteId=null)
     {
-        if (readEventById($this->getId()))
-        {
-            updateEvent($this->getId(), $this);
-        } else {
-            insertEvent($this);
-        }
-    }
-
-    public function delete() // TODO Should this also delete all of the attendance records associated with this event?
-    {
-        //deleteEvent($this->getId()); // TODO finish implementation for deleteEvent() in db/dbInterface.php
+        $this->id = null;
+        $this->name = $name;
+        $this->date = $date;
+        $this->description = $description;
+        $this->eventbriteId = $eventbriteId;
     }
 
     public function addAttendee(Attendee $attendee)
@@ -148,7 +140,7 @@ class Event extends Entry
     /**
      * @param mixed $date
      */
-    public function setDate($date): void // TODO add regex checking for date format
+    public function setDate(string $date): void // TODO add regex checking for date format
     {
         $this->date = $date;
     }

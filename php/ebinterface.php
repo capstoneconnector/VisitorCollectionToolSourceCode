@@ -56,15 +56,13 @@ function pullEbAttendees(string $event_id) : array
 
 function importEbEvents(string $oAuthToken)
 {
-	require_once "../db/dbInterface.php";
-
 	$eventbriteEvents = pullEbEvents();
 	foreach ($eventbriteEvents as $eventbriteEvent) {
 	    $date = date_create($eventbriteEvent["start"]["local"]);
 	    $date = date_format($date, "Y-m-d");
 
 	    $event = new Event();
-	    $event->createNew
+	    $event->create
         (
             $eventbriteEvent["name"]["text"],   // name
             $date,                              // date
@@ -72,7 +70,6 @@ function importEbEvents(string $oAuthToken)
             $eventbriteEvent["id"]              // eventbrite Id
         );
 
-        var_dump($event);
         $eventbriteAttendees = pullEbAttendees($eventbriteEvent["id"]);
         foreach ($eventbriteAttendees as $eventbriteAttendee) {
             $eventbriteProfile = $eventbriteAttendee["profile"];
@@ -84,38 +81,13 @@ function importEbEvents(string $oAuthToken)
                 $eventbriteProfile["last_name"],
                 $eventbriteProfile["email"],
             );
-            DbClass::insertNew($attendee);
+            DbClass::save($attendee);
             $event->addAttendee($attendee);
 
         }
         DbClass::save($event);
     }
-}
-
-
-function testPullEbEvents() {
-	//echo $attendee_list_url;
-	echo "<br>";
-	//$events = pullEbEvents($PRI_TOKEN);
-    $events = array();
-	$attendees = pullEbAttendees($events[0]["id"]);
-	$attendee = $attendees[0];
-	echo $attendee["profile"]["name"];
-	echo "<br>";
-	echo $attendee["id"];
-	echo "<br>";	
-}
-
-/*function testPullEbEvents() {
-	$events = pullEbEvents($PRI_TOKEN);
-	echo $events[0]["name"];
-	echo "<br>";
-	echo $events[0]["id"];
-	echo "<br>";
-	echo $events[0]["event_url"];
-	echo "<br>";
-}*/
-?>
+}?>
 
 
 

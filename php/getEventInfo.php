@@ -11,11 +11,9 @@ function getEvent($id){
 
 }
 
+/*
 function getEventNew($id){
-    $dbEvent = DbClass::getEventByID($id);
-    $event = new Event();
-    $event->createNew($dbEvent["Eventid"], $dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"]);
-    $event->populateAttendeeList();
-    return $event;
+    return new Event($id);
 
 }
+*/
