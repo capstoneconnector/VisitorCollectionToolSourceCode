@@ -265,5 +265,24 @@ class DbClass implements DbManagerInterface
             return FALSE;
         }
     }
+
+    public static function checkPasswordMatch($username, $password){
+        $pdo = newPDO();
+        $hashedPassword = sha1($password);
+        $stmt = $pdo->prepare("SELECT COUNT(Username) AS num FROM user WHERE Username = ? AND Password = ?");
+        $stmt->bindParam(1, $username);
+        $stmt->bindParam(2, $hashedPassword);
+        if($stmt->execute())
+        {
+            $info = $stmt->fetch();
+            if($info['num'] == 1)
+            {
+                return TRUE;
+            }
+            else {
+                return FALSE;
+            }
+        }
+    }
 }
 

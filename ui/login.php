@@ -56,7 +56,7 @@
 </html>
 
 <?php
-	require_once "../db/dbInterface.php";
+	require_once "../php/verifyLogin.php";
 	if(!empty($_POST)){
 		$username = $_POST['username'];
 		$password = $_POST['password'];
