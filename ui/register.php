@@ -57,6 +57,8 @@
 				<br><br>
 				<label id = "field">Email <input class = "input" type = "email" name = "email" required value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''?>"></label>
 				<br><br>
+                <label id = "field">Phone Number <input class = "input" type = "text" name = "phone" required value="<?php echo isset($_POST["phone"]) ? $_POST["phone"] : ''?>"></label>
+                <br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>
 			<form method = "post" action = "checkin.php">
@@ -68,19 +70,30 @@
 
 <?php
 	require_once "../php/checkRegistration.php";
+    require_once "../php/getEventInfo.php";
 	require_once "../db/dbInterface.php";
+    require_once "../php/registerAttendee.php";
+    require_once "../php/checkAttendeeExists.php";
+    require_once "../php/getAttendeeInfo.php";
+    require_once "../php/createAttendee.php";
 
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
 			$fname = $_POST["fname"];
 			$lname = $_POST["lname"];
 			$email = $_POST["email"];
-			$event = $_SESSION['eventId'];
-			
-			if(checkRegistration($fname, $lname, $email, $event) == FALSE){ 
-				registerUser($fname, $lname, $email, $event);
+			$phone = $_POST["phone"];
+            $event = getEvent($_SESSION["eventId"]);
+			if(!checkAttendeeExists($fname, $lname, $email)){
+			    $attendee = createAttendee($fname, $lname, $email, $phone);
+            }
+			else{
+			    $attendee = getAttendeeFromAttributes($fname, $lname, $email);
+            }
+			if(checkRegistration($attendee, $event) == FALSE){
+				registerAttendee($attendee, $event);
 				echo "<script type='text/javascript'>";
-				echo "alert('Registration and Check In Successful!');";
+				echo "alert('Registration Successful!');";
 				echo "window.location = ('checkin.php');";
 				echo "</script>";
 			}
