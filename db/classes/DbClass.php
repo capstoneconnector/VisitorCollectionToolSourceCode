@@ -1,8 +1,6 @@
 <?php
-//require_once "../db/connect.php";
-//require_once "../db/classes/DbManagerInterface.php";
-require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/connect.php";
-require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/classes/DbManagerInterface.php";
+require_once "../db/connect.php";
+require_once "../db/classes/DbManagerInterface.php";
 
 require_once "TableSummary.php";
 
@@ -115,7 +113,7 @@ class DbClass implements DbManagerInterface
         $theId = $pdo->lastInsertId();
         $entry->$primaryAttributeFunctionName($theId);
 
-        return $isSuccessful; // TODO returns the id instead of the entry. see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
+        return $isSuccessful;
     }
 
     /**
@@ -191,8 +189,6 @@ class DbClass implements DbManagerInterface
             self::update($entry);
         } else {
             self::insert($entry);
-            // TODO set the subclass id(s) to the newly created entry id(s)
-            //see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
         }
     }
 

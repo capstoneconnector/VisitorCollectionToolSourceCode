@@ -1,8 +1,7 @@
 <?php
 function newPDO()
 {
-    //require_once "../php/parseConfig.php";
-    require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/php/parseConfig.php";
+    require_once "../php/parseConfig.php";
     $config = parseConfig();
 
     $hostname = $config["hostname"];
