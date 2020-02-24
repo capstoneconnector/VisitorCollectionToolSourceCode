@@ -41,7 +41,7 @@ class Attendee extends Entry
         $this->phone = $phone;
     }
 
-    public function create(string $firstName, string $lastName, string $email, string $phone=null)
+    public function create(string $firstName, string $lastName, string $email, string $phone="")
     {
         $this->id = null;
         $this->firstName = $firstName;
@@ -73,6 +73,11 @@ class Attendee extends Entry
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function setFirstName($firstName): void

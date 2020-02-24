@@ -27,12 +27,26 @@ class DbClassTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $result);
     }
 
-    function testInsertAttendee()
+    function testInsertAttendeeWithAllAttributesSet()
     {
         $attendee = new Attendee();
-        $attendee->create("Jim", "Bob", "jimbob@gmail.com", "123-4567");
+        $attendee->create("Jim", "Walton", "jimbob@gmail.com", "123-4567");
         $this->assertTrue(DbClass::insert($attendee));
+    }
 
+    function testInsertAttendeeWithoutPhoneNumberSet()
+    {
+        $attendee = new Attendee();
+        $attendee->create("Olivia", "Walton", "oliviawalton@gmail.com");
+        $this->assertTrue(DbClass::insert($attendee));
+    }
+
+    function testInsertingAttendeeSetsTheIdOfAttendee()
+    {
+        $attendee = new Attendee();
+        $attendee->create("Mary", "Walton", "maryellen@gmail.com");
+        DbClass::insert($attendee);
+        $this->assertTrue(!empty($attendee->getId()));
     }
 
     function testInsertEvent()
@@ -53,9 +67,9 @@ class DbClassTest extends PHPUnit_Framework_TestCase
     function testUpdateAttendee()
     {
         $attendee = new Attendee(10000);
-        $attendee->setFirstName("Kylie");
-        $attendee->setLastName("Harmon");
-        $attendee->setemail("kh@good.mail");
+        $attendee->setFirstName("Albert");
+        $attendee->setLastName("Ingalls");
+        $attendee->setemail("alberingalls@good.mail");
         $attendee->setPhone("");
         $this->assertTrue(DbClass::update($attendee));
     }
@@ -63,7 +77,7 @@ class DbClassTest extends PHPUnit_Framework_TestCase
     function testUpdateEntryThatDoesNotExist()
     {
         $attendee = new Attendee();
-        $attendee->create("Matt", "Nestle", "mn@good.year");
+        $attendee->create("Mary", "Ingalls", "mn@good.year");
         $this->assertFalse(DbClass::update($attendee));
     }
 }

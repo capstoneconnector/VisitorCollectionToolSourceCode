@@ -70,6 +70,8 @@ function importEbEvents(string $oAuthToken)
             $eventbriteEvent["id"]              // eventbrite Id
         );
 
+        DbClass::insert($event);
+
         $eventbriteAttendees = pullEbAttendees($eventbriteEvent["id"]);
         foreach ($eventbriteAttendees as $eventbriteAttendee) {
             $eventbriteProfile = $eventbriteAttendee["profile"];
@@ -80,11 +82,13 @@ function importEbEvents(string $oAuthToken)
                 $eventbriteProfile["last_name"],
                 $eventbriteProfile["email"],
             );
-            DbClass::save($attendee);
+
+            DbClass::insert($attendee);
+
             $event->addAttendee($attendee);
 
+            DbClass::addRegistration($attendee->getId(), $event->getId(), false);
         }
-        DbClass::save($event);
     }
 }?>
 

@@ -95,7 +95,8 @@ class DbClass implements DbManagerInterface
             $values .= ", ?";
         }
 
-        $statement = newPDO()->prepare("INSERT INTO {$tableName}({$columns}) VALUES ({$values})");
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO {$tableName}({$columns}) VALUES ({$values})");
 
         // binding parameters
         for ($index=0; $index < count($attributes); $index++)
@@ -104,7 +105,15 @@ class DbClass implements DbManagerInterface
             $statement->bindParam($index+1, $value[$index]);
         }
 
-        return $statement->execute(); // TODO returns the id of the insted entry. see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
+        $isSuccessful = $statement->execute();
+
+        //setting the primary attribute on the entry
+        $primaryAttribute = ucfirst($tableSummary->getPrimaryAttributes()[0]);
+        $primaryAttributeFunctionName = "set{$primaryAttribute}";
+        $theId = $pdo->lastInsertId();
+        $entry->$primaryAttributeFunctionName($theId);
+
+        return $isSuccessful;
     }
 
     /**
@@ -180,8 +189,6 @@ class DbClass implements DbManagerInterface
             self::update($entry);
         } else {
             self::insert($entry);
-            // TODO set the subclass id(s) to the newly created entry id(s)
-            //see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
         }
     }
 
@@ -224,23 +231,6 @@ class DbClass implements DbManagerInterface
         return $tableSummaries[get_class($entry)];
     }
 
-    private static function getColumnEqualsValuePair(Entry $entry, array $dbColumns, array $values)
-    {
-        if (count($dbColumns) != count($values))
-        {
-            return new Exception("columns and values arrays must be the same length");
-        }
-
-        $columnValuePairs = array();
-        for ($index=0; $index<count($dbColumns); $index++)
-        {
-            $columnValuePair = $dbColumns[$index] . "=" . self::getValueOfAttribute($entry, $values[$index]) . " ";
-            array_push($columnValuePairs, $columnValuePair);
-        }
-
-        return $columnValuePairs;
-    }
-
     private static function getColumnEqualsParameter(array $dbColumns)
     {
         $values = array();
@@ -253,24 +243,6 @@ class DbClass implements DbManagerInterface
         $values = join(", ", $values);
 
         return $values;
-    }
-
-    private static function getColumnEqualsValue(array $dbColumns, array $values)
-    {
-        if (count($dbColumns) != count($values))
-        {
-            return new Exception("columns and values arrays must be the same length");
-        }
-
-        $columnsEqualsValues = array();
-        for ($index=0; $index<count($dbColumns);$index++)
-        {
-            $columnEqualsValue = $dbColumns[$index] . "=" . $values[$index] ." ";
-            array_push($columnsEqualsValues, $columnEqualsValue);
-        }
-
-        return $columnsEqualsValues;
-
     }
 
     public static function getAllEventsAfterCurrentDate(){

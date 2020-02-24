@@ -2,7 +2,6 @@
 function newPDO()
 {
     require_once "../php/parseConfig.php";
-
     $config = parseConfig();
 
     $hostname = $config["hostname"];

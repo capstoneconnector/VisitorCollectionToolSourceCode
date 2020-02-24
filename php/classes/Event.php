@@ -128,14 +128,16 @@ class Event extends Entry
         return $this->attendees;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @param mixed $date
-     */
     public function setDate(string $date): void // TODO add regex checking for date format
     {
         $this->date = $date;
