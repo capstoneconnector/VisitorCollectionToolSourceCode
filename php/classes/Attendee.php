@@ -1,10 +1,12 @@
 <?php
+require_once "Entry.php";
+//require_once "../../db/classes/DbClass.php";
 
-class Attendee
+class Attendee extends Entry
 {
     private $id;
-    private $fname;
-    private $lname;
+    private $firstName;
+    private $lastName;
     private $email;
     private $phone;
 
@@ -19,77 +21,48 @@ class Attendee
     {
         if ($id)
         {
-            $attendee = readAttendeeById($id);
+            $ids = array($id);
+            $attendee = DbClass::readById($this, $ids);
 
-            $this->id    = $id;
-            $this->fname = $attendee["Fname"];
-            $this->lname = $attendee["Lname"];
-            $this->email = $attendee["Email"];
-            $this->phone = $attendee["Phone"];
-            return True;
-        }
-        return False;
-    }
-
-    /**
-     * [WIP]
-     * This is a factory function for Attendee
-     * @param $id
-     * @return bool
-     */
-    /*
-    static public function fromId($id)
-    {
-        if ($id)
-        {
-            $attendee = readAttendeeById($id);
-
-            $this->id    = $id;
-            $this->fname = $attendee["Fname"];
-            $this->lname = $attendee["Lname"];
-            $this->email = $attendee["Email"];
-            $this->phone = $attendee["Phone"];
-            return self::__construct(fname, lname, email, phone);
+            $this->id        = $id;
+            $this->firstName = $attendee["Fname"];
+            $this->lastName  = $attendee["Lname"];
+            $this->email     = $attendee["Email"];
+            $this->phone     = $attendee["Phone"];
         }
     }
-    */
-    public function createNew(int $id, string $fname, string $lname, string $email, string $phone=null)
+
+    public function createNew($id, $fname, $lname, $email, $phone=null)
     {
         $this->id = $id;
-        $this->fname = $fname;
-        $this->lname = $lname;
+        $this->firstName = $fname;
+        $this->lastName = $lname;
         $this->email = $email;
         $this->phone = $phone;
     }
 
-    public function save()
+    public function create(string $firstName, string $lastName, string $email, string $phone=null)
     {
-        if ($attendee = readAttendeeById($this->getId()))
-        {
-            return updateAttendee($this->getId(), $this);
-        } else {
-            return insertAttendee($this);
-        }
+        $this->id = null;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->phone = $phone;
     }
 
-    public function delete()
-    {
-        deleteAttendee($this->getId());
-    }
-
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getFname(): string
+    public function getFirstName()
     {
-        return $this->fname;
+        return $this->firstName;
     }
 
-    public function getLname(): string
+    public function getLastName()
     {
-        return $this->lname;
+        return $this->lastName;
     }
 
     public function getEmail(): string
@@ -97,19 +70,19 @@ class Attendee
         return $this->email;
     }
 
-    public function getPhone(): string
+    public function getPhone()
     {
         return $this->phone;
     }
 
-    public function setFname($fname): void
+    public function setFirstName($firstName): void
     {
-        $this->fname = $fname;
+        $this->firstName = $firstName;
     }
 
-    public function setLname($lname): void
+    public function setLastName($lastName): void
     {
-        $this->lname = $lname;
+        $this->lastName = $lastName;
     }
 
     public function setEmail($email): void
@@ -121,5 +94,4 @@ class Attendee
     {
         $this->phone = $phone;
     }
-
 }

@@ -1,15 +1,13 @@
 <?php
 
 
-class Attendance
+class Attendance extends Entry
 {
     private $attendeeId;
     private $eventId;
     private $registered;
     private $walkIn;
     private $attended;
-
-
 
     public function __construct(int $attendeeId,
                                    int $eventId,
@@ -38,37 +36,32 @@ class Attendance
         return 0;
     }
 
-    public function save()
-    {
-        return 0;
-    }
-
     public function delete()
     {
 
     }
 
-    public function getAttendeeId()
+    public function getAttendeeId() : int
     {
         return $this->attendeeId;
     }
 
-    public function getEventId()
+    public function getEventId() : int
     {
         return $this->eventId;
     }
 
-    public function getRegistered()
+    public function getRegistered() : bool
     {
         return $this->registered;
     }
 
-    public function getWalkIn()
+    public function getWalkIn() : bool
     {
         return $this->walkIn;
     }
 
-    public function getAttended()
+    public function getAttended() : bool
     {
         return $this->attended;
     }

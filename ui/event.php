@@ -121,8 +121,8 @@
 					foreach($event->getAttendees() as $attendee){
 					    $attendance = getAttendanceRecord($event, $attendee);
 						echo "<tr>";
-						echo "<td>".$attendee->getFname()."</td>";
-						echo "<td>".$attendee->getLname()."</td>";
+						echo "<td>".$attendee->getFirstName()."</td>";
+						echo "<td>".$attendee->getLastName()."</td>";
 						echo "<td>".$attendee->getEmail()."</td>";
 						echo "<td>".$attendee->getPhone()."</td>";
 						echo "<td>".$attendance->getWalkIn()."</td>";

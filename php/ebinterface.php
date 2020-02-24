@@ -1,11 +1,17 @@
 <?php
+require_once "../db/classes/DbClass.php";
+require_once "classes/Event.php";
+require_once "classes/Attendee.php";
+
 $PRI_TOKEN = "COKR3D7YQAPZM2GWLOTL";
 
 /*
 arg: $requeset is the url extention after the endpoint
 arg: $options is extra aruments in the url. Must be a list of arguments e.g. ["arg=value", ...]
+A full list of args may be found at //TODO find a list of args (url link)
 */
-function wrapUrlRequestWithOptions($request, $options) {
+function wrapUrlRequestWithOptions(string $request, array $options) : string
+{
 	require_once "../php/parseConfig.php";
 	$config = parseConfig();
 	$token_argument = "?token=" . $config["PRIVATE_TOKEN"];
@@ -19,15 +25,17 @@ function wrapUrlRequestWithOptions($request, $options) {
 	return $endpoint.$request.$token_argument.$args;
 }
 
-function wrapUrlRequest($request) {
+function wrapUrlRequest(string $request) : string
+{
 	return wrapUrlRequestWithOptions($request, []);
 }
 
-function getJsonFromUrl($url) {
+function getJsonFromUrl(string $url) {
 	return json_decode(file_get_contents($url), true);
 }
 
-function depaginate($page, $data_type) {
+function depaginate($page, $data_type) :array
+{
 	$result = array();
 	for ($i=0; $i<$page["pagination"]["page_count"]; $i++) {
 		$result += $page[$data_type];
@@ -35,60 +43,51 @@ function depaginate($page, $data_type) {
 	return $result;
 }
 
-function pullEbEvents($OAuthToken) {
+function pullEbEvents() : array {
 	$contents = getJsonFromUrl(wrapUrlRequest("users/me/events"));
 	return depaginate($contents, "events");	 
 }
 
-function pullEbAttendees($event_id) {
+function pullEbAttendees(string $event_id) : array
+{
 	$contents = getJsonFromUrl(wrapUrlRequest("events/".$event_id."/attendees/"));
 	return depaginate($contents, "attendees");
 }
 
-function importEbEvents($oAuthToken) {
-	require_once "../db/dbInterface.php";
+function importEbEvents(string $oAuthToken)
+{
+	$eventbriteEvents = pullEbEvents();
+	foreach ($eventbriteEvents as $eventbriteEvent) {
+	    $date = date_create($eventbriteEvent["start"]["local"]);
+	    $date = date_format($date, "Y-m-d");
 
-	$events = pullEbEvents($oAuthToken);
-	foreach ($events as $event) {
-		addEvent($event["name"], $event["start"]["local"]);	// TODO date needs formatting
+	    $event = new Event();
+	    $event->create
+        (
+            $eventbriteEvent["name"]["text"],   // name
+            $date,                              // date
+            $eventbriteEvent["summary"],        // description
+            $eventbriteEvent["id"]              // eventbrite Id
+        );
 
-		$attendees = pullEbAttendees($event["id"]);
-		foreach ($attendees["attendees"] as $attendee) {
-			$profile = $attendee["profile"];
-			addAttendee($profile["first_name"], 
-						$profile["last_name"],
-						$profile["email"],
-						$attendee["event_id"]
-			);
-			
-		}
-	}
-}
+        $eventbriteAttendees = pullEbAttendees($eventbriteEvent["id"]);
+        foreach ($eventbriteAttendees as $eventbriteAttendee) {
+            $eventbriteProfile = $eventbriteAttendee["profile"];
+            $attendee = new Attendee();
+            $attendee->create
+            (
+                $eventbriteProfile["first_name"],
+                $eventbriteProfile["last_name"],
+                $eventbriteProfile["email"],
+            );
+            DbClass::save($attendee);
+            $event->addAttendee($attendee);
 
+        }
+        DbClass::save($event);
+    }
+}?>
 
-function testPullEbEvents() {
-	//echo $attendee_list_url;
-	echo "<br>";
-	//$events = pullEbEvents($PRI_TOKEN);
-    $events = array();
-	$attendees = pullEbAttendees($events[0]["id"]);
-	$attendee = $attendees[0];
-	echo $attendee["profile"]["name"];
-	echo "<br>";
-	echo $attendee["id"];
-	echo "<br>";	
-}
-
-/*function testPullEbEvents() {
-	$events = pullEbEvents($PRI_TOKEN);
-	echo $events[0]["name"];
-	echo "<br>";
-	echo $events[0]["id"];
-	echo "<br>";
-	echo $events[0]["event_url"];
-	echo "<br>";
-}*/
-?>
 
 
 <html>

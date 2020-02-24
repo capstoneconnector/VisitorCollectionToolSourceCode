@@ -9,3 +9,10 @@ function getEvent($id){
     $event->populateAttendeeList();
     return $event;
 }
+
+/*
+function getEventNew($id){
+    return new Event($id);
+
+}
+*/

@@ -2,106 +2,200 @@
 require_once "../db/connect.php";
 require_once "../db/classes/DbManagerInterface.php";
 
+require_once "TableSummary.php";
+
 class DbClass implements DbManagerInterface
 {
-    const ATTENDEE_TABLE_NAME = "attendee";
-    const ATTRIBUTE_NAMES = array();
-    protected $attributeDbNames = array();
-    protected $keyAttribute;
-    protected $keyDbAttribute;
+    private $tableSummaries;
 
     public function __construct()
     {
-
+        $this->tableSummaries = TableSummary::getTableSummaries();
     }
 
 
 
     /**
-     * Pulls an entry from a table using the ID of the entry and returns an array
+     * Pulls an entry from a table using the id(s) of the entry and returns an array
      *
-     * @param int $id
-     * The row entry of the corresponding id
+     * @param int $ids
+     * The row entry of the corresponding id(s)
+     * @return array
+     * The full row data of the corresponding id(s) pulled from the db of the class with corresponding name
+     */
+
+    /**
+     * What is it?
+     * examples: readById(new Attendee, [10000])
+     * @param Entry $table
+     * @param array $ids
      * @return array
      * The full row data of the corresponding id pulled from the db of the class with corresponding name
      */
-    function readById(int $id)
+    public static function readById(Entry $table, array $ids)
     {
-        $conditional = $this->keyDbAttribute . "=" . $id;
-        $statement = newPDO()->prepare("SELECT * FROM {$this->tableName} WHERE {$conditional}");
+        $tableSummary = self::getTableSummary($table);
+        $dbPrimaryAttributes = $tableSummary->getDbPrimaryAttributes();
+        $tableName = $tableSummary->getTableName();
+        $conditional = self::getColumnEqualsParameter($dbPrimaryAttributes);
 
-        $tableResult = array();
+
+        $statement = newPDO()->prepare("SELECT * FROM {$tableName} WHERE {$conditional}");
+
+        // binding parameters
+        for ($index=0; $index < count($dbPrimaryAttributes); $index++)
+        {
+            $statement->bindParam($index+1, $ids[$index]);
+        }
+
+        $statement->execute();
+        return $statement->fetch();
+
+        /*
+         * TODO low priority, see source code
+         * May still be used in replacement of the above two statements if multiple id's are provided.
+         * To be implemented
+         * Abstract the following fetch logic to its own function
+        $result = array();
         if($statement->execute())
         {
             while($row = $statement->fetch())
             {
-                array_push($tableResult, $row);
+                array_push($result, $row);
             }
-            return $tableResult;
+            return $result;
         } else {
-            trigger_error("Selection statement failed. Could not retrieve entry from DB");
+            false;
         }
+        */
     }
 
     /**
      * Inserts a new entry into the table corresponding to the name of the class using the specified attributes in that
      * class
      *
-     * @param int $id
-     * refers to the entry of the corresponding id
-     * @param DbClass $dbClass
+     * @param $entry
+     * refers to the entry that needs to be inserted into the database
      * @return bool
      * returns true if the insertion was successful; otherwise returns false.
      */
-    function insert()
+    public static function insert(Entry $entry)
     {
-        $columns = join(", ", $this->attributeDbNames);
-        $values = join(", ", $this->getValuesOfAttributes($this->attributeNames));
-        $statement = newPDO()->prepare("INSERT INTO {$this->tableName}({$columns}) VALUES ({$values})");
-        return $statement->execute();
+        $tableSummary = self::getTableSummary($entry);
+        $tableName = $tableSummary->getDbTableName();
+        $attributes = $tableSummary->getAttributes();
+        $dbAttributes = $tableSummary->getDbAttributes();
+        $columns = join(", ", $dbAttributes);
+
+        // formatting values to have a number of parameters ("?") equal to the number of attributes for the table
+        // e.g. if a table has five attributes then there will be five "?" like this: "?, ?, ?, ?, ?"
+        $values = "?";
+        for ($index=0; $index<count($dbAttributes) - 1; $index++)
+        {
+            $values .= ", ?";
+        }
+
+        $statement = newPDO()->prepare("INSERT INTO {$tableName}({$columns}) VALUES ({$values})");
+
+        // binding parameters
+        for ($index=0; $index < count($attributes); $index++)
+        {
+            $value[$index] = self::getValueOfAttribute($entry, $attributes[$index]);
+            $statement->bindParam($index+1, $value[$index]);
+        }
+
+        return $statement->execute(); // TODO returns the id of the insted entry. see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
     }
 
     /**
-     * Resets all attributes in the DB to the current attribute values represented in the class. The entry must exist
-     * in the DB to update the entry.
-     * Throws error if the $keyAttribute is not set; indicating that there is no entry in the DB.
+     * Resets all attributes in the database to the current attribute values represented in the class. The entry must exist
+     * in the database to update the entry.
+     * Throws error if the primary key is not set; indicating that there is no entry in the database.
+     *
+     * @param $entry
      * @return bool
      * returns true if the update is successful; otherwise returns false.
      */
-    function update()
+    public static function update(Entry $entry)
     {
-        if (!empty($this->getValueOfAttribute($this->keyAttribute)))
+        $tableSummary = self::getTableSummary($entry);
+
+        $primaryAttributesAreNotEmpty = true;
+        foreach ($tableSummary->getPrimaryAttributes() as $primaryAttribute)
         {
-            $columnValuePair = array();
-            foreach ($this->attributeNames as $attrName) {
-                array_push($columnValuePair, $attrName . "=" . $this->getValueOfAttribute($attrName));
+            if ($isset = empty(self::getValueOfAttribute($entry, $primaryAttribute))) // if the primary value is empty
+            {
+                $primaryAttributesAreNotEmpty = false;
+            }
+        }
+
+        // checks if the primary attributes are not empty. If the primary values are empty, then that implies that the entry does not exist in the database
+        if ($primaryAttributesAreNotEmpty)
+        {
+            $dbAttributes = $tableSummary->getDbAttributes();
+            $dbPrimaryAttributes = $tableSummary->getDbPrimaryAttributes();
+
+            $tableName = $tableSummary->getDbTableName();
+            $values = self::getColumnEqualsParameter($dbAttributes);
+            $conditionals = self::getColumnEqualsParameter($dbPrimaryAttributes);
+
+            $statement = newPDO()->prepare("UPDATE {$tableName} SET {$values} WHERE {$conditionals}");
+
+            // binding parameters
+            // Can't use the "+" operator because it does not append elements, rather it overwrites them.
+            // ex $dbAttributes = array([0]=>"Id", ...) and $dbPrimaryAttributes = array([0]=>"Id"). I want both instances to exist in $parameters with each element of $dbPrimaryAttributes being appended at the end of $dbAttributes
+            $parameters = $tableSummary->getAttributes();
+            foreach ($tableSummary->getPrimaryAttributes() as $primaryAttribute)
+            {
+                array_push($parameters, $primaryAttribute);
+            }
+            $value = array();
+            for ($index=0; $index < count($parameters); $index++)
+            {
+                $value[$index] = self::getValueOfAttribute($entry, $parameters[$index]);
+                $statement->bindParam($index+1, $value[$index]);
             }
 
-            $values = join(", ", $columnValuePair);
-            $conditional = $this->keyDbAttribute . "=" . $this->getValueOfAttribute($this->keyAttribute);
-            $statement = newPDO()->prepare("UPDATE {$this->tableName} SET {$values} WHERE {$conditional}");
             return $statement->execute();
         } else {
-            trigger_error("Entry does not exist!");
+            return false;
         }
-    }
 
-    function delete()
+}
+
+    public static function delete()
     {
         // TODO: Implement delete() method.
     }
 
+    public static function save(Entry $entry)
+    {
+        $tableSummary = self::getTableSummary($entry);
+
+        if (self::getValuesOfAttributes($entry, $tableSummary->getPrimaryAttributes())) // if the value of the primary key exists (is truthy)
+        {
+            self::update($entry);
+        } elseif (false) { // TODO change "false" to fit the following condition: if the value of a secondary key matches a value of a database secondary key
+            //e.g. secondary key for attendee is email and secondary key for Event is eventbrite id
+            self::update($entry);
+        } else {
+            self::insert($entry);
+            // TODO set the subclass id(s) to the newly created entry id(s)
+            //see https://www.w3schools.com/php/php_mysql_insert_lastid.asp
+        }
+    }
+
     /**
-     * Takes a class defined attribute <name> and returns get<name>() for that attribute in that class.
+     * Takes a class defined attribute $attributeName and returns get<$attributeName>() for that attribute in that class.
      * Example: an attribute named "email" will return getEmail().
      *
      * @param string $attributeName
      * @return mixed
      */
-    private function getValueOfAttribute(string $attributeName)
+    private static function getValueOfAttribute(Entry $entry, string $attributeName)
     {
-        $attributeFunctionName = "get".ucfirst($attributeName);
-        return $this->$attributeFunctionName();
+        $getAttribute = "get".ucfirst($attributeName);
+        return $entry->$getAttribute();
     }
 
     /**
@@ -110,19 +204,77 @@ class DbClass implements DbManagerInterface
      * @param array $attributeNames
      * @return array
      */
-    private function getValuesOfAttributes(array $attributeNames)
+    private static function getValuesOfAttributes(Entry $entry, array $attributeNames)
     {
+        $tableSummaries = TableSummary::getTableSummaries();
+        $tableType = $tableSummaries[get_class($entry)];
+
         $attributeValues = array();
         foreach ($attributeNames as $attrName)
         {
-            array_push($attributeValues, $this->getValueOfAttribute($attrName));
+            array_push($attributeValues, self::getValueOfAttribute($entry, $attrName));
         }
 
         return $attributeValues;
     }
 
-    static function getAllEventsAfterCurrentDate(){
-        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events on or after current date
+    private static function getTableSummary(Entry $entry) : TableSummary
+    {
+        $tableSummaries = TableSummary::getTableSummaries();
+        return $tableSummaries[get_class($entry)];
+    }
+
+    private static function getColumnEqualsValuePair(Entry $entry, array $dbColumns, array $values)
+    {
+        if (count($dbColumns) != count($values))
+        {
+            return new Exception("columns and values arrays must be the same length");
+        }
+
+        $columnValuePairs = array();
+        for ($index=0; $index<count($dbColumns); $index++)
+        {
+            $columnValuePair = $dbColumns[$index] . "=" . self::getValueOfAttribute($entry, $values[$index]) . " ";
+            array_push($columnValuePairs, $columnValuePair);
+        }
+
+        return $columnValuePairs;
+    }
+
+    private static function getColumnEqualsParameter(array $dbColumns)
+    {
+        $values = array();
+        foreach ($dbColumns as $dbColumn)
+        {
+            $columnEqualsParameter = $dbColumn . "=? ";
+            array_push($values, $columnEqualsParameter);
+        }
+
+        $values = join(", ", $values);
+
+        return $values;
+    }
+
+    private static function getColumnEqualsValue(array $dbColumns, array $values)
+    {
+        if (count($dbColumns) != count($values))
+        {
+            return new Exception("columns and values arrays must be the same length");
+        }
+
+        $columnsEqualsValues = array();
+        for ($index=0; $index<count($dbColumns);$index++)
+        {
+            $columnEqualsValue = $dbColumns[$index] . "=" . $values[$index] ." ";
+            array_push($columnsEqualsValues, $columnEqualsValue);
+        }
+
+        return $columnsEqualsValues;
+
+    }
+
+    public static function getAllEventsAfterCurrentDate(){
+        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events after current date
         $info = array();
         if($statement->execute()) {
             while($row = $statement->fetch()) {
@@ -143,7 +295,7 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
-    static function getAttendeesForEvent($eventID){
+    public static function getAttendeesForEvent($eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
         $statement->bindParam(1, $eventID);
@@ -156,7 +308,7 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
-    static function getEventByID($id) {
+    public static function getEventByID($id) {
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT * FROM event WHERE Eventid=?"); //Fetch specific event by id
         $statement->bindParam(1, $id);
@@ -164,7 +316,7 @@ class DbClass implements DbManagerInterface
         return $info = $statement->fetch();
     }
 
-    static function checkAttendanceByID($attendeeID, $eventID){
+    public static function checkAttendanceByID($attendeeID, $eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE");
         $statement->bindParam(1, $attendeeID);
@@ -183,7 +335,7 @@ class DbClass implements DbManagerInterface
         }
     }
 
-    static function setAttendedTrue($attendeeID, $eventID){
+    public static function setAttendedTrue($attendeeID, $eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("UPDATE attendance SET Attended = TRUE WHERE Eventid = ? AND Attendeeid = ?");
         $statement->bindParam(1, $eventID);
@@ -272,6 +424,19 @@ class DbClass implements DbManagerInterface
             else{
                 return FALSE;
             }
+        }
+        else{
+            return FALSE;
+        }
+    }
+
+    public static function addWalkinRegistration($attendeeID, $eventID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, TRUE, FALSE)");
+        $statement->bindParam(1, $attendeeID);
+        $statement->bindParam(2, $eventID);
+        if($statement->execute()){
+            return TRUE;
         }
         else{
             return FALSE;

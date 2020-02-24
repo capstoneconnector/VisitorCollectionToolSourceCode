@@ -3,9 +3,9 @@
 
 interface DbManagerInterface
 {
-    public function readById(int $id);
-    public function insert();
-    public function update();
-    public function delete();
+    public static function readById(Entry $table, array $ids);
+    public static function insert(Entry $entry);
+    public static function update(Entry $entry);
+    public static function delete();
 
 }
