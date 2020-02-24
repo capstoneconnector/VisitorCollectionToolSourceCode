@@ -326,5 +326,18 @@ class DbClass implements DbManagerInterface
             return NULL;
         }
     }
+
+    public static function getEventsByName($query){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT * FROM event WHERE Name LIKE CONCAT('%',?,'%')");
+        $statement->bindParam(1, $query);
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
 }
 

@@ -3,6 +3,9 @@
 	if(empty($_SESSION['logged'])){
 		header ('location: login.php');
 	}
+	if(empty($_SESSION['reset'])){
+	    $_SESSION['reset'] = TRUE;
+    }
 ?>
 
 <html lang="php">
@@ -74,80 +77,102 @@
                         <br><br>
                         <input type = "submit" value = "Save">
                         <button onclick="UpdateEvent();">Cancel</button>
-                        </br></br>
+                        <br><br>
 				    </form>
                 </div>
                 <br>
                 <div id = "SearchEvents" class="col-12">
-                        <form method="post">
+                        <form name = "searchForm" id = "searchForm" method="post">
                             <div class="col-10">
                                 <label for = "Search" class "control-label">Search Events:</label>
-                                <input type = "text" class = "form-control" />
+                                <input type = "text" name = "query" id = "query" class = "form-control" />
+                                <br>
+
                             </div>
+                        </form>
+                        <form action="" method="post">
+                            <button name = "reset" class = "btn btn-info">Reset</button>
                         </form>
                 </div>
 			</div>
-			<div id = "EventTable" class="col-12">
+        </div>
 			<?php
 				require_once "../php/getEvents.php";
+                function createEventTable($events){
+                    echo "<div class = 'container'>";
+                    echo '<div id = "EventTable" class="col-12">';
+                    echo "<table id = 'eventTable' class='table'>";
+                    echo '<thead class="thead-dark">';
+                    echo "<tr>";
+                    echo "<th>Name</th>";
+                    echo "<th>Description</th>";
+                    echo "<th>Date</th>";
+                    echo "<th>Eventid</th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                    foreach($events as $event){
+                        echo "<tr>";
+                        echo "<td><a href = 'event.php?eventid=".$event->getId()."'>".$event->getName()."</a></td>";
+                        echo "<td>".$event->getDescription()."</td>";
+                        echo "<td>".$event->getDate()."</td>";
+                        echo "<td>".$event->getId()."</td>";
+                        echo "</tr>";
+                    }
+                    echo "</tbody>";
+                    echo "</table>";
+                    echo "</div>";
+                    echo "</div>";
+                }
 				$events = getAllEvents();
-				if (!empty($events)){
-					echo "<table id = 'eventTable' class='table'>";
-					echo '<thead class="thead-dark">';
-					echo "<tr>";
-					echo "<th>Name</th>";
-					echo "<th>Description</th>";
-					echo "<th>Date</th>";
-					echo "<th>Eventid</th>";
-					echo "</tr>";
-					echo "</thead>";
-					echo "<tbody>";
-					foreach($events as $event){
-						echo "<tr>";
-						echo "<td><a href = 'attendee.php?eventid=".$event->getId()."'>".$event->getName()."</a></td>";
-						echo "<td>".$event->getDescription()."</td>";
-						echo "<td>".$event->getDate()."</td>";
-						echo "<td>".$event->getId()."</td>";
-						echo "</tr>";
-					}
-					echo "</tbody>";
-					echo "</table>";
+				if (!empty($events) and $_SESSION['reset'] == TRUE){
+					createEventTable($events);
 				}
 			?>
-            </div>
         </div>
     </body>
 </html>
 
 <?php
 	require_once "../php/createEvent.php";
+    require_once "../php/getEvents.php";
 	if (!empty($_POST))
 	{
-		if (isset($_POST['name']))
+        if(isset($_POST['reset'])){
+            $_SESSION['reset'] = TRUE;
+        }
+	    elseif(isset($_POST["query"])){
+	        $_SESSION['reset'] = FALSE;
+	        $query = $_POST["query"];
+	        $events = searchEventsByName($query);
+	        createEventTable($events);
+        }
+
+		elseif (isset($_POST['name']))
 		{
-		$name = $_POST["name"];
-		$description = $_POST["description"];
-		$date = $_POST["date"];
-		if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
-		{
-			if (createEvent($name, $description, $date)){
-			echo '<script language="javascript">';
-			echo 'window.location=("manager.php")';
-			echo '</script>';
-			}
-			else
-			{
-			echo '<script language="javascript">';
-			echo 'alert("Date Format Error: YYYY-MM-DD"))';
-			echo '</script>';
-			}
-		}
-			if (isset($_POST["export"]))
-			{
-				echo '<script language="javascript">';
-				echo 'exportTableToCSV("event", "event.csv")';
-				echo '</script>';
-			}
+            $name = $_POST["name"];
+            $description = $_POST["description"];
+            $date = $_POST["date"];
+            if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
+            {
+                if (createEvent($name, $description, $date)){
+                echo '<script language="javascript">';
+                echo 'window.location=("manager.php")';
+                echo '</script>';
+                }
+                else
+                {
+                echo '<script language="javascript">';
+                echo 'alert("Date Format Error: YYYY-MM-DD"))';
+                echo '</script>';
+                }
+            }
+                if (isset($_POST["export"]))
+                {
+                    echo '<script language="javascript">';
+                    echo 'exportTableToCSV("event", "event.csv")';
+                    echo '</script>';
+                }
 		}
 	}
 ?>

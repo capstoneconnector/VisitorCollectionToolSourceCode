@@ -1,5 +1,10 @@
-// adding record
-// show div that has form
+
+$(document).ready(function(){
+	$('#query').live('blur',function(){
+		$('#searchForm').submit();
+	});
+});​
+
 function UpdateEvent() 
 	{
 		var btnAddEvent = document.getElementById("btnAddEvent");
