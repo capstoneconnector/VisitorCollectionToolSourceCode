@@ -20,34 +20,24 @@
         if (isset($_GET["eventid"])) {
             $attendance = getAttendanceByEventId($_GET["eventid"]);
             unset($_POST["eventid"]);
-            echo "<table>";
-            echo "<tr>";
-            echo "<td>" . $attendance['Walk-in'] . "</td>";
-            echo "<td>" . $attendance['Registered'] . "</td>";
-            echo "<td>" . $attendance['Attended'] . "</td>";
-            echo "</tr>";
-            echo "</table>";
         }
     */
+    echo "function drawChart() {";
+    echo "var data = new google.visualization.DataTable();";
+    echo "data.addColumn('string', 'Type');";
+    echo "data.addColumn('number', 'Attendance');";
+    echo "data.addRows([";
+    echo "['Walk-in', ".$attendance['Walk-in']. "],";
+    echo  "['Registered', 5],";
+    echo "['Attended', 1],";
+    echo " ]);";
+    echo "var options = {'title':'Attendance Types',";
+    echo "'width':800,";
+    echo "'height':600};";
+    echo "var chart = new google.visualization.PieChart(document.getElementById('chart_div'));";
+    echo "chart.draw(data, options);";
+    echo "}";
     ?>
-        function drawChart() {
-            // Create the data table
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Type');
-            data.addColumn('number', 'Attendance');
-            data.addRows([
-                ['Walk-in', 1],
-                ['Registered', 5],
-                ['Attended', 1],
-            ]);
-            // Set chart options
-            var options = {'title':'Attendance Types',
-                'width':800,
-                'height':600};
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
