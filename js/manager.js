@@ -1,11 +1,4 @@
-
-$(document).ready(function(){
-	$('#query').live('blur',function(){
-		$('#searchForm').submit();
-	});
-});
-
-function UpdateEvent() 
+function UpdateEvent()
 	{
 		var btnAddEvent = document.getElementById("btnAddEvent");
 		var y = document.getElementById("SearchEvents");
@@ -91,6 +84,7 @@ function PullData() {
 		xhttp.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to checkin
 				alert("EventBrite Pull Successful");
+				window.location = ("manager.php");
 			}
 		};
 		xhttp.open("GET", "/php/importEBEvents.php", true); //AJAX call to checkEmail php script
