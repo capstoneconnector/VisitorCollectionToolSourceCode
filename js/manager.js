@@ -83,3 +83,17 @@ function UpdateEvent()
 	// Download CSV file
 	downloadCSV(csv.join("\n"), tableName);
 }
+
+function PullData() {
+	let confirmation = confirm("Pull event data from EventBrite?");
+	if(confirmation === true) {
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to checkin
+				alert("EventBrite Pull Successful");
+			}
+		};
+		xhttp.open("GET", "/php/importEBEvents.php", true); //AJAX call to checkEmail php script
+		xhttp.send();
+	}
+}
