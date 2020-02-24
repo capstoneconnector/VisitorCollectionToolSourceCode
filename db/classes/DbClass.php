@@ -411,6 +411,18 @@ class DbClass implements DbManagerInterface
         }
     }
 
+    public static function getAttendanceByEventId($eventid){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT sum(Walkin) AS 'Walk-in', sum(Registered) AS 'Registered', sum(Attended) AS 'Attended' FROM attendance WHERE eventid = ?");
+        $statement->bindParam(1, $eventid);
+        if($statement->execute()) {
+            return $statement->fetch();
+        }
+        else{
+            return NULL;
+        }
+    }
+
     public static function isAttendeeRegistered($attendeeID, $eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Registered = TRUE");
