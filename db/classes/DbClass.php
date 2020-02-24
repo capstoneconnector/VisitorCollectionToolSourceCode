@@ -385,7 +385,7 @@ class DbClass implements DbManagerInterface
 
     public static function getAttendanceByEventId($eventid){
         $pdo = newPDO();
-        $statement = $pdo->prepare("SELECT sum(Walkin) AS 'Walk-in', sum(Registered) AS 'Registered', sum(Attended) AS 'Attended' FROM attendance WHERE eventid = ?");
+        $statement = $pdo->prepare("SELECT sum(Walkin) AS walkin, sum(Registered) AS registered, sum(Attended) AS attended FROM attendance WHERE Eventid = ?");
         $statement->bindParam(1, $eventid);
         if($statement->execute()) {
             return $statement->fetch();
@@ -414,18 +414,6 @@ class DbClass implements DbManagerInterface
         }
     }
 
-    public static function addWalkinRegistration($attendeeID, $eventID){
-        $pdo = newPDO();
-        $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, TRUE, FALSE)");
-        $statement->bindParam(1, $attendeeID);
-        $statement->bindParam(2, $eventID);
-        if($statement->execute()){
-            return TRUE;
-        }
-        else{
-            return FALSE;
-        }
-    }
 
     public static function addRegistration($attendeeID, $eventID, $walkIn){
         $pdo = newPDO();
