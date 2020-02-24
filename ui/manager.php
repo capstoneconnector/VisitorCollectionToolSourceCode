@@ -84,15 +84,17 @@
                 <div id = "SearchEvents" class="col-12">
                         <form name = "searchForm" id = "searchForm" method="post">
                             <div class="col-10">
-                                <label for = "Search" class "control-label">Search Events:</label>
-                                <input type = "text" name = "query" id = "query" class = "form-control" />
-                                <br>
-
+                                <label for = "Search" class = "control-label">Search Events:</label>
+                                <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
                             </div>
                         </form>
+                    <div class="col-10">
+                        <button onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
+                        <br><br>
                         <form action="" method="post">
                             <button name = "reset" class = "btn btn-info">Reset</button>
                         </form>
+                    </div>
                 </div>
 			</div>
         </div>
@@ -140,12 +142,6 @@
 	{
         if(isset($_POST['reset'])){
             $_SESSION['reset'] = TRUE;
-        }
-	    elseif(isset($_POST["query"])){
-	        $_SESSION['reset'] = FALSE;
-	        $query = $_POST["query"];
-	        $events = searchEventsByName($query);
-	        createEventTable($events);
         }
 
 		elseif (isset($_POST['name']))
