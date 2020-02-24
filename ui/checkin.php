@@ -86,8 +86,8 @@
 									echo '<th>First Name</th><th>Last Name</th><th>Email</th><th></th>';
 									for ($i = 0; $i < sizeof($names); $i++){
 										echo '<tr>';
-										echo '<td>' . $names[$i]->getFname() . '</td>';
-										echo '<td>' . $names[$i]->getLname() . '</td>';
+										echo '<td>' . $names[$i]->getFirstName() . '</td>';
+										echo '<td>' . $names[$i]->getLastName() . '</td>';
 										echo '<td>' . $names[$i]->getEmail() . '</td>';  //Table creation markup
 									echo "<td><button id = '". $i . "' onclick= verifyUser('".$names[$i]->getId()."','".$names[$i]->getEmail()."','". $event->getId()."')>This is me</button>"; //Tie user email and id to the UI button to send to AJAX function
 									echo '</tr>';

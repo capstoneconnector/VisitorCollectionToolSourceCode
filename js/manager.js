@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$('#query').live('blur',function(){
 		$('#searchForm').submit();
 	});
-});​
+});
 
 function UpdateEvent() 
 	{

@@ -9,7 +9,7 @@ function findName($name, $event){
         $lname = $names[1];
         $result = [];
         foreach($event->getAttendees() as $attendee){
-                if(DbClass::checkAttendanceByID($attendee->getId(), $event->getId()) == FALSE and matchName($fname, $attendee->getFirstName()) and matchName($lname, $attendee->getLname())){
+                if(DbClass::checkAttendanceByID($attendee->getId(), $event->getId()) == FALSE and matchName($fname, $attendee->getFirstName()) and matchName($lname, $attendee->getLastName())){
                     array_push($result, $attendee);
                 }
         }
