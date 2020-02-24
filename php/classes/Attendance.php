@@ -1,4 +1,5 @@
 <?php
+require_once "Entry.php";
 
 
 class Attendance extends Entry

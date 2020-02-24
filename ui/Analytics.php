@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src = "/js/Analytics.js"></script>
+    <script src = "/js/manager.js"></script>
     <link rel = "stylesheet" type = "text/css" href = "/css/Analytics.css">
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -14,29 +14,29 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
     <?php
-    /*
-        require_once "../db/classes/DbClass.php";
-        require_once "../php/getAttendanceInfo.php";
-        if (isset($_GET["eventid"])) {
-            $attendance = getAttendanceByEventId($_GET["eventid"]);
-            unset($_POST["eventid"]);
-        }
-    */
-    echo "function drawChart() {";
-    echo "var data = new google.visualization.DataTable();";
-    echo "data.addColumn('string', 'Type');";
-    echo "data.addColumn('number', 'Attendance');";
-    echo "data.addRows([";
-    echo "['Walk-in', ".$attendance['Walk-in']. "],";
-    echo  "['Registered', 5],";
-    echo "['Attended', 1],";
-    echo " ]);";
-    echo "var options = {'title':'Attendance Types',";
-    echo "'width':800,";
-    echo "'height':600};";
-    echo "var chart = new google.visualization.PieChart(document.getElementById('chart_div'));";
-    echo "chart.draw(data, options);";
-    echo "}";
+    require_once "../db/classes/DbClass.php";
+    require_once "../php/getAttendanceInfo.php";
+    if (isset($_GET["eventid"])) {
+        $attendance = DbClass::getAttendanceByEventId($_GET["eventid"]);
+        $walkinProportion = $attendance['walkin'] / $attendance['registered'];
+        $attendedProportion = $attendance['attended'] / $attendance['registered'];
+        echo "function drawChart() {";
+        echo "var data = new google.visualization.DataTable();";
+        echo "data.addColumn('string', 'Type');";
+        echo "data.addColumn('number', 'Attendance');";
+        echo "data.addRows([";
+        echo "['Walk-in', ".$walkinProportion. "],";
+        echo "['Attended', ". $attendedProportion."],";
+        echo " ]);";
+        echo "var options = {'title':'Attendance Types',";
+        echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
+        echo "'width':800,";
+        echo "'height':600};";
+        echo "var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));";
+        echo "chart.draw(data, options);";
+        echo "}";
+        unset($_POST["eventid"]);
+    }
     ?>
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@
 <div class = "container">
     <div class = "row">
         <div class="col-2">
-            <img src="/img/Innovation_Connector_Logo.png" width="150px"></img>
+            <img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
             <div id ="menu">
                 <ul>
                     <li><a href='setup.php'><span>Set Up</span></a></li>
