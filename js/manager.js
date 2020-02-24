@@ -1,11 +1,4 @@
-
-$(document).ready(function(){
-	$('#query').live('blur',function(){
-		$('#searchForm').submit();
-	});
-});
-
-function UpdateEvent() 
+function UpdateEvent()
 	{
 		var btnAddEvent = document.getElementById("btnAddEvent");
 		var y = document.getElementById("SearchEvents");
@@ -82,4 +75,31 @@ function UpdateEvent()
 	}
 	// Download CSV file
 	downloadCSV(csv.join("\n"), tableName);
+}
+
+function PullData() {
+	let confirmation = confirm("Pull event data from EventBrite?");
+	if(confirmation === true) {
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				alert("EventBrite Pull Successful");
+				window.location = ("manager.php");
+			}
+		};
+		xhttp.open("GET", "/php/importEBEvents.php", true);
+		xhttp.send();
+	}
+}
+
+function SearchEvents() {
+	let xhttp = new XMLHttpRequest();
+	let query = document.getElementById("query").value;
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to checkin
+			document.getElementById("eventTable").innerHTML = this.responseText;
+		}
+	};
+	xhttp.open("GET", "/php/createEventTable.php?query=" + query, true); //AJAX call to checkEmail php script
+	xhttp.send();
 }
