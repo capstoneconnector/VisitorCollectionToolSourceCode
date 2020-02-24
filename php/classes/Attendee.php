@@ -9,6 +9,7 @@ class Attendee extends Entry
     private $lastName;
     private $email;
     private $phone;
+    private $eventbriteId;
 
     /**
      * If $id is provided, then Attendee is created with information from DB
@@ -24,11 +25,27 @@ class Attendee extends Entry
             $ids = array($id);
             $attendee = DbClass::readById($this, $ids);
 
-            $this->id        = $id;
-            $this->firstName = $attendee["Fname"];
-            $this->lastName  = $attendee["Lname"];
-            $this->email     = $attendee["Email"];
-            $this->phone     = $attendee["Phone"];
+            if ($id != $attendee["Id"])
+            {
+                trigger_error("Given id and stored id are not equal.");
+            }
+            $this->id           = $id;
+            $this->firstName    = $attendee["Fname"];
+            $this->lastName     = $attendee["Lname"];
+            $this->email        = $attendee["Email"];
+
+            if (!empty($attendee["Phone"])) {
+                $this->phone = $attendee["Phone"];
+            } else {
+                $this->phone = "";
+            }
+
+            if (!empty($attendee["Ebid"])) {
+                $this->eventbriteId = $attendee["Ebid"];
+            } else {
+                $this->eventbriteId = 0;
+            }
+
         }
     }
 
@@ -41,13 +58,14 @@ class Attendee extends Entry
         $this->phone = $phone;
     }
 
-    public function create(string $firstName, string $lastName, string $email, string $phone="")
+    public function create(string $firstName, string $lastName, string $email, string $phone="", int $eventbriteId=0)
     {
         $this->id = null;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
         $this->phone = $phone;
+        $this->eventbriteId = $eventbriteId;
     }
 
     public function getId()
@@ -98,5 +116,10 @@ class Attendee extends Entry
     public function setPhone($phone): void
     {
         $this->phone = $phone;
+    }
+
+    public function getEventbriteId() : int
+    {
+        return $this->eventbriteId;
     }
 }

@@ -1,7 +1,11 @@
 <?php
 require_once "Entry.php";
-require_once "../db/classes/DbClass.php";
-require_once "../php/classes/Attendee.php";
+//require_once "../db/classes/DbClass.php";
+//require_once "../php/classes/Attendee.php";
+
+require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/classes/DbClass.php";
+require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/php/classes/Attendee.php";
+
 
 class Event extends Entry
 {

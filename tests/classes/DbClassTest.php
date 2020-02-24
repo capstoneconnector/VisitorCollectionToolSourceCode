@@ -21,6 +21,8 @@ class DbClassTest extends PHPUnit_Framework_TestCase
             3       => '555-5555',
             'Email' => 'bjones@gmail.com',
             4       => 'bjones@gmail.com',
+            'Ebid'  => null,
+            5       => null,
         );
         $result = DbClass::readById(new Attendee(), [10000]);
 
@@ -44,7 +46,7 @@ class DbClassTest extends PHPUnit_Framework_TestCase
     function testInsertingAttendeeSetsTheIdOfAttendee()
     {
         $attendee = new Attendee();
-        $attendee->create("Mary", "Walton", "maryellen@gmail.com");
+        $attendee->create("Mary", "Walton", "maryellen@gmail.com", "555-0001");
         DbClass::insert($attendee);
         $this->assertTrue(!empty($attendee->getId()));
     }
@@ -79,5 +81,10 @@ class DbClassTest extends PHPUnit_Framework_TestCase
         $attendee = new Attendee();
         $attendee->create("Mary", "Ingalls", "mn@good.year");
         $this->assertFalse(DbClass::update($attendee));
+    }
+
+    function testThatCreatingAnEventTheOldWayAndNewWayAreTheSame()
+    {
+
     }
 }

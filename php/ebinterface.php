@@ -81,6 +81,8 @@ function importEbEvents(string $oAuthToken)
                 $eventbriteProfile["first_name"],
                 $eventbriteProfile["last_name"],
                 $eventbriteProfile["email"],
+                "",
+                $eventbriteAttendee["id"]
             );
 
             DbClass::insert($attendee);

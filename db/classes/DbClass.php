@@ -1,6 +1,10 @@
 <?php
-require_once "../db/connect.php";
-require_once "../db/classes/DbManagerInterface.php";
+//require_once "../db/connect.php";
+//require_once "../db/classes/DbManagerInterface.php";
+
+require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/connect.php";
+require_once "C:/xampp/htdocs/VisitorCollectionToolSourceCode/db/classes/DbManagerInterface.php";
+
 
 require_once "TableSummary.php";
 
@@ -27,6 +31,7 @@ class DbClass implements DbManagerInterface
     /**
      * What is it?
      * examples: readById(new Attendee, [10000])
+     *
      * @param Entry $table
      * @param array $ids
      * @return array
@@ -35,6 +40,8 @@ class DbClass implements DbManagerInterface
     public static function readById(Entry $table, array $ids)
     {
         $tableSummary = self::getTableSummary($table);
+
+        // PART 1: CREATING SQL STATEMENT
         $dbPrimaryAttributes = $tableSummary->getDbPrimaryAttributes();
         $tableName = $tableSummary->getTableName();
         $conditional = self::getColumnEqualsParameter($dbPrimaryAttributes);
@@ -42,12 +49,13 @@ class DbClass implements DbManagerInterface
 
         $statement = newPDO()->prepare("SELECT * FROM {$tableName} WHERE {$conditional}");
 
-        // binding parameters
+        // PART 2: BINDING PARAMETERS
         for ($index=0; $index < count($dbPrimaryAttributes); $index++)
         {
             $statement->bindParam($index+1, $ids[$index]);
         }
 
+        // PART 3: EXECUTE
         $statement->execute();
         return $statement->fetch();
 
@@ -55,7 +63,7 @@ class DbClass implements DbManagerInterface
          * TODO low priority, see source code
          * May still be used in replacement of the above two statements if multiple id's are provided.
          * To be implemented
-         * Abstract the following fetch logic to its own function
+         * Abstract the following fetch logic to its own function so it can be used by other functions
         $result = array();
         if($statement->execute())
         {
@@ -82,6 +90,8 @@ class DbClass implements DbManagerInterface
     public static function insert(Entry $entry)
     {
         $tableSummary = self::getTableSummary($entry);
+
+        // PART 1: CREATING SQL STATEMENT
         $tableName = $tableSummary->getDbTableName();
         $attributes = $tableSummary->getAttributes();
         $dbAttributes = $tableSummary->getDbAttributes();
@@ -98,20 +108,23 @@ class DbClass implements DbManagerInterface
         $pdo = newPDO();
         $statement = $pdo->prepare("INSERT INTO {$tableName}({$columns}) VALUES ({$values})");
 
-        // binding parameters
+        // PART 2: BINDING PARAMETERS
         for ($index=0; $index < count($attributes); $index++)
         {
             $value[$index] = self::getValueOfAttribute($entry, $attributes[$index]);
             $statement->bindParam($index+1, $value[$index]);
         }
 
+        // PART 3: INSERTING THE ENTRY INTO THE DATA BASE
         $isSuccessful = $statement->execute();
 
-        //setting the primary attribute on the entry
-        $primaryAttribute = ucfirst($tableSummary->getPrimaryAttributes()[0]);
-        $primaryAttributeFunctionName = "set{$primaryAttribute}";
-        $theId = $pdo->lastInsertId();
-        $entry->$primaryAttributeFunctionName($theId);
+        // PART 4: SETTING THE PRIMARY ATTRIBUTE OF THE ENTRY
+        if ($isSuccessful)
+        {
+            $primaryAttribute = ucfirst($tableSummary->getPrimaryAttributes()[0]);
+            $primaryAttributeFunctionName = "set{$primaryAttribute}";
+            $entry->$primaryAttributeFunctionName($pdo->lastInsertId());
+        }
 
         return $isSuccessful;
     }
@@ -202,7 +215,13 @@ class DbClass implements DbManagerInterface
     private static function getValueOfAttribute(Entry $entry, string $attributeName)
     {
         $getAttribute = "get".ucfirst($attributeName);
-        return $entry->$getAttribute();
+        $returnedValue = $entry->$getAttribute();
+        //if the $returnedValue is not empty or not a secondary attribute
+        if (!empty($returnedValue) || (!in_array($attributeName, self::getTableSummary($entry)->getSecondaryAttributes()))) {
+            return $returnedValue;
+        } else {
+            return null;
+        }
     }
 
     /**

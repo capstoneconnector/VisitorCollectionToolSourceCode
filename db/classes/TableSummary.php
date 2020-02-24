@@ -50,14 +50,14 @@ class TableSummary
         // class defined names and attributes
         $tableName              = "Attendee";
         $primaryAttributes      = array("id");
-        $secondaryAttributes    = array("email");
-        $attributes             = array("id", "firstName", "lastName", "phone", "email");
+        $secondaryAttributes    = array("eventbriteId");
+        $attributes             = array("id", "firstName", "lastName", "phone", "email", "eventbriteId");
 
         // database defined names and attributes
         $dbTableName            = "attendee";
         $dbPrimaryAttributes    = array("Id");
-        $dbSecondaryAttributes  = array("Email");
-        $dbAttributes           = array("Id", "Fname", "Lname", "Phone", "Email");
+        $dbSecondaryAttributes  = array("Ebid");
+        $dbAttributes           = array("Id", "Fname", "Lname", "Phone", "Email", "Ebid");
 
         return new TableSummary
         (
@@ -114,6 +114,11 @@ class TableSummary
         return $this->primaryAttributes;
     }
 
+    public function getSecondaryAttributes(): array
+    {
+        return $this->secondaryAttributes;
+    }
+
     public function getAttributes(): array
     {
         return $this->attributes;
@@ -127,6 +132,11 @@ class TableSummary
     public function getDbPrimaryAttributes(): array
     {
         return $this->dbPrimaryAttributes;
+    }
+
+    public function getDbSecondaryAttributes(): array
+    {
+        return $this->dbSecondaryAttributes;
     }
 
     public function getDbAttributes(): array
