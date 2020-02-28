@@ -20,15 +20,19 @@ class Event extends Entry
     {
         if ($id)
         {
-            $dbEvent = DbClass::getEventByID($id);
-            $this->createNew($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
+            $dbEvent = DbClass::readById($this, array($id));
+            if ($id != $dbEvent[""])
+            {
+                trigger_error("Given id and stored id are not equal.");
+            }
+
             $this->id = $id;
+            $this->createNew($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
             $this->populateAttendeeList();
         }
     }
 
     /**
-     *
      * @param $name
      * @param $date // TODO add regex before setting date. return an invalid formate exception if wrong format
      * @param $description
@@ -54,6 +58,18 @@ class Event extends Entry
         $this->date = $date;
         $this->description = $description;
         $this->eventbriteId = $eventbriteId;
+    }
+
+    public function save()
+    {
+        if ($this->id)
+        {
+            DbClass::update($this);
+            foreach ($this->attendees as $attendee)
+            {
+
+            }
+        }
     }
 
     public function addAttendee(Attendee $attendee)
@@ -83,10 +99,9 @@ class Event extends Entry
     {
         $attendees = [];
         $dbAttendees = DbClass::getAttendeesForEvent($this->id);
-        foreach($dbAttendees as $row)
+        foreach($dbAttendees as $dbAttendee)
         {
-            $attendee = new Attendee($row["Id"]);
-            $attendee->createNew($row["Id"], $row["Fname"], $row["Lname"], $row["Email"], $row["Phone"]);
+            $attendee = new Attendee($dbAttendee["Id"]);
             array_push($attendees, $attendee);
         }
         $this->attendees = $attendees;

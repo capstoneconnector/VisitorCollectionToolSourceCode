@@ -12,7 +12,7 @@ class TableSummary
     private $dbSecondaryAttributes;
     private $dbAttributes;
 
-    private static $tableNames = array("Event", "Attendee");
+    private static $tableNames = array("Event", "Attendee", "Attendance");
 
     private function __construct(string $tableName,
                                 array $primaryAttributes,
@@ -85,6 +85,33 @@ class TableSummary
         $dbPrimaryAttributes = array("Eventid");
         $dbSecondaryAttributes = array("Ebid");
         $dbAttributes = array("Eventid", "Name", "Date", "Description", "Ebid");
+
+        return new TableSummary
+        (
+            $tableName,
+            $primaryAttributes,
+            $secondaryAttributes,
+            $attributes,
+            $dbTableName,
+            $dbPrimaryAttributes,
+            $dbSecondaryAttributes,
+            $dbAttributes
+        );
+    }
+
+    public static function getAttendanceSummary()
+    {
+        // class defined names and attributes
+        $tableName = "Attendance";
+        $primaryAttributes = array("attendeeId", "eventId");
+        $secondaryAttributes = array();
+        $attributes = array("attendeeId", "eventId", "registered", "walkIn", "attended");
+
+        // database defined names and attributes
+        $dbTableName = "attendance";
+        $dbPrimaryAttributes = array("Attendeeid", "Eventid");
+        $dbSecondaryAttributes = array("");
+        $dbAttributes = array("Attendeeid", "Eventid", "Registered", "Walkin", "Attended");
 
         return new TableSummary
         (

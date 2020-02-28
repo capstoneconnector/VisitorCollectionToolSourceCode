@@ -66,6 +66,13 @@ class DbClassTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(DbClass::insert($event));
     }
 
+    function testInsertAttendance()
+    {
+        $attendance = new Attendance();
+        $attendance->createNew(10000, 10000, 0, 0, 0);
+        $this->assertTrue(DbClass::insert($attendance));
+    }
+
     function testUpdateAttendee()
     {
         $attendee = new Attendee(10000);

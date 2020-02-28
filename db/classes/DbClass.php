@@ -47,7 +47,8 @@ class DbClass implements DbManagerInterface
         // PART 2: BINDING PARAMETERS
         for ($index=0; $index < count($dbPrimaryAttributes); $index++)
         {
-            $statement->bindParam($index+1, $ids[$index]);
+            $values[$index] = $ids[$index];
+            $statement->bindParam($index+1, $values[$index]);
         }
 
         // PART 3: EXECUTE
@@ -201,10 +202,15 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * Takes a class defined attribute $attributeName and returns get<$attributeName>() for that attribute in that class.
-     * Example: an attribute named "email" will return getEmail().
+     * Takes an entry subclass instance $entry and defined attribute $attributeName and returns $entry->get<$attributeName>().
+     * Example: given an Attendee entry and attribute name "email", this will return $attendee->getEmail() from that instance of Attendee
      *
+     * @param $entry
+     * Must be an instance of a subclass of Entry.
+     * The list of available subclasses of Entry are accessible in the TableSummary class
      * @param string $attributeName
+     * the attribute variable name in the given subclass.
+     * The list of available attribute names for each subclass are accessible in the TableSummary class
      * @return mixed
      */
     private static function getValueOfAttribute(Entry $entry, string $attributeName)
@@ -220,16 +226,19 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * Takes an array of strings where each string is a class defined attribute <name> and returns an array of the
-     * result of the get<name>() function declared in that class
+     * Takes an Entry subclass instance $entry and an array of strings where each string is a class defined attribute $attributeName and returns an array of each
+     * $entry->get<$name>() function declared in that subclass
+     *
+     * @param $entry
+     * the subclass instance of Entry.
+     * The list of available subclasses of Entry are accessible in the TableSummary class
      * @param array $attributeNames
+     * An array of attribute names in that entry.
+     * The list of available attribute names for each subclass are accessible in the TableSummary class
      * @return array
      */
     private static function getValuesOfAttributes(Entry $entry, array $attributeNames)
     {
-        $tableSummaries = TableSummary::getTableSummaries();
-        $tableType = $tableSummaries[get_class($entry)];
-
         $attributeValues = array();
         foreach ($attributeNames as $attrName)
         {
@@ -245,7 +254,17 @@ class DbClass implements DbManagerInterface
         return $tableSummaries[get_class($entry)];
     }
 
-    private static function getColumnEqualsParameter(array $dbColumns)
+    /**
+     * takes an array of strings representing database columns for one table and returns a string of repeated "<$dbColumn>=?".
+     * each "<$dbColumn>=?" is joined together with commas to form one string.
+     *
+     *
+     * @param array $dbColumns
+     *
+     * The list of available column names for each database table are accessible in the TableSummary class
+     * @return string
+     */
+    private static function getColumnEqualsParameter(array $dbColumns) : string
     {
         $values = array();
         foreach ($dbColumns as $dbColumn)
@@ -427,7 +446,6 @@ class DbClass implements DbManagerInterface
             return FALSE;
         }
     }
-
 
     public static function addRegistration($attendeeID, $eventID, $walkIn){
         $pdo = newPDO();
