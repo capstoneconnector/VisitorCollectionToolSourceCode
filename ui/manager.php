@@ -83,12 +83,12 @@
                 <br>
                 <div id = "SearchEvents" class="col-12">
                         <form name = "searchForm" id = "searchForm" method="post">
-                            <div class="col-10">
+                            <div class="col-7 float-left">
                                 <label for = "Search" class = "control-label">Search Events:</label>
-                                <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
+                                <input type = "text" name = "query" id = "query" class = "form-control" />
                             </div>
                         </form>
-                    <div class="col-10">
+                    <div class="col-5 float-right">
                         <button onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
                         <br><br>
                         <form action="" method="post">
