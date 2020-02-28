@@ -10,8 +10,8 @@
             $this->registeredAttendee = new Attendee();
             $this->nonRegisteredAttendee = new Attendee();
 	    	$this->event->createNew(999, "Test Event", "2030-04-01", "");
-	    	$this->registeredAttendee->createNew(10000, "Bob", "Jones", "555-5555", "bjones@gmail.com");
-	    	$this->nonRegisteredAttendee->createNew(10001, "Mary", "Jane", "555-5555", "mjane@gmail.com");
+	    	$this->registeredAttendee->createNew(10000, "Bob", "Jones", "bjones@gmail.com", "555-5555");
+	    	$this->nonRegisteredAttendee->createNew(10001, "Mary", "Jane", "mjane@gmail.com", "555-5555");
 
 		}
 		public function tearDown(){
