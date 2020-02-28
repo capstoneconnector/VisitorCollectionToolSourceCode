@@ -6,6 +6,7 @@
 	    public function setUp(){
             $this->event = new Event();
             $this->event->createNew(999, "Test Event", "2030-04-01", "");
+            $this->event->populateAttendeeList();
 		}
 		public function tearDown(){
 		}
