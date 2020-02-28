@@ -3,11 +3,9 @@ require_once "../db/classes/DbClass.php";
 require_once "classes/Event.php";
 require_once "classes/Attendee.php";
 
-$PRI_TOKEN = "COKR3D7YQAPZM2GWLOTL";
-
 /*
-arg: $requeset is the url extention after the endpoint
-arg: $options is extra aruments in the url. Must be a list of arguments e.g. ["arg=value", ...]
+arg: $request is the url extension after the endpoint
+arg: $options is extra arguments in the url. Must be a list of arguments e.g. ["arg=value", ...]
 A full list of args may be found at //TODO find a list of args (url link)
 */
 function wrapUrlRequestWithOptions(string $request, array $options) : string
@@ -92,10 +90,9 @@ function importEbEvents(string $oAuthToken)
             DbClass::addRegistration($attendee->getId(), $event->getId(), false);
         }
     }
-}?>
+}
 
-
-
+/*
 <html>
 	<head></head>
 	<body>
@@ -112,3 +109,7 @@ function importEbEvents(string $oAuthToken)
 	</body>
 
 </html>
+ */
+
+
+

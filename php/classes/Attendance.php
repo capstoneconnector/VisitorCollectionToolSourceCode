@@ -23,25 +23,6 @@ class Attendance extends Entry
         $this->attended = $attended;
     }
 
-    public static function byId(int $id)
-    {
-
-    }
-
-    public static function byForm(int $attendeeId,
-                                  int $eventId,
-                                  bool $registered=true,
-                                  bool $walkin=false,
-                                  bool $attended=false)
-    {
-        return 0;
-    }
-
-    public function delete()
-    {
-
-    }
-
     public function getAttendeeId() : int
     {
         return $this->attendeeId;

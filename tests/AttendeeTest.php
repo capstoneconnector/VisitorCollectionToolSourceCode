@@ -1,5 +1,5 @@
 <?php
-require_once "../../php/classes/Attendee.php";
+require_once "../php/classes/Attendee.php";
 
 
 class attendeeTest extends PHPUnit_Framework_TestCase

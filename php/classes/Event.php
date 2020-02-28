@@ -21,14 +21,18 @@ class Event extends Entry
         if ($id)
         {
             $dbEvent = DbClass::readById($this, array($id));
-            if ($id != $dbEvent[""])
+            if ($id != $dbEvent["Eventid"])
             {
-                trigger_error("Given id and stored id are not equal.");
+                trigger_error("There is no event with the given id");
             }
 
+            if (!$dbEvent["Description"]) {$dbEvent["Description"] = "";}
+
+            $this->create($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
             $this->id = $id;
-            $this->createNew($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
             $this->populateAttendeeList();
+        } else {
+            $this->create("", "");
         }
     }
 
@@ -78,7 +82,7 @@ class Event extends Entry
     }
 
     /**
-     * returns true if removal is sucessful. Returns false if there is no attendee to be removed. or the removal failed.
+     * returns true if removal is successful. Returns false if there is no attendee to be removed. or the removal failed.
      *
      * @param Attendee $attendee
      * @return bool
