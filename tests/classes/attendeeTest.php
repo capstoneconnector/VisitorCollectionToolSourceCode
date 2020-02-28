@@ -8,7 +8,7 @@ class attendeeTest extends PHPUnit_Framework_TestCase
 
     public function setUp(){
         $this->attendee = new Attendee();
-        $this->attendee->createNew("Bob", "Jones", "bjones@gmail.com", "555-5555");
+        $this->attendee->createNew(9999,"Bob", "Jones", "bjones@gmail.com", "555-5555");
     }
 
     public function tearDown(){
