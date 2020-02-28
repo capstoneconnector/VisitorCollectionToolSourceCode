@@ -1,7 +1,7 @@
 <?php
-	include_once "../db/dbInterface.php";
+	include_once "../php/createEvent.php";
 
-	class AddEventTest extends PHPUnit_Framework_TestCase{ //Run this file with phpunit command from command line
+	class CreateEventTest extends PHPUnit_Framework_TestCase{ //Run this file with phpunit command from command line
 		public function setUp(){
 		}
 		public function tearDown(){
@@ -11,6 +11,6 @@
 		}
 
 		function testAddEventSuccess(){
-			$this->assertTrue(addEvent("Test Event", "3000-01-01"));
+			$this->assertTrue(createEvent("Test Event", "Description", "3000-01-01"));
 		}
 	}
