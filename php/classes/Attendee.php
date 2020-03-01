@@ -22,8 +22,7 @@ class Attendee extends Entry
     {
         if ($id)
         {
-            $ids = array($id);
-            $attendee = DbClass::readById($this, $ids);
+            $attendee = DbClass::readById($this, array($id));
 
             if ($id != $attendee["Id"])
             {
@@ -51,30 +50,35 @@ class Attendee extends Entry
 
     public function createNew($id, $fname, $lname, $email, $phone=null)
     {
-        $this->id = $id;
+        $this->id        = $id;
         $this->firstName = $fname;
-        $this->lastName = $lname;
-        $this->email = $email;
-        $this->phone = $phone;
+        $this->lastName  = $lname;
+        $this->email     = strtolower($email);
+        $this->phone     = $phone;
     }
 
-    public function create(string $firstName, string $lastName, string $email, string $phone="", int $eventbriteId=0)
-    {
-        $this->id = null;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->phone = $phone;
+    public function create(string $firstName, string $lastName, string $email, string $phone = "", int $eventbriteId = 0) {
+        $this->id           = null;
+        $this->firstName    = $firstName;
+        $this->lastName     = $lastName;
+        $this->email        = strtolower($email);
+        $this->phone        = $phone;
         $this->eventbriteId = $eventbriteId;
     }
 
-    public function getId()
-    {
+    public function save() : bool {
+        if ($this->id) {
+            return DbClass::update($this);
+        } else {
+            return DbClass::insert($this);
+        }
+    }
+
+    public function getId() {
         return $this->id;
     }
 
-    public function getFirstName()
-    {
+    public function getFirstName() {
         return $this->firstName;
     }
 

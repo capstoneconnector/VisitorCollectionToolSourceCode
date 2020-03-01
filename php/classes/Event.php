@@ -21,8 +21,7 @@ class Event extends Entry
         if ($id)
         {
             $dbEvent = DbClass::readById($this, array($id));
-            if ($id != $dbEvent["Eventid"])
-            {
+            if ($id != $dbEvent[""]) {
                 trigger_error("There is no event with the given id");
             }
 
@@ -46,9 +45,10 @@ class Event extends Entry
     public function createNew($id, $name, $date, $description, $eventbriteId=null)
     {
         //unset($this->id);
-        $this->id = $id;
-        $this->name = $name;
-        $this->date = $date;
+        $this->id          = $id;
+        $this->name        = $name;
+        $date              = date_format($date, "Y-m-d");
+        $this->date        = $date;
         $this->description = $description;
         if (!empty($eventbriteId)) {
             $this->eventbriteId = $eventbriteId;
@@ -82,7 +82,7 @@ class Event extends Entry
     }
 
     /**
-     * returns true if removal is successful. Returns false if there is no attendee to be removed. or the removal failed.
+     * returns true if removal is sucessful. Returns false if there is no attendee to be removed. or the removal failed.
      *
      * @param Attendee $attendee
      * @return bool

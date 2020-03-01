@@ -15,7 +15,7 @@ function getSetupEvents() {
     }
          return $events;
 
-    }
+}
 
     function getAllEvents(){
          $dbEvents = DbClass::getAllEvents();

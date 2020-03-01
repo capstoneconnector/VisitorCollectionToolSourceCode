@@ -296,14 +296,6 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
-    public static function getEventByID($id) {
-        $pdo = newPDO();
-        $statement = $pdo->prepare("SELECT * FROM event WHERE Eventid=?"); //Fetch specific event by id
-        $statement->bindParam(1, $id);
-        $statement->execute();
-        return $info = $statement->fetch();
-    }
-
     public static function checkAttendanceByID($attendeeID, $eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE");
@@ -339,30 +331,6 @@ class DbClass implements DbManagerInterface
         else{
             return FALSE;
         }
-    }
-
-    public static function addAttendee($fname, $lname, $email, $phone){
-        $pdo = newPDO();
-        $statement = $pdo->prepare("INSERT INTO attendee(Fname, Lname, Phone, Email) VALUES(?,?,?,?)");
-        $statement->bindParam(1, $fname);
-        $statement->bindParam(2, $lname);
-        $statement->bindParam(3, $phone);
-        $statement->bindParam(4, $email);
-        if($statement->execute()){
-            return $pdo->lastInsertId();
-        }
-        else{
-            return NULL;
-        }
-    }
-
-    public static function addEvent($name, $description, $date){
-        $pdo = newPDO();
-        $statement = $pdo->prepare("INSERT INTO event(Name, Description, Date) VALUES(?,?,?)");
-        $statement->bindParam(1, $name);
-        $statement->bindParam(2, $description);
-        $statement->bindParam(3, $date);
-        return $statement->execute();
     }
 
     public static function getAttendeeByName($fname, $lname, $email){
@@ -405,8 +373,8 @@ class DbClass implements DbManagerInterface
         }
     }
 
-    public static function addRegistration($attendeeID, $eventID, $walkIn){
-        $pdo = newPDO();
+    public static function addRegistration($attendeeID, $eventID, $walkIn) : bool {
+        $pdo       = newPDO();
         $statement = $pdo->prepare("INSERT INTO attendance(Attendeeid, Eventid, Registered, Walkin, Attended) VALUES (?, ?, TRUE, ?, FALSE)");
         $statement->bindParam(1, $attendeeID);
         $statement->bindParam(2, $eventID);
