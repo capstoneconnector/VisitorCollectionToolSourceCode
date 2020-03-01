@@ -71,7 +71,6 @@
 <?php
 	require_once "../php/checkRegistration.php";
     require_once "../php/getEventInfo.php";
-	require_once "../db/dbInterface.php";
     require_once "../php/registerAttendee.php";
     require_once "../php/checkAttendeeExists.php";
     require_once "../php/getAttendeeInfo.php";

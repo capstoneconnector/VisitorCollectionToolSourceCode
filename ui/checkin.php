@@ -1,5 +1,4 @@
 <?php
-	require_once "../db/dbInterface.php";
 	session_start();
 	if(empty($_SESSION['logged'])){
 		header ('location: login.php');
@@ -56,8 +55,9 @@
                          </tr>
                     </table>
 					<?php
-						$event = getEventById($_SESSION["eventId"]); //Use session var for event name
-						echo "<h2>" . $event["Name"] . "</h2>";
+                        require_once "../php/getEventInfo.php";
+						$event = getEvent($_SESSION["eventId"]); //Use session var for event name
+						echo "<h2>" . $event->getName() . "</h2>";
 					?>
 					<br>
 					<form method="post">
