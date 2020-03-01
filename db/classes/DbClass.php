@@ -161,7 +161,6 @@ class DbClass implements DbManagerInterface
 
             // binding parameters
             // Can't use the "+" operator because it does not append elements, rather it overwrites them.
-            // ex $dbAttributes = array([0]=>"Id", ...) and $dbPrimaryAttributes = array([0]=>"Id"). I want both instances to exist in $parameters with each element of $dbPrimaryAttributes being appended at the end of $dbAttributes
             $parameters = $tableSummary->getAttributes();
             foreach ($tableSummary->getPrimaryAttributes() as $primaryAttribute)
             {
@@ -258,7 +257,6 @@ class DbClass implements DbManagerInterface
      * takes an array of strings representing database columns for one table and returns a string of repeated "<$dbColumn>=?".
      * each "<$dbColumn>=?" is joined together with commas to form one string.
      *
-     *
      * @param array $dbColumns
      *
      * The list of available column names for each database table are accessible in the TableSummary class
@@ -328,12 +326,7 @@ class DbClass implements DbManagerInterface
         $statement->bindParam(2, $eventID);
         if($statement->execute()){
             $result = $statement->fetch();
-            if($result['num'] > 0){
-                return TRUE;
-            }
-            else{
-                return FALSE;
-            }
+            return $result['num']>0;
         }
         else{
             return FALSE;
@@ -345,12 +338,7 @@ class DbClass implements DbManagerInterface
         $statement = $pdo->prepare("UPDATE attendance SET Attended = TRUE WHERE Eventid = ? AND Attendeeid = ?");
         $statement->bindParam(1, $eventID);
         $statement->bindParam(2, $attendeeID);
-        if($statement->execute()){
-            return TRUE;
-        }
-        else{
-            return FALSE;
-        }
+        return $statement->execute();
     }
 
     public static function doesAttendeeExist($fname, $lname, $email){
@@ -361,12 +349,7 @@ class DbClass implements DbManagerInterface
         $statement->bindParam(3, $email);
         if($statement->execute()){
             $result = $statement->fetch();
-            if($result['num'] > 0){
-                return TRUE;
-            }
-            else{
-                return FALSE;
-            }
+            return $result['num']>0;
         }
         else{
             return FALSE;
@@ -394,12 +377,7 @@ class DbClass implements DbManagerInterface
         $statement->bindParam(1, $name);
         $statement->bindParam(2, $description);
         $statement->bindParam(3, $date);
-        if($statement->execute()){
-            return TRUE;
-        }
-        else{
-            return FALSE;
-        }
+        return $statement->execute();
     }
 
     public static function getAttendeeByName($fname, $lname, $email){
@@ -435,12 +413,7 @@ class DbClass implements DbManagerInterface
         $statement->bindParam(2, $eventID);
         if($statement->execute()){
             $result = $statement->fetch();
-            if($result['num'] > 0){
-                return TRUE;
-            }
-            else{
-                return FALSE;
-            }
+            return $result['num']>0;
         }
         else{
             return FALSE;
@@ -453,12 +426,7 @@ class DbClass implements DbManagerInterface
         $statement->bindParam(1, $attendeeID);
         $statement->bindParam(2, $eventID);
         $statement->bindParam(3, $walkIn);
-        if($statement->execute()){
-            return TRUE;
-        }
-        else{
-            return FALSE;
-        }
+        return $statement->execute();
     }
 
     public static function checkPasswordMatch($username, $password){
@@ -470,13 +438,7 @@ class DbClass implements DbManagerInterface
         if($statement->execute())
         {
             $info = $statement->fetch();
-            if($info['num'] == 1)
-            {
-                return TRUE;
-            }
-            else {
-                return FALSE;
-            }
+            return $info['num'] == 1;
         }
         else{
             return FALSE;

@@ -42,8 +42,8 @@ function depaginate($page, $data_type) :array
 }
 
 function pullEbEvents() : array {
-	$contents = getJsonFromUrl(wrapUrlRequest("users/me/events"));
-	return depaginate($contents, "events");	 
+    $contents = getJsonFromUrl(wrapUrlRequest("users/me/events"));
+    return depaginate($contents, "events");
 }
 
 function pullEbAttendees(string $event_id) : array
@@ -93,22 +93,13 @@ function importEbEvents(string $oAuthToken)
 }
 
 /*
-<html>
-	<head></head>
-	<body>
-		https://www.eventbriteapi.com/v3/users/me/events?token=COKR3D7YQAPZM2GWLOTL
-		pullEbEvents($OAuthToken) //Pri_token get all of the events of a user<br>
-		getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
-		getAttendeeInfo($attendee_id) // return entire attendee object<br>
+pullEbEvents($OAuthToken) //Pri_token get all of the events of a user<br>
+getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
+getAttendeeInfo($attendee_id) // return entire attendee object<br>
 
-
-		https://www.eventbriteapi.com/v3/users/me/events?token=OAUTH_TOKEN				//get all events' details
-		https://www.eventbriteapi.com/v3/events/EVENT_ID?token=OAUTH_TOKEN				//get one event's details
-		https://www.eventbriteapi.com/v3/events/EVENT_ID/attendees/?token=OAUTH_TOKEN	//get the attendee list for a spesific event
-
-	</body>
-
-</html>
+https://www.eventbriteapi.com/v3/users/me/events?token=OAUTH_TOKEN				//get all events' details
+https://www.eventbriteapi.com/v3/events/EVENT_ID?token=OAUTH_TOKEN				//get one event's details
+https://www.eventbriteapi.com/v3/events/EVENT_ID/attendees/?token=OAUTH_TOKEN	//get the attendee list for a specific event
  */
 
 

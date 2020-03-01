@@ -11,11 +11,11 @@ class DbClassTest extends PHPUnit_Framework_TestCase
 
     function setup()
     {
-        $this->pdo = newPDO();
     }
 
     function teardown()
     {
+        $this->pdo           = newPDO();
         $deleteTestAttendees = $this->pdo->prepare("DELETE FROM attendee WHERE Lname='Walton'");
         $deleteTestAttendees->execute();
 
@@ -23,7 +23,8 @@ class DbClassTest extends PHPUnit_Framework_TestCase
         $deleteTestEvents->execute();
 
         $updateAttendee = $this->pdo->prepare(
-            "update attendee set Fname='Jane', Lname='Doe', Phone='555-5555', Email='jdoe@bsu.edu' where Id=10000");
+            "UPDATE attendee SET Fname='Jane', Lname='Doe', Phone='555-5555', Email='jdoe@bsu.edu' WHERE Id=10000"
+        );
         $updateAttendee->execute();
     }
 
