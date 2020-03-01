@@ -12,25 +12,14 @@ class DbClass implements DbManagerInterface
         $this->tableSummaries = TableSummary::getTableSummaries();
     }
 
-
-
     /**
-     * Pulls an entry from a table using the id(s) of the entry and returns an array
-     *
-     * @param int $ids
-     * The row entry of the corresponding id(s)
-     * @return array
-     * The full row data of the corresponding id(s) pulled from the db of the class with corresponding name
-     */
-
-    /**
-     * What is it?
-     * examples: readById(new Attendee, [10000])
+     * Reads one row of data from the database of the $table table and primary id(s) of that row.
      *
      * @param Entry $table
      * @param array $ids
+     * Must use an array of ids even if there is only one id in the array
      * @return array
-     * The full row data of the corresponding id pulled from the db of the class with corresponding name
+     * The full row data of the table with id(s)
      */
     public static function readById(Entry $table, array $ids)
     {
@@ -75,11 +64,10 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * Inserts a new entry into the table corresponding to the name of the class using the specified attributes in that
-     * class
+     * Inserts a new entry into the database. Values in the class are the values to be used when inserting.
      *
      * @param $entry
-     * refers to the entry that needs to be inserted into the database
+     * The entry that is to be inserted into the database.
      * @return bool
      * returns true if the insertion was successful; otherwise returns false.
      */
@@ -126,11 +114,11 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * Resets all attributes in the database to the current attribute values represented in the class. The entry must exist
-     * in the database to update the entry.
-     * Throws error if the primary key is not set; indicating that there is no entry in the database.
+     * Update all attributes in the database to the current attribute values represented in the class. The entry must exist. in the database to update the entry.
+     * Returns false if the primary key is not set; indicating that there is no entry in the database.
      *
      * @param $entry
+     * The entry to be updated. The id attribute must be set in order to update the entry, otherwise the update will fail
      * @return bool
      * returns true if the update is successful; otherwise returns false.
      */
@@ -201,8 +189,8 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * Takes an entry subclass instance $entry and defined attribute $attributeName and returns $entry->get<$attributeName>().
-     * Example: given an Attendee entry and attribute name "email", this will return $attendee->getEmail() from that instance of Attendee
+     * Takes an $entry and defined attribute $attributeName and returns $entry->get<$attributeName>().
+     * Example: given an Attendee entry and attribute name "email", this will return $attendee->getEmail()
      *
      * @param $entry
      * Must be an instance of a subclass of Entry.
@@ -225,11 +213,10 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * Takes an Entry subclass instance $entry and an array of strings where each string is a class defined attribute $attributeName and returns an array of each
-     * $entry->get<$name>() function declared in that subclass
+     * Takes an $entry and an array of strings where each string is a class defined attribute $attributeName and returns an array of $entry->get<$attributeName>()
      *
      * @param $entry
-     * the subclass instance of Entry.
+     * The subclass instance of Entry.
      * The list of available subclasses of Entry are accessible in the TableSummary class
      * @param array $attributeNames
      * An array of attribute names in that entry.
@@ -254,11 +241,9 @@ class DbClass implements DbManagerInterface
     }
 
     /**
-     * takes an array of strings representing database columns for one table and returns a string of repeated "<$dbColumn>=?".
-     * each "<$dbColumn>=?" is joined together with commas to form one string.
+     * takes an array of strings representing database columns for one table and returns a string of repeated "<$dbColumn>=?" where each "<$dbColumn>=?" is joined together with commas to form one string.
      *
      * @param array $dbColumns
-     *
      * The list of available column names for each database table are accessible in the TableSummary class
      * @return string
      */
