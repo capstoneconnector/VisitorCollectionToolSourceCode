@@ -25,25 +25,18 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
-					
-						<div id ="menu">
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href='setup.php'><span>Set Up</span></a></li>
-							</ul>
-						</div>
-				</div>
-				
-				<div class="col-10">
+				<div class="col-12">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
 						<tr>
+                            <td>
+                                <img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
+                            </td>
 							<td width = "20">&nbsp;</td>
 							<td>
 								<h2>Events</h2>
 							</td>
 							<td>&nbsp;</td>
-							
+
 							<td align = "right">
 								<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
 								<button id = "btnAddData" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
@@ -55,6 +48,13 @@
 						</tr>
 					</table>
 				</div>
+                <div class="col-2">
+                    <div id ="menu">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href='setup.php'><span>Set Up</span></a></li>
+                        </ul>
+                    </div>
+                </div>
 			    <div class="col-10">
 				    <form method = "post" id="UpdateEvent" class="col-7">
                         <label>Name:</label>
@@ -83,17 +83,19 @@
                 <br>
                 <div id = "SearchEvents" class="col-12">
                         <form name = "searchForm" id = "searchForm" method="post">
-                            <div class="col-10">
+                            <div class="col-7 float-left">
                                 <label for = "Search" class = "control-label">Search Events:</label>
                                 <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
                             </div>
                         </form>
-                    <div class="col-10">
+                    <div class="col-5 float-right">
+                        <div class="col-4 float-right">
+                            <form action="" method="post">
+                                <button name = "reset" class = "btn btn-info">Reset</button>
+                            </form>
+                            <br><br>
+                        </div>
                         <button onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
-                        <br><br>
-                        <form action="" method="post">
-                            <button name = "reset" class = "btn btn-info">Reset</button>
-                        </form>
                     </div>
                 </div>
 			</div>
