@@ -122,16 +122,16 @@
 					echo "</thead>";
 					echo "<tbody>";
 					foreach($event->getAttendees() as $attendee){
-					    $attendance = getAttendanceRecord($event, $attendee);
-						echo "<tr>";
-						echo "<td>".$attendee->getFirstName()."</td>";
-						echo "<td>".$attendee->getLastName()."</td>";
-						echo "<td>".$attendee->getEmail()."</td>";
-						echo "<td>".$attendee->getPhone()."</td>";
-						echo "<td>".$attendance->getWalkIn()."</td>";
-                        echo "<td>".$attendance->getAttended()."</td>";
-						echo "</tr>";
-					}
+                        $attendance = getAttendanceRecord($event, $attendee);
+                        echo "<tr>";
+                        echo "<td>" . $attendee->getFirstName() . "</td>";
+                        echo "<td>" . $attendee->getLastName() . "</td>";
+                        echo "<td>" . $attendee->getEmail() . "</td>";
+                        echo "<td>" . $attendee->getPhone() . "</td>";
+                        echo "<td>" . $attendance->getIsWalkIn() . "</td>";
+                        echo "<td>" . $attendance->getIsAttended() . "</td>";
+                        echo "</tr>";
+                    }
 					echo "</tbody>";
 					echo "</table>";
 				}

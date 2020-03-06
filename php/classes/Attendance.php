@@ -1,70 +1,88 @@
 <?php
+require_once "../db/classes/DbClass.php";
+require_once "../php/classes/Attendee.php";
+require_once "../php/classes/Event.php";
 require_once "Entry.php";
 
 
-class Attendance extends Entry
-{
+class Attendance extends Entry {
     private $attendeeId;
     private $eventId;
-    private $registered;
-    private $walkIn;
-    private $attended;
+    private $isRegistered;
+    private $isWalkIn;
+    private $isAttended;
 
-    public function __construct(int $attendeeId,
-                                   int $eventId,
-                                   bool $registered,
-                                   bool $walkin,
-                                   bool $attended)
-    {
-        $this->attendeeId = $attendeeId;
-        $this->eventId = $eventId;
-        $this->registered = $registered;
-        $this->walkIn = $walkin;
-        $this->attended = $attended;
+    public function __construct(int $attendeeId = 0, int $eventId = 0) {
+        // idiot proofing
+        $attendeeAndEventExist = true;
+        if ($attendeeId && $eventId) {
+            if (DbClass::readById(new Attendee(), [$attendeeId]) == false) {
+                $attendeeAndEventExist = false;
+                echo "That attendee does not exist in the database!\n";
+            }
+            if (DbClass::readById(new Event(), [$eventId]) == false) {
+                $attendeeAndEventExist = false;
+                echo "That event does not exist in the database!\n";
+            }
+        } else {
+            $attendeeAndEventExist = false;
+        }
+
+        if ($attendeeAndEventExist) {
+            $attendance = DbClass::readById($this, [$attendeeId, $eventId]);
+
+            $this->attendeeId = $attendeeId;
+            $this->eventId    = $eventId;
+
+            if ($attendance) {
+                $this->isRegistered = $attendance["Registered"];
+                $this->isWalkIn     = $attendance["Walkin"];
+                $this->isAttended   = $attendance["Attended"];
+            } else {
+                $this->isRegistered = true;
+                $this->isWalkIn     = false;
+                $this->isAttended   = false;
+            }
+        } else {
+            $this->attendeeId   = 0;
+            $this->eventId      = 0;
+            $this->isRegistered = false;
+            $this->isWalkIn     = false;
+            $this->isAttended   = false;
+        }
     }
 
-    public static function byId(int $id)
-    {
-
+    public function save() : bool {
+        // TODO: Implement save() method.
+        if (DbClass::readById($this, [$this->attendeeId, $this->eventId])) {
+            return DbClass::update($this);
+        } else {
+            return DbClass::insert($this);
+        }
     }
 
-    public static function byForm(int $attendeeId,
-                                  int $eventId,
-                                  bool $registered=true,
-                                  bool $walkin=false,
-                                  bool $attended=false)
-    {
-        return 0;
+    public function delete() {
+        // TODO: Implement delete() method.
     }
 
-    public function delete()
-    {
-
-    }
-
-    public function getAttendeeId() : int
-    {
+    public function getAttendeeId() : int {
         return $this->attendeeId;
     }
 
-    public function getEventId() : int
-    {
+    public function getEventId() : int {
         return $this->eventId;
     }
 
-    public function getRegistered() : bool
-    {
-        return $this->registered;
+    public function getIsRegistered() : int {
+        return $this->isRegistered;
     }
 
-    public function getWalkIn() : bool
-    {
-        return $this->walkIn;
+    public function getIsWalkIn() : int {
+        return $this->isWalkIn;
     }
 
-    public function getAttended() : bool
-    {
-        return $this->attended;
+    public function getIsAttended() : int {
+        return $this->isAttended;
     }
 
     public function setAttendeeId(int $attendeeId): void
@@ -77,18 +95,15 @@ class Attendance extends Entry
         $this->eventId = $eventId;
     }
 
-    public function setRegistered(bool $registered): void
-    {
-        $this->registered = $registered;
+    public function setIsRegistered(bool $isRegistered) : void {
+        $this->isRegistered = $isRegistered;
     }
 
-    public function setWalkIn(bool $walkIn): void
-    {
-        $this->walkIn = $walkIn;
+    public function setIsWalkIn(bool $isWalkIn) : void {
+        $this->isWalkIn = $isWalkIn;
     }
 
-    public function setAttended(bool $attended): void
-    {
-        $this->attended = $attended;
+    public function setIsAttended(bool $isAttended) : void {
+        $this->isAttended = $isAttended;
     }
 }

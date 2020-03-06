@@ -14,10 +14,9 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
     <?php
-    require_once "../db/classes/DbClass.php";
     require_once "../php/getAttendanceInfo.php";
     if (isset($_GET["eventid"])) {
-        $attendance = DbClass::getAttendanceByEventId($_GET["eventid"]);
+        $attendance = getAttendanceProportion($_GET["eventid"]);
         $walkinProportion = $attendance['walkin'] / $attendance['registered'];
         $attendedProportion = $attendance['attended'] / $attendance['registered'];
         echo "function drawChart() {";

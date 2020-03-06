@@ -20,27 +20,37 @@ class Event extends Entry
     {
         if ($id)
         {
-            $dbEvent = DbClass::getEventByID($id);
-            $this->createNew($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
+            $dbEvent = DbClass::readById($this, array($id));
+            if ($id != $dbEvent[""]) {
+                echo "There is no event with the given id";
+                trigger_error("There is no event with the given id");
+            }
+
+            if (!$dbEvent["Description"]) {$dbEvent["Description"] = "";}
+
+            $this->create($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
             $this->id = $id;
             $this->populateAttendeeList();
+        } else {
+            $this->create("", "");
         }
     }
 
     /**
-     *
      * @param $name
-     * @param $date // TODO add regex before setting date. return an invalid formate exception if wrong format
+     * @param $date // TODO add regex before setting date in constructor and setDate().
+     * return an invalid format exception if wrong format. see line 52
      * @param $description
      * @param null $eventbriteId
      */
 
-    public function createNew($id, $name, $date, $description, $eventbriteId=null)
-    {
+    public function createNew($id, $name, $date, $description, $eventbriteId=null) {
         //unset($this->id);
-        $this->id = $id;
+        $this->id   = $id;
         $this->name = $name;
-        $this->date = $date;
+
+        //$date = date_format($date, "Y-m-d");
+        $this->date        = $date;
         $this->description = $description;
         if (!empty($eventbriteId)) {
             $this->eventbriteId = $eventbriteId;
@@ -56,9 +66,24 @@ class Event extends Entry
         $this->eventbriteId = $eventbriteId;
     }
 
-    public function addAttendee(Attendee $attendee)
+    public function save()
     {
-       array_push($this->attendees, $attendee);
+        if ($this->id) {
+            DbClass::update($this);
+            foreach ($this->attendees as $attendee) {
+
+            }
+        } else {
+            DbClass::insert($this);
+        }
+    }
+
+    public function delete() {
+        // TODO: Implement delete() method.
+    }
+
+    public function addAttendee(Attendee $attendee) {
+        array_push($this->attendees, $attendee);
     }
 
     /**
@@ -83,10 +108,9 @@ class Event extends Entry
     {
         $attendees = [];
         $dbAttendees = DbClass::getAttendeesForEvent($this->id);
-        foreach($dbAttendees as $row)
+        foreach($dbAttendees as $dbAttendee)
         {
-            $attendee = new Attendee($row["Id"]);
-            $attendee->createNew($row["Id"], $row["Fname"], $row["Lname"], $row["Email"], $row["Phone"]);
+            $attendee = new Attendee($dbAttendee["Id"]);
             array_push($attendees, $attendee);
         }
         $this->attendees = $attendees;
@@ -117,7 +141,7 @@ class Event extends Entry
 
     public function getEventbriteId()
     {
-        return $this->eventbriteId;
+        return $this->eventbriteId ? $this->eventbriteId : null;
     }
 
     /**

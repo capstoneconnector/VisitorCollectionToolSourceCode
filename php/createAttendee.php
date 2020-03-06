@@ -2,9 +2,12 @@
 require_once "../db/classes/DbClass.php";
 require_once "classes/Attendee.php";
 
-function createAttendee($fname, $lname, $phone, $email){
+// TODO compare to php/createEvent.php. One returns bool, the other returns the object. See source code.
+// Choose one return type or name them differently. ex. createAttendee():bool and getAttendee():Attendee.
+
+function createAttendee($fname, $lname, $email, $phone) {
     $attendee = new Attendee();
-    $attendeeID = DbClass::addAttendee($fname, $lname, $phone, $email);
-    $attendee->createNew($attendeeID, $fname, $lname, $phone, $email);
+    $attendee->create($fname, $lname, $email, $phone);
+    $attendee->save();
     return $attendee;
 }

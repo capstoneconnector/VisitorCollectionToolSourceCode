@@ -3,11 +3,9 @@ require_once "../db/classes/DbClass.php";
 require_once "classes/Event.php";
 require_once "classes/Attendee.php";
 
-$PRI_TOKEN = "COKR3D7YQAPZM2GWLOTL";
-
 /*
-arg: $requeset is the url extention after the endpoint
-arg: $options is extra aruments in the url. Must be a list of arguments e.g. ["arg=value", ...]
+arg: $request is the url extension after the endpoint
+arg: $options is extra arguments in the url. Must be a list of arguments e.g. ["arg=value", ...]
 A full list of args may be found at //TODO find a list of args (url link)
 */
 function wrapUrlRequestWithOptions(string $request, array $options) : string
@@ -44,8 +42,8 @@ function depaginate($page, $data_type) :array
 }
 
 function pullEbEvents() : array {
-	$contents = getJsonFromUrl(wrapUrlRequest("users/me/events"));
-	return depaginate($contents, "events");	 
+    $contents = getJsonFromUrl(wrapUrlRequest("users/me/events"));
+    return depaginate($contents, "events");
 }
 
 function pullEbAttendees(string $event_id) : array
@@ -92,23 +90,17 @@ function importEbEvents(string $oAuthToken)
             DbClass::addRegistration($attendee->getId(), $event->getId(), false);
         }
     }
-}?>
+}
+
+/*
+pullEbEvents($OAuthToken) //Pri_token get all of the events of a user<br>
+getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
+getAttendeeInfo($attendee_id) // return entire attendee object<br>
+
+https://www.eventbriteapi.com/v3/users/me/events?token=OAUTH_TOKEN				//get all events' details
+https://www.eventbriteapi.com/v3/events/EVENT_ID?token=OAUTH_TOKEN				//get one event's details
+https://www.eventbriteapi.com/v3/events/EVENT_ID/attendees/?token=OAUTH_TOKEN	//get the attendee list for a specific event
+ */
 
 
 
-<html>
-	<head></head>
-	<body>
-		https://www.eventbriteapi.com/v3/users/me/events?token=COKR3D7YQAPZM2GWLOTL
-		pullEbEvents($OAuthToken) //Pri_token get all of the events of a user<br>
-		getAttendees($event_id) // get a list of all attendees' full name and email "fullname": "email" or 0 = {"name": <\fullname>, "email": <\email>}<br>
-		getAttendeeInfo($attendee_id) // return entire attendee object<br>
-
-
-		https://www.eventbriteapi.com/v3/users/me/events?token=OAUTH_TOKEN				//get all events' details
-		https://www.eventbriteapi.com/v3/events/EVENT_ID?token=OAUTH_TOKEN				//get one event's details
-		https://www.eventbriteapi.com/v3/events/EVENT_ID/attendees/?token=OAUTH_TOKEN	//get the attendee list for a spesific event
-
-	</body>
-
-</html>
