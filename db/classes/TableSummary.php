@@ -48,16 +48,16 @@ class TableSummary
     public static function getAttendeeSummary() : TableSummary
     {
         // class defined names and attributes
-        $tableName              = "Attendee";
-        $primaryAttributes      = array("id");
-        $secondaryAttributes    = array("eventbriteId");
-        $attributes             = array("id", "firstName", "lastName", "phone", "email", "eventbriteId");
+        $tableName           = "Attendee";
+        $primaryAttributes   = array("id");
+        $secondaryAttributes = array();
+        $attributes          = array("id", "firstName", "lastName", "phone", "email", "eventbriteId");
 
         // database defined names and attributes
-        $dbTableName            = "attendee";
-        $dbPrimaryAttributes    = array("Id");
-        $dbSecondaryAttributes  = array("Ebid");
-        $dbAttributes           = array("Id", "Fname", "Lname", "Phone", "Email", "Ebid");
+        $dbTableName           = "attendee";
+        $dbPrimaryAttributes   = array("Id");
+        $dbSecondaryAttributes = array();
+        $dbAttributes          = array("Id", "Fname", "Lname", "Phone", "Email", "Ebid");
 
         return new TableSummary
         (
@@ -75,16 +75,16 @@ class TableSummary
     public static function getEventSummary() : TableSummary
     {
         // class defined names and attributes
-        $tableName = "Event";
-        $primaryAttributes = array("id");
-        $secondaryAttributes = array("eventbriteId");
-        $attributes = array("id", "name", "date", "description", "eventbriteId");
+        $tableName           = "Event";
+        $primaryAttributes   = array("id");
+        $secondaryAttributes = array();
+        $attributes          = array("id", "name", "date", "description", "eventbriteId");
 
         // database defined names and attributes
-        $dbTableName = "event";
-        $dbPrimaryAttributes = array("Eventid");
-        $dbSecondaryAttributes = array("Ebid");
-        $dbAttributes = array("Eventid", "Name", "Date", "Description", "Ebid");
+        $dbTableName           = "event";
+        $dbPrimaryAttributes   = array("Eventid");
+        $dbSecondaryAttributes = array();
+        $dbAttributes          = array("Eventid", "Name", "Date", "Description", "Ebid");
 
         return new TableSummary
         (
@@ -102,16 +102,16 @@ class TableSummary
     public static function getAttendanceSummary()
     {
         // class defined names and attributes
-        $tableName = "Attendance";
-        $primaryAttributes = array("attendeeId", "eventId");
+        $tableName           = "Attendance";
+        $primaryAttributes   = array("attendeeId", "eventId");
         $secondaryAttributes = array();
-        $attributes = array("attendeeId", "eventId", "registered", "walkIn", "attended");
+        $attributes          = array("attendeeId", "eventId", "isRegistered", "isWalkIn", "isAttended");
 
         // database defined names and attributes
-        $dbTableName = "attendance";
-        $dbPrimaryAttributes = array("Attendeeid", "Eventid");
-        $dbSecondaryAttributes = array("");
-        $dbAttributes = array("Attendeeid", "Eventid", "Registered", "Walkin", "Attended");
+        $dbTableName           = "attendance";
+        $dbPrimaryAttributes   = array("Attendeeid", "Eventid");
+        $dbSecondaryAttributes = array();
+        $dbAttributes          = array("Attendeeid", "Eventid", "Registered", "Walkin", "Attended");
 
         return new TableSummary
         (

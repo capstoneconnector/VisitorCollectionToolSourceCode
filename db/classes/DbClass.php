@@ -27,17 +27,19 @@ class DbClass implements DbManagerInterface
 
         // PART 1: CREATING SQL STATEMENT
         $dbPrimaryAttributes = $tableSummary->getDbPrimaryAttributes();
-        $tableName = $tableSummary->getTableName();
-        $conditional = self::getColumnEqualsParameter($dbPrimaryAttributes);
+        $tableName           = $tableSummary->getDbTableName();
 
+        $conditionals = array();
+        foreach ($dbPrimaryAttributes as $dbPrimaryAttribute) {
+            array_push($conditionals, $dbPrimaryAttribute . "=?");
+        }
+        $conditional = join(" AND ", $conditionals);
 
         $statement = newPDO()->prepare("SELECT * FROM {$tableName} WHERE {$conditional}");
-
-        // PART 2: BINDING PARAMETERS
-        for ($index=0; $index < count($dbPrimaryAttributes); $index++)
-        {
+        // PART 2: BIND PARAMETERS
+        for ($index = 0; $index<count($dbPrimaryAttributes); $index++) {
             $values[$index] = $ids[$index];
-            $statement->bindParam($index+1, $values[$index]);
+            $statement->bindParam($index + 1, $values[$index]);
         }
 
         // PART 3: EXECUTE
@@ -92,14 +94,14 @@ class DbClass implements DbManagerInterface
         $pdo = newPDO();
         $statement = $pdo->prepare("INSERT INTO {$tableName}({$columns}) VALUES ({$values})");
 
-        // PART 2: BINDING PARAMETERS
+        // PART 2: BIND PARAMETERS
         for ($index=0; $index < count($attributes); $index++)
         {
             $value[$index] = self::getValueOfAttribute($entry, $attributes[$index]);
             $statement->bindParam($index+1, $value[$index]);
         }
 
-        // PART 3: INSERTING THE ENTRY INTO THE DATA BASE
+        // PART 3: EXECUTE
         $isSuccessful = $statement->execute();
 
         // PART 4: SETTING THE PRIMARY ATTRIBUTE OF THE ENTRY
@@ -136,31 +138,39 @@ class DbClass implements DbManagerInterface
         }
 
         // checks if the primary attributes are not empty. If the primary values are empty, then that implies that the entry does not exist in the database
-        if ($primaryAttributesAreNotEmpty)
-        {
-            $dbAttributes = $tableSummary->getDbAttributes();
+        if ($primaryAttributesAreNotEmpty) {
+            // PART 1: CREATING SQL STATEMENT
+            $dbAttributes        = $tableSummary->getDbAttributes();
             $dbPrimaryAttributes = $tableSummary->getDbPrimaryAttributes();
 
             $tableName = $tableSummary->getDbTableName();
-            $values = self::getColumnEqualsParameter($dbAttributes);
-            $conditionals = self::getColumnEqualsParameter($dbPrimaryAttributes);
+            $values    = self::getJoinedColumnEqualsParameter($dbAttributes);
 
-            $statement = newPDO()->prepare("UPDATE {$tableName} SET {$values} WHERE {$conditionals}");
+            $conditionals = array();
+            foreach ($dbPrimaryAttributes as $dbPrimaryAttribute) {
+                array_push($conditionals, $dbPrimaryAttribute . "=?");
+            }
+            $conditional = join(" AND ", $conditionals);
 
-            // binding parameters
+
+            //$conditionals = self::getJoinedColumnEqualsParameter($dbPrimaryAttributes);
+
+            $statement = newPDO()->prepare("UPDATE {$tableName} SET {$values} WHERE {$conditional}");
+
+            // PART 2: BIND PARAMETERS
             // Can't use the "+" operator because it does not append elements, rather it overwrites them.
             $parameters = $tableSummary->getAttributes();
-            foreach ($tableSummary->getPrimaryAttributes() as $primaryAttribute)
-            {
+            foreach ($tableSummary->getPrimaryAttributes() as $primaryAttribute) {
                 array_push($parameters, $primaryAttribute);
             }
+
             $value = array();
-            for ($index=0; $index < count($parameters); $index++)
-            {
+            for ($index = 0; $index<count($parameters); $index++) {
                 $value[$index] = self::getValueOfAttribute($entry, $parameters[$index]);
                 $statement->bindParam($index+1, $value[$index]);
             }
 
+            // PART 3: EXECUTE
             return $statement->execute();
         } else {
             return false;
@@ -168,9 +178,25 @@ class DbClass implements DbManagerInterface
 
 }
 
-    public static function delete()
-    {
-        // TODO: Implement delete() method.
+    public static function delete(Entry $entry) {
+        // TODO: Test delete() method.
+        $tableSummary = self::getTableSummary($entry);
+        // PART 1: CREATING SQL STATEMENT
+        $tableName   = $tableSummary->getDbTableName();
+        $conditional = self::getJoinedColumnEqualsParameter($tableSummary->getDbPrimaryAttributes());
+
+        $statement = newPdo()->prepare("DELETE FROM {$tableName} WHERE {$conditional}");
+
+        // PART 2: BIND PARAMETERS
+        $primaryAttributes = $tableSummary->getPrimaryAttributes();
+        for ($index = 0; $index>count($primaryAttributes); $index++) {
+            $values[$index] = self::getValueOfAttribute($entry, $primaryAttributes[$index]);
+            $statement->bindParam($index + 1, $values[$index]);
+        }
+
+        // PART 3: EXECUTE
+        return $statement->execute();
+
     }
 
     public static function save(Entry $entry)
@@ -203,13 +229,7 @@ class DbClass implements DbManagerInterface
     private static function getValueOfAttribute(Entry $entry, string $attributeName)
     {
         $getAttribute = "get".ucfirst($attributeName);
-        $returnedValue = $entry->$getAttribute();
-        //if the $returnedValue is not empty or not a secondary attribute
-        if (!empty($returnedValue) || (!in_array($attributeName, self::getTableSummary($entry)->getSecondaryAttributes()))) {
-            return $returnedValue;
-        } else {
-            return null;
-        }
+        return $entry->$getAttribute();
     }
 
     /**
@@ -247,11 +267,9 @@ class DbClass implements DbManagerInterface
      * The list of available column names for each database table are accessible in the TableSummary class
      * @return string
      */
-    private static function getColumnEqualsParameter(array $dbColumns) : string
-    {
+    private static function getJoinedColumnEqualsParameter(array $dbColumns) : string {
         $values = array();
-        foreach ($dbColumns as $dbColumn)
-        {
+        foreach ($dbColumns as $dbColumn) {
             $columnEqualsParameter = $dbColumn . "=? ";
             array_push($values, $columnEqualsParameter);
         }
@@ -297,6 +315,7 @@ class DbClass implements DbManagerInterface
     }
 
     public static function checkAttendanceByID($attendeeID, $eventID){
+        // TODO delete This can already be done by creating an Attendee() and checking getIsAttended()
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE");
         $statement->bindParam(1, $attendeeID);
@@ -318,17 +337,19 @@ class DbClass implements DbManagerInterface
         return $statement->execute();
     }
 
-    public static function doesAttendeeExist($fname, $lname, $email){
-        $pdo = newPDO();
+    public static function doesAttendeeExist($fname, $lname, $email) {
+        // TODO delete doesAttendeeExist()?
+        // The same functionality can be implemented by getAttendeeByName()
+        // They have the same the same signature input. Null output from getAttendeeByName() can be interpreted as false and the array return can be interpreted as true.
+        $pdo       = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendee WHERE Fname = ? AND Lname = ? AND Email = ?");
         $statement->bindParam(1, $fname);
         $statement->bindParam(2, $lname);
         $statement->bindParam(3, $email);
-        if($statement->execute()){
+        if ($statement->execute()) {
             $result = $statement->fetch();
             return $result['num']>0;
-        }
-        else{
+        } else {
             return FALSE;
         }
     }
@@ -359,17 +380,16 @@ class DbClass implements DbManagerInterface
         }
     }
 
-    public static function isAttendeeRegistered($attendeeID, $eventID){
-        $pdo = newPDO();
+    public static function isAttendeeRegistered($attendeeID, $eventID) : bool {
+        $pdo       = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Registered = TRUE");
         $statement->bindParam(1, $attendeeID);
         $statement->bindParam(2, $eventID);
-        if($statement->execute()){
+        if ($statement->execute()) {
             $result = $statement->fetch();
             return $result['num']>0;
-        }
-        else{
-            return FALSE;
+        } else {
+            return false;
         }
     }
 

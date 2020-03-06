@@ -1,6 +1,5 @@
 <?php
 require_once "Entry.php";
-//require_once "../../db/classes/DbClass.php";
 
 class Attendee extends Entry
 {
@@ -26,7 +25,8 @@ class Attendee extends Entry
 
             if ($id != $attendee["Id"])
             {
-                trigger_error("Given id and stored id are not equal.");
+                echo "There is no attendee with the given id";
+                trigger_error("There is no attendee with the given id");
             }
             $this->id           = $id;
             $this->firstName    = $attendee["Fname"];
@@ -44,7 +44,6 @@ class Attendee extends Entry
             } else {
                 $this->eventbriteId = 0;
             }
-
         }
     }
 
@@ -72,6 +71,10 @@ class Attendee extends Entry
         } else {
             return DbClass::insert($this);
         }
+    }
+
+    public function delete() {
+        // TODO: Implement delete() method.
     }
 
     public function getId() {
@@ -122,8 +125,7 @@ class Attendee extends Entry
         $this->phone = $phone;
     }
 
-    public function getEventbriteId() : int
-    {
-        return $this->eventbriteId;
+    public function getEventbriteId() {
+        return $this->eventbriteId ? $this->eventbriteId : null;
     }
 }
