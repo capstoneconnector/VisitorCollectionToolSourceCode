@@ -8,3 +8,10 @@ function getAttendeeFromAttributes($fname, $lname, $email){
     $attendee->createNew($dbAttendee["Id"], $dbAttendee["Fname"], $dbAttendee["Lname"], $dbAttendee["Email"], $dbAttendee["Phone"]);
     return $attendee;
 }
+
+function getAttendeeInfoByID($id){
+    $attendee = new Attendee();
+    $dbAttendee = DbClass::getAttendeeByID($id);
+    $attendee->createNew($dbAttendee["Id"], $dbAttendee["Fname"], $dbAttendee["Lname"], $dbAttendee["Email"], $dbAttendee["Phone"]);
+    return $attendee;
+}

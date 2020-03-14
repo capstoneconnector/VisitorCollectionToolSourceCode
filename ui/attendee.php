@@ -18,10 +18,6 @@
             <div id ="menu">
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href='setup.php'><span>Set Up</span></a></li>
-                    <?php
-                    $eventid = $_GET["eventid"];
-                    echo '<li><a href=Analytics.php?eventid=' . $eventid . '><span>Analytics</span></a></li>'
-                    ?>
                     <li class='last'><a href='manager.php'><span>Events</span></a></li>
                 </ul>
             </div>
@@ -46,6 +42,39 @@
                 </table>
             </div>
         </div>
+        <div class = "col-10">
+            <?php
+            require_once "../php/getAttendeeInfo.php";
+            if (isset($_GET["attendeeid"]))
+            {
+                $attendee = getAttendeeInfoByID($_GET["attendeeid"]);
+                unset($_POST["attendeeid"]);
+            }
+            if (!empty($attendee)){
+                echo "<div id = 'header'>" . $attendee->getFirstName() . " " . $attendee->getLastName() . "</div>";
+                echo "<br>";
+                echo "<table id = 'attendeeTable' class='table'>";
+                echo '<thead class="thead-dark">';
+                echo "<tr>";
+                echo "<th>First Name</th>";
+                echo "<th>Last Name</th>";
+                echo "<th>Email</th>";
+                echo "<th>Phone Number</th>";
+                echo "<th>Gender</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                echo "<tr>";
+                echo "<td>" . $attendee->getFirstName() . "</td>";
+                echo "<td>" . $attendee->getLastName() . "</td>";
+                echo "<td>" . $attendee->getEmail() . "</td>";
+                echo "<td>" . $attendee->getPhone() . "</td>";
+                echo "<td>" . "TODO" . "</td>";
+                echo "</tr>";
+                echo "</tbody>";
+                echo "</table>";
+            }
+            ?>
     </div>
 </div>
 </body>

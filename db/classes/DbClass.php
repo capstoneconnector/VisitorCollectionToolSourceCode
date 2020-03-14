@@ -368,6 +368,18 @@ class DbClass implements DbManagerInterface
         }
     }
 
+    public static function getAttendeeByID($id){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT * FROM attendee WHERE Id = ?");
+        $statement->bindParam(1, $id);
+        if($statement->execute()) {
+            return $statement->fetch();
+        }
+        else{
+            return NULL;
+        }
+}
+
     public static function getAttendanceByEventId($eventid){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT sum(Walkin) AS walkin, sum(Registered) AS registered, sum(Attended) AS attended FROM attendance WHERE Eventid = ?");
