@@ -52,6 +52,7 @@
                     <div id ="menu">
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href='setup.php'><span>Set Up</span></a></li>
+                            <li><a href='users.php'><span>Users</span></a></li>
                         </ul>
                     </div>
                 </div>
