@@ -25,14 +25,16 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 	</head>
 	<body>
-    <div id="main">
-					<div class="col-10">
-						<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <div class="container mt-1" id="menu">
-                                        <div class="dropdown">
+    <div class ="container" id="main">
+        <div clas="row">
+        </div>
+            <div class="col-12">
+                <table width = "100%" style = "background:#05163D; color: honeydew" align="right">
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="container mt-1" id="menu">
+                                <div class="dropdown">
                                             <button type="button" class="btn btn-primary " data-toggle="dropdown">
                                                 <span class=""><i class="fas fa-bars fa-1x"></i></span>
                                             </button>

@@ -26,11 +26,9 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-2">
-				</div>
 			</div>
 			<div id="main">
-				<div class="col-10">
+				<div class="col-12">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
 						<tr>
 							<td>&nbsp;</td>
