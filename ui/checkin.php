@@ -45,11 +45,11 @@
 									</div>
 								</div>
 				</div>
-							<td width = "95">&nbsp;</td>
+							<td width = "110">&nbsp;</td>
 							<td>
 								<h2>Check In</h2>
 							</td>
-							<td width = "45">&nbsp;</td>
+							<td width = "35">&nbsp;</td>
                          </tr>
                     </table>
 					<?php

@@ -31,25 +31,25 @@
             <div class="col-12">
                 <table width = "100%" style = "background:#05163D; color: honeydew" align="right">
                     <tr>
-                        <td></td>
+                        <td>&nbsp;</td>
                         <td>
                             <div class="container mt-1" id="menu">
                                 <div class="dropdown">
-                                            <button type="button" class="btn btn-primary " data-toggle="dropdown">
-                                                <span class=""><i class="fas fa-bars fa-1x"></i></span>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="login.php">Set Up</a>
-                                                <a class="dropdown-item" href="checkin.php">Check In</a>
-                                            </div>
-                                        </div>
-                                        </div>
+                                    <button type="button" class="btn btn-primary " data-toggle="dropdown">
+                                        <span class=""><i class="fas fa-bars fa-1x"></i></span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="login.php">Set Up</a>
+                                        <a class="dropdown-item" href="checkin.php">Check In</a>
                                     </div>
-                                <td width = "115">
+                                </div>
+                            </div>
+            </div>
+                                <td width = "165">
                                 <td>
                                     <h2>Registration</h2>
                                 </td>
-                                <td width = "45">&nbsp;</td>
+                                <td width = "30">&nbsp;</td>
                             </tr>
                         </table>
 			<form method = "post">
