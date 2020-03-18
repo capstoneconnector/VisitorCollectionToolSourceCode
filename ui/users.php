@@ -94,6 +94,38 @@
                         <button onclick = 'SearchUsers(-1)' class = "btn btn-info">Search</button>
                     </div>
                 </div>
+                <div id = "AttendeeTable" class="col-12">
+                    <?php
+                    require_once "../php/getAttendeeInfo.php";
+                    $attendees = getAllAttendees();
+                    if (!empty($attendees)){
+                        echo "<div id = 'header'>Attendees</div>";
+                        echo "<br>";
+                        echo "<table id = 'attendeeTable' class='table'>";
+                        echo '<thead class="thead-dark">';
+                        echo "<tr>";
+                        echo "<th>First Name</th>";
+                        echo "<th>Last Name</th>";
+                        echo "<th>Email</th>";
+                        echo "<th>Phone Number</th>";
+                        echo "<th>Gender</th>";
+                        echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                        foreach($attendees as $attendee){
+                            echo "<tr>";
+                            echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
+                            echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
+                            echo "<td>" . $attendee->getEmail() . "</td>";
+                            echo "<td>" . $attendee->getPhone() . "</td>";
+                            echo "<td>" . "TODO" . "</td>";
+                            echo "</tr>";
+                        }
+                        echo "</tbody>";
+                        echo "</table>";
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </body>

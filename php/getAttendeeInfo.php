@@ -15,3 +15,14 @@ function getAttendeeInfoByID($id){
     $attendee->createNew($dbAttendee["Id"], $dbAttendee["Fname"], $dbAttendee["Lname"], $dbAttendee["Email"], $dbAttendee["Phone"]);
     return $attendee;
 }
+
+function getAllAttendees(){
+    $dbAttendees = DbClass::getAllAttendees();
+    $attendees = array();
+    foreach($dbAttendees as $dbAttendee){
+        $attendee = new Attendee();
+        $attendee->createNew($dbAttendee["Id"], $dbAttendee["Fname"], $dbAttendee["Lname"], $dbAttendee["Email"], $dbAttendee["Phone"]);
+        array_push($attendees, $attendee);
+    }
+    return $attendees;
+}

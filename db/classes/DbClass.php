@@ -301,6 +301,17 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
+    public static function getAllAttendees(){
+        $statement = newPDO()->prepare("SELECT * FROM attendee");
+        $info = array();
+        if($statement->execute()){
+            while($row = $statement->fetch()){
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
+
     public static function getAttendeesForEvent($eventID){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT Id, Fname, Lname, Email, Phone FROM attendee, attendance, event WHERE event.Eventid = attendance.Eventid AND attendee.Id = attendance.Attendeeid AND event.Eventid = ?");
