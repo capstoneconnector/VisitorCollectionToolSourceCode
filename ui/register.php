@@ -61,6 +61,12 @@
 				<br><br>
                 <label id = "field">Phone Number <input class = "input" type = "text" name = "phone" required value="<?php echo isset($_POST["phone"]) ? $_POST["phone"] : ''?>"></label>
                 <br><br>
+                <label id = "field">Male <input class = "input" type="radio" id="male" name="gender" required value=""<?php echo isset($_POST["gender"]) ? $_POST["gender"] : ''?>"></label>
+                <br>
+                <label id = "field">Female <input class = "input" type="radio" id="male" name="gender" required value=""<?php echo isset($_POST["gender"]) ? $_POST["gender"] : ''?>"></label>
+                <br>
+                <label id = "field">Prefer not to say <input class = "input" type="radio" id="male" name="gender" required value=""<?php echo isset($_POST["gender"]) ? $_POST["gender"] : ''?>"></label>
+                <br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>
 			<form method = "post" action = "checkin.php">

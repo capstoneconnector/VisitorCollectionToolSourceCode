@@ -73,6 +73,13 @@
                     <label>
                         <input type="text" name="phone" required />
                     </label>
+                    <br>
+                    <label>Gender:</label>
+                    <br>
+                    <label id ="field"> Male <input type="radio" name="male" value="male"/></label>
+                    <label id="field"> Female <input type="radio" name="male" value="female"/></label>
+                    <br>
+                    <label id ="field"> Prefer not to say <input type="radio" name="male" value="other"/></label>
                     <br><br>
                     <input type = "submit" value = "Save">
                     <button onclick="UpdateAttendee();">Cancel</button>
