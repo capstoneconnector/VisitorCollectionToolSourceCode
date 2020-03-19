@@ -20,32 +20,27 @@
 	<body id = "main">
 	<div class="container">
 			<div class="row">
-				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" width="150px">
-					
-						<div id ="menu">
-							<ul class="nav nav-pills nav-stacked">
-
-								<li><a href='manager.php'><span>Manager Dashboard</span></a></li>
-
-							</ul>
-						</div>
-				</div>
-				<div class="col-10">
+				<div class="col-12">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
 						<tr>
-							<td width = "20">&nbsp;</td>
+							<td><img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px"></td>
 							<td>
 								<h2>Choose an Event</h2>
 							</td>
 							<td>&nbsp;</td>
 							<td width = "10">&nbsp;</td>
 						</tr>
-						<tr>
-							<td colspan "2">
-						</tr>
 					</table>
+                </div>
+                    <div class="col-2">
+                        <div id ="menu">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href='manager.php'><span>Manager Dashboard</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
 		<br><br><br><br>
+                <div class="col-12">
 		<form method="POST">
             <label for="placeholder"></label><select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
@@ -62,6 +57,7 @@
 		<br><br><br>
 		</div>
 		</div>
+        </div>
 	</body>
 </html>
 

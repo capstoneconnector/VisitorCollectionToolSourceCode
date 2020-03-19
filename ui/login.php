@@ -18,18 +18,14 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-2">
-					<img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
-				</div>
-				<div id = "main" class="col-10">
+				<div id = "main" class="col-12">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
 						<tr>
-							<td width = "20">&nbsp;</td>
+                            <td><img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px"></td>
 							<td>
 								<h2>Login</h2>
 							</td>
-							<td>&nbsp;</td>
-							<td width = "10">&nbsp;</td>
+							<td width = "315">&nbsp;</td>
 						</tr>
 						<tr>
 							<td colspan "2">

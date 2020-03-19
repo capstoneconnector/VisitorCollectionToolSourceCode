@@ -14,19 +14,11 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-2">
-            <div id ="menu">
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href='setup.php'><span>Set Up</span></a></li>
-                    <li class='last'><a href='manager.php'><span>Events</span></a></li>
-                </ul>
-            </div>
-        </div>
-            <div class="col-10">
+            <div class="col-12">
                 <table width = "100%" style = "background:#05163D; color: honeydew" align="right">
                     <tr>
                         <td>
-                            <img src="../img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
+                            <img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
                         </td>
                         <td>
                             <h2>Attendee Information</h2>
@@ -41,8 +33,16 @@
                     </tr>
                 </table>
             </div>
+        <div class="col-2">
+            <div id ="menu">
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href='setup.php'><span>Set Up</span></a></li>
+                    <li class='last'><a href='manager.php'><span>Events</span></a></li>
+                </ul>
+            </div>
         </div>
-        <div class = "col-10">
+        </div>
+        <div class = "col-12">
             <?php
             require_once "../php/getAttendeeInfo.php";
             if (isset($_GET["attendeeid"]))

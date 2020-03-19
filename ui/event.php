@@ -14,24 +14,10 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-2">
-					<img src="../img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
-					
-						<div id ="menu">
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href='setup.php'><span>Set Up</span></a></li>
-                                <?php
-                                $eventid = $_GET["eventid"];
-								echo '<li><a href=Analytics.php?eventid=' . $eventid . '><span>Analytics</span></a></li>'
-								?>
-								<li class='last'><a href='manager.php'><span>Events</span></a></li>
-							</ul>
-						</div>
-				</div>
-				
-				<div class="col-10">
+				<div class="col-12">
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
 						<tr>
+                            <td><img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px"></td>
 							<td width = "20">&nbsp;</td>
 							<td>
 								<h2>Attendees</h2>
@@ -47,7 +33,19 @@
 							<td colspan "2">
 						</tr>
 					</table>
-				</div>
+                </div>
+                    <div class="col-2">
+                        <div id ="menu">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href='setup.php'><span>Set Up</span></a></li>
+                                <?php
+                                $eventid = $_GET["eventid"];
+                                echo '<li><a href=Analytics.php?eventid=' . $eventid . '><span>Analytics</span></a></li>'
+                                ?>
+                                <li class='last'><a href='manager.php'><span>Events</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
 			<div class="col-10">
 				<form method = "post" id="UpdateAttendee" class = "col-7" style="display:none">
                     <label>First Name:</label>
