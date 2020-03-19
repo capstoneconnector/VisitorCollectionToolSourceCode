@@ -47,25 +47,25 @@
 <body>
 <div class = "container">
     <div class = "row">
+        <div class="col-12">
+            <table width = "100%" style = "background:#05163D; color: honeydew" align="right">
+                <tr>
+                    <td><img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px"></td>
+                    <td width = "20">&nbsp;</td>
+                    <td>
+                        <h2>Analytics</h2>
+                    </td>
+                    <td width = "285">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
         <div class="col-2">
-            <img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
             <div id ="menu">
                 <ul>
                     <li><a href='setup.php'><span>Set Up</span></a></li>
                     <li class='last'><a href='manager.php'><span>Events</span></a></li>
                 </ul>
             </div>
-        </div>
-        <div class="col-10">
-            <table width = "100%" style = "background:#05163D; color: honeydew" align="right">
-                <tr>
-                    <td width = "20">&nbsp;</td>
-                    <td>
-                        <h2>Analytics</h2>
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
         </div>
         <!--Div that will hold the pie chart-->
         <div id="chart_div">

@@ -18,7 +18,7 @@
 					<table width = "100%" style = "background:#05163D; color: honeydew" align="right">
 						<tr>
                             <td><img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px"></td>
-							<td width = "20">&nbsp;</td>
+							<td width = "115">&nbsp;</td>
 							<td>
 								<h2>Attendees</h2>
 							</td>

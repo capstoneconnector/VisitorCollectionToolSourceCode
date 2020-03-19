@@ -31,7 +31,7 @@
                             <td>
                                 <img src="/img/Innovation_Connector_Logo.png" alt = "Logo" width="150px">
                             </td>
-							<td width = "20">&nbsp;</td>
+							<td width = "115">&nbsp;</td>
 							<td>
 								<h2>Events</h2>
 							</td>
