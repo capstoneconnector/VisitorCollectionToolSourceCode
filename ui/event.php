@@ -72,12 +72,12 @@
                         <input type="text" name="phone" required />
                     </label>
                     <br>
-                    <label>Gender:</label>
-                    <br>
-                    <label id ="field"> Male <input type="radio" name="male" value="male"/></label>
-                    <label id="field"> Female <input type="radio" name="male" value="female"/></label>
-                    <br>
-                    <label id ="field"> Prefer not to say <input type="radio" name="male" value="other"/></label>
+                    <label for="placeholder"></label><select id = "placeholder" name="gender" class="input" required>
+                        <option disabled selected> -- Gender -- </option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Prefer not to say</option>
+                    </select>
                     <br><br>
                     <input type = "submit" value = "Save">
                     <button onclick="UpdateAttendee();">Cancel</button>

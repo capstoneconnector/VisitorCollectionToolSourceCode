@@ -61,11 +61,12 @@
 				<br><br>
                 <label id = "field">Phone Number <input class = "input" type = "text" name = "phone" required value="<?php echo isset($_POST["phone"]) ? $_POST["phone"] : ''?>"></label>
                 <br><br>
-                <label id = "field">Male <input class = "input" type="radio" id="male" name="gender" required value=""<?php echo isset($_POST["gender"]) ? $_POST["gender"] : ''?>"></label>
-                <br>
-                <label id = "field">Female <input class = "input" type="radio" id="male" name="gender" required value=""<?php echo isset($_POST["gender"]) ? $_POST["gender"] : ''?>"></label>
-                <br>
-                <label id = "field">Prefer not to say <input class = "input" type="radio" id="male" name="gender" required value=""<?php echo isset($_POST["gender"]) ? $_POST["gender"] : ''?>"></label>
+                <label for="placeholder"></label><select id = "placeholder" name="gender" class="input" required>
+                    <option disabled selected> -- Gender -- </option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Prefer not to say</option>
+                    </select>
                 <br><br>
 				<input class = "submit" type = "submit" value = "Submit">
 			</form>
