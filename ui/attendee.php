@@ -25,6 +25,7 @@
                         </td>
                         <td align = "right">
                             <button id = "editAttendee" class = "btn btn-info" onclick = editAttendee(-1);> Edit </button>
+                            <button id = "deleteAttendee" class = "btn btn-info" onclick = deleteAttendee(-1);> Delete </button>
                         </td>
                         <td width = "10">&nbsp;</td>
                     </tr>
