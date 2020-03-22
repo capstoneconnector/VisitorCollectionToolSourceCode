@@ -21,10 +21,10 @@ class Event extends Entry
         if ($id)
         {
             $dbEvent = DbClass::readById($this, array($id));
-            if ($id != $dbEvent[""]) {
+            /*if ($id != $dbEvent[""]) {
                 echo "There is no event with the given id";
                 trigger_error("There is no event with the given id");
-            }
+            }*/
 
             if (!$dbEvent["Description"]) {$dbEvent["Description"] = "";}
 
