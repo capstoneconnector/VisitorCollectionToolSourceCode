@@ -13,12 +13,12 @@ class AttendeeTest extends PHPUnit_Framework_TestCase {
     public function tearDown() {
 
     }
-    function testCreateNewAttendee()
-    {
+
+    function testCreateNewAttendee() {
         $this->assertInstanceOf(Attendee::class, $attendee = new Attendee());
     }
 
-    function testGetFname(){
+    function testGetFname() {
         $this->assertSame("Bob", $this->attendee->getFirstName());
     }
 }

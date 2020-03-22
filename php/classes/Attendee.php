@@ -25,9 +25,10 @@ class Attendee extends Entry
 
             if ($id != $attendee["Id"])
             {
-                echo "There is no attendee with the given id";
+                echo "There is no attendee with the given id\n";
                 trigger_error("There is no attendee with the given id");
             }
+
             $this->id           = $id;
             $this->firstName    = $attendee["Fname"];
             $this->lastName     = $attendee["Lname"];

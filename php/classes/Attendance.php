@@ -14,7 +14,9 @@ class Attendance extends Entry {
 
     public function __construct(int $attendeeId = 0, int $eventId = 0) {
         // idiot proofing
+
         $attendeeAndEventExist = true;
+        /*
         if ($attendeeId && $eventId) {
             if (DbClass::readById(new Attendee(), [$attendeeId]) == false) {
                 $attendeeAndEventExist = false;
@@ -27,6 +29,7 @@ class Attendance extends Entry {
         } else {
             $attendeeAndEventExist = false;
         }
+        */
 
         if ($attendeeAndEventExist) {
             $attendance = DbClass::readById($this, [$attendeeId, $eventId]);

@@ -326,17 +326,17 @@ class DbClass implements DbManagerInterface
     }
 
     public static function checkAttendanceByID($attendeeID, $eventID){
-        // TODO delete This can already be done by creating an Attendee() and checking getIsAttended()
-        $pdo = newPDO();
+        // TODO  CAN DO! delete This can already be done by creating an Attendee() and checking getIsAttended()
+
+        $pdo       = newPDO();
         $statement = $pdo->prepare("SELECT COUNT(*) AS num FROM attendance WHERE Attendeeid = ? AND Eventid = ? AND Attended = TRUE");
         $statement->bindParam(1, $attendeeID);
         $statement->bindParam(2, $eventID);
-        if($statement->execute()){
+        if ($statement->execute()) {
             $result = $statement->fetch();
             return $result['num']>0;
-        }
-        else{
-            return FALSE;
+        } else {
+            return false;
         }
     }
 
