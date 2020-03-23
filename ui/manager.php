@@ -113,7 +113,6 @@
                     echo "<th>Description</th>";
                     echo "<th>Date</th>";
                     echo "<th>Eventid</th>";
-                    echo "<th></th>";
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -123,7 +122,6 @@
                         echo "<td>".$event->getDescription()."</td>";
                         echo "<td>".$event->getDate()."</td>";
                         echo "<td>".$event->getId()."</td>";
-                        echo "<td> <button id = \"deleteEvent\" class = \"btn btn-info\" onclick = deleteEvent(-1);> Delete </button></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>";
