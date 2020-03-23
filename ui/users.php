@@ -87,7 +87,7 @@
                 <div id = "SearchUsers" class="col-12">
                     <form name = "searchForm" id = "searchForm" method="post">
                         <div class="col-7 float-left">
-                            <label for = "Search" class = "control-label">Search Events:</label>
+                            <label for = "Search" class = "control-label">Search Attendees:</label>
                             <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
                         </div>
                     </form>

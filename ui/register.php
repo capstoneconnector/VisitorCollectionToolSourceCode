@@ -91,9 +91,13 @@
 			$lname = $_POST["lname"];
 			$email = $_POST["email"];
 			$phone = $_POST["phone"];
+			$gender = $_POST["gender"];
+			if($gender == "other"){
+			    $gender = NULL;
+            }
             $event = getEvent($_SESSION["eventId"]);
 			if(!checkAttendeeExists($fname, $lname, $email)){
-			    $attendee = createAttendee($fname, $lname, $email, $phone);
+			    $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
             }
 			else{
 			    $attendee = getAttendeeFromAttributes($fname, $lname, $email);

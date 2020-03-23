@@ -4,5 +4,7 @@ require_once "classes/Attendance.php";
 
 function getAttendanceRecord($event, $attendee){
     $dbAttendance = DbClass::getAttendance($event->getId(), $attendee->getId());
-    return new Attendance($event->getId(), $attendee->getId(), $dbAttendance["Registered"], $dbAttendance["Walkin"], $dbAttendance["Attended"]);
+    $attendance = new Attendance();
+    $attendance->createNew($dbAttendance["Eventid"], $dbAttendance["Attendeeid"], $dbAttendance["Registered"], $dbAttendance["Walkin"], $dbAttendance["Attended"]);
+    return $attendance;
 }

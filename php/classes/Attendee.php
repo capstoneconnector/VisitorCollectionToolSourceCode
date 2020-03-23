@@ -64,7 +64,7 @@ class Attendee extends Entry
         $this->gender = $gender;
     }
 
-    public function create(string $firstName, string $lastName, string $email, string $phone = "", int $eventbriteId = 0, string $gender) {
+    public function create($firstName, $lastName, $email, $gender,  $phone = "", $eventbriteId = 0) {
         $this->id           = null;
         $this->firstName    = $firstName;
         $this->lastName     = $lastName;

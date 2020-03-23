@@ -160,10 +160,14 @@
 		$lname = $_POST["lname"];
 		$email = $_POST["email"];
 		$phone = $_POST["phone"];
+		$gender = $_POST["gender"];
 		$eventid = $_GET["eventid"];
+        if($gender == "other"){
+            $gender = NULL;
+        }
 		$event = getEvent($_GET["eventid"]);
         if(!checkAttendeeExists($fname, $lname, $email)){
-            $attendee = createAttendee($fname, $lname, $email, $phone);
+            $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
         }
         else{
             $attendee = getAttendeeFromAttributes($fname, $lname, $email);
