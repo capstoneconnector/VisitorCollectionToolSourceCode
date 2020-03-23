@@ -74,8 +74,8 @@
                         <br>
                         <label for="placeholder"></label><select id = "placeholder" name="gender" class="input" required>
                             <option disabled selected> -- Gender -- </option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                             <option value="other">Prefer not to say</option>
                         </select>
                         <br><br>
@@ -125,7 +125,7 @@
                             echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
                             echo "<td>" . $attendee->getEmail() . "</td>";
                             echo "<td>" . $attendee->getPhone() . "</td>";
-                            echo "<td>" . "TODO" . "</td>";
+                            echo "<td>" . $attendee->getGender() . "</td>";
                             echo "</tr>";
                         }
                         echo "</tbody>";

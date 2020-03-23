@@ -63,8 +63,8 @@
                 <br><br>
                 <label for="placeholder"></label><select id = "placeholder" name="gender" class="input" required>
                     <option disabled selected> -- Gender -- </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                         <option value="other">Prefer not to say</option>
                     </select>
                 <br><br>

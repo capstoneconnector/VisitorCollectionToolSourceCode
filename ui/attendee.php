@@ -70,7 +70,7 @@
                 echo "<td>" . $attendee->getLastName() . "</td>";
                 echo "<td>" . $attendee->getEmail() . "</td>";
                 echo "<td>" . $attendee->getPhone() . "</td>";
-                echo "<td>" . "TODO" . "</td>";
+                echo "<td>" . $attendee->getGender() . "</td>";
                 echo "</tr>";
                 echo "</tbody>";
                 echo "</table>";
