@@ -42,13 +42,15 @@
         $gender = getGender_Differences($_GET["eventid"]);
         $femaleProportion = $gender['Female'] / $gender['registered'];
         $maleProportion = $gender['Male'] / $gender['registered'];
+        $otherProportion = $gender['Prefer not to say'] / $gender['registered']
         echo "function drawChart() {";
         echo "var data = new google.visualization.DataTable();";
         echo "data.addColumn('string', 'Type');";
-        echo "data.addColumn('number', 'Attendance');";
+        echo "data.addColumn('number', 'Genders');";
         echo "data.addRows([";
         echo "['Female', ".$femaleProportion. "],";
         echo "['Male', ". $maleProportion."],";
+        echo "['Prefer not to say', ". $otherProportion."],";
         echo " ]);";
         echo "var options = {'title':'Gender Types',";
         echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
@@ -95,8 +97,6 @@
         <div id="Attendance_Proportions">
         </div>
         <div id="Gender_Differences">
-        </div>
-        <div id="chart_div3">
         </div>
     </div>
 </div>
