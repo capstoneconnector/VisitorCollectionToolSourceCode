@@ -466,5 +466,33 @@ class DbClass implements DbManagerInterface
         }
         return $info;
     }
+
+    public static function deleteEventById($id){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("DELETE FROM event WHERE Eventid = ?");
+        $statement->bindParam(1, $id);
+        return $statement->execute();
+    }
+
+    public static function deleteAttendeeById($id){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("DELETE FROM attendee WHERE Id = ?");
+        $statement->bindParam(1, $id);
+        return $statement->execute();
+    }
+
+    public static function deleteAttendanceByEventId($id){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("DELETE FROM attendance WHERE Eventid = ?");
+        $statement->bindParam(1, $id);
+        return $statement->execute();
+    }
+
+    public static function deleteAttendanceByAttendeeId($id){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("DELETE FROM attendance WHERE Attendeeid = ?");
+        $statement->bindParam(1, $id);
+        return $statement->execute();
+    }
 }
 

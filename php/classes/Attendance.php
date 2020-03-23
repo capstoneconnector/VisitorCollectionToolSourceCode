@@ -55,6 +55,14 @@ class Attendance extends Entry {
         }
     }
 
+    public function createNew($attendeeId, $eventId, $isRegistered, $isWalkIn, $isAttended){
+        $this->attendeeId   = $attendeeId;
+        $this->eventId      = $eventId;
+        $this->isRegistered = $isRegistered;
+        $this->isWalkIn     = $isWalkIn;
+        $this->isAttended   = $isAttended;
+    }
+
     public function save() : bool {
         // TODO: Implement save() method.
         if (DbClass::readById($this, [$this->attendeeId, $this->eventId])) {

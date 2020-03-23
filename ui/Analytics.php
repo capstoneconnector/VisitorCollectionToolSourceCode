@@ -31,11 +31,37 @@
         echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
         echo "'width':800,";
         echo "'height':600};";
-        echo "var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));";
+        echo "var chart = new google.visualization.ColumnChart(document.getElementById('Attendance_Proportions'));";
         echo "chart.draw(data, options);";
         echo "}";
         unset($_POST["eventid"]);
     }
+    /*
+    require_once "../php/getGenderInfo.php";
+    if (isset($_GET["eventid"])) {
+        $gender = getGender_Differences($_GET["eventid"]);
+        $femaleProportion = $gender['Female'] / $gender['registered'];
+        $maleProportion = $gender['Male'] / $gender['registered'];
+        $otherProportion = $gender['Prefer not to say'] / $gender['registered']
+        echo "function drawChart() {";
+        echo "var data = new google.visualization.DataTable();";
+        echo "data.addColumn('string', 'Type');";
+        echo "data.addColumn('number', 'Genders');";
+        echo "data.addRows([";
+        echo "['Female', ".$femaleProportion. "],";
+        echo "['Male', ". $maleProportion."],";
+        echo "['Prefer not to say', ". $otherProportion."],";
+        echo " ]);";
+        echo "var options = {'title':'Gender Types',";
+        echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
+        echo "'width':800,";
+        echo "'height':600};";
+        echo "var chart = new google.visualization.ColumnChart(document.getElementById('Gender_Differences'));";
+        echo "chart.draw(data, options);";
+        echo "}";
+        unset($_POST["eventid"]);
+    }
+    */
     ?>
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -68,7 +94,9 @@
             </div>
         </div>
         <!--Div that will hold the pie chart-->
-        <div id="chart_div">
+        <div id="Attendance_Proportions">
+        </div>
+        <div id="Gender_Differences">
         </div>
     </div>
 </div>

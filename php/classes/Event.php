@@ -23,12 +23,12 @@ class Event extends Entry
             $dbEvent = DbClass::readById($this, array($id));
             if ($id != $dbEvent["Eventid"]) {
                 echo "There is no event with the given id\n";
+            /*if ($id != $dbEvent[""]) {
+                echo "There is no event with the given id";
                 trigger_error("There is no event with the given id");
-            }
+            }*/
 
-            if (!$dbEvent["Description"]) {
-                $dbEvent["Description"] = "";
-            }
+            if (!$dbEvent["Description"]) {$dbEvent["Description"] = "";}
 
             $this->create($dbEvent["Name"], $dbEvent["Date"], $dbEvent["Description"], $dbEvent["Ebid"]);
             $this->id = $id;
@@ -71,12 +71,9 @@ class Event extends Entry
     public function save()
     {
         if ($this->id) {
-            DbClass::update($this);
-            foreach ($this->attendees as $attendee) {
-
-            }
+            return DbClass::update($this);
         } else {
-            DbClass::insert($this);
+            return DbClass::insert($this);
         }
     }
 

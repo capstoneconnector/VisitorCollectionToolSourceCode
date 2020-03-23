@@ -51,13 +51,13 @@ class TableSummary
         $tableName           = "Attendee";
         $primaryAttributes   = array("id");
         $secondaryAttributes = array();
-        $attributes          = array("id", "firstName", "lastName", "phone", "email", "eventbriteId");
+        $attributes          = array("id", "firstName", "lastName", "phone", "email", "eventbriteId", "gender");
 
         // database defined names and attributes
         $dbTableName           = "attendee";
         $dbPrimaryAttributes   = array("Id");
         $dbSecondaryAttributes = array();
-        $dbAttributes          = array("Id", "Fname", "Lname", "Phone", "Email", "Ebid");
+        $dbAttributes          = array("Id", "Fname", "Lname", "Phone", "Email", "Ebid", "Gender");
 
         return new TableSummary
         (

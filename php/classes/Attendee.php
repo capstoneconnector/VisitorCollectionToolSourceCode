@@ -9,6 +9,7 @@ class Attendee extends Entry
     private $email;
     private $phone;
     private $eventbriteId;
+    private $gender;
 
     /**
      * If $id is provided, then Attendee is created with information from DB
@@ -45,24 +46,32 @@ class Attendee extends Entry
             } else {
                 $this->eventbriteId = 0;
             }
+
+            if (!empty($attendee["Gender"])) {
+                $this->eventbriteId = $attendee["Gender"];
+            } else {
+                $this->eventbriteId = null;
+            }
         }
     }
 
-    public function createNew($id, $fname, $lname, $email, $phone=null)
+    public function createNew($id, $fname, $lname, $email, $phone=null, $gender = null)
     {
         $this->id        = $id;
         $this->firstName = $fname;
         $this->lastName  = $lname;
         $this->email     = strtolower($email);
         $this->phone     = $phone;
+        $this->gender = $gender;
     }
 
-    public function create(string $firstName, string $lastName, string $email, string $phone = "", int $eventbriteId = 0) {
+    public function create($firstName, $lastName, $email, $gender,  $phone = "", $eventbriteId = 0) {
         $this->id           = null;
         $this->firstName    = $firstName;
         $this->lastName     = $lastName;
         $this->email        = strtolower($email);
         $this->phone        = $phone;
+        $this->gender = $gender;
         $this->eventbriteId = $eventbriteId;
     }
 
@@ -128,5 +137,13 @@ class Attendee extends Entry
 
     public function getEventbriteId() {
         return $this->eventbriteId ? $this->eventbriteId : null;
+    }
+
+    public function getGender(){
+        return $this->gender;
+    }
+
+    public function setGender($gender){
+        $this->gender = $gender;
     }
 }

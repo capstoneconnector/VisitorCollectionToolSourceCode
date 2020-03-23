@@ -25,7 +25,10 @@
                         </td>
                         <td align = "right">
                             <button id = "editAttendee" class = "btn btn-info" onclick = editAttendee(-1);> Edit </button>
-                            <button id = "deleteAttendee" class = "btn btn-info" onclick = deleteAttendee(-1);> Delete </button>
+                            <?php
+                            $attendeeId = $_GET["attendeeid"];
+                            echo '<button id = "btnDeleteAttendee" class = "btn btn-info" onclick = deleteAttendee("' . $attendeeId . '")> Delete Attendee </button>';
+                            ?>
                         </td>
                         <td width = "10">&nbsp;</td>
                     </tr>
@@ -70,7 +73,7 @@
                 echo "<td>" . $attendee->getLastName() . "</td>";
                 echo "<td>" . $attendee->getEmail() . "</td>";
                 echo "<td>" . $attendee->getPhone() . "</td>";
-                echo "<td>" . "TODO" . "</td>";
+                echo "<td>" . $attendee->getGender() . "</td>";
                 echo "</tr>";
                 echo "</tbody>";
                 echo "</table>";

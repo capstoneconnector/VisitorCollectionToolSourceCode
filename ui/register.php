@@ -63,8 +63,8 @@
                 <br><br>
                 <label for="placeholder"></label><select id = "placeholder" name="gender" class="input" required>
                     <option disabled selected> -- Gender -- </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                         <option value="other">Prefer not to say</option>
                     </select>
                 <br><br>
@@ -91,9 +91,13 @@
 			$lname = $_POST["lname"];
 			$email = $_POST["email"];
 			$phone = $_POST["phone"];
+			$gender = $_POST["gender"];
+			if($gender == "other"){
+			    $gender = NULL;
+            }
             $event = getEvent($_SESSION["eventId"]);
 			if(!checkAttendeeExists($fname, $lname, $email)){
-			    $attendee = createAttendee($fname, $lname, $email, $phone);
+			    $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
             }
 			else{
 			    $attendee = getAttendeeFromAttributes($fname, $lname, $email);

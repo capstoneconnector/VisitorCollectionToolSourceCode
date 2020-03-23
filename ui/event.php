@@ -26,7 +26,11 @@
 							
 							<td align = "right">
 								<button id = "btnAddAttendee" class = "btn btn-info" onclick = UpdateAttendee(-1);> Add Attendee </button>
-							</td>
+                                <?php
+                                $eventid = $_GET["eventid"];
+                                echo '<button id = "btnDeleteEvent" class = "btn btn-info" onclick = deleteEvent("' . $eventid . '")> Delete Event </button>';
+                                ?>
+                            </td>
 							<td width = "10">&nbsp;</td>
 						</tr>
 						<tr>
@@ -74,8 +78,8 @@
                     <br>
                     <label for="placeholder"></label><select id = "placeholder" name="gender" class="input" required>
                         <option disabled selected> -- Gender -- </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                         <option value="other">Prefer not to say</option>
                     </select>
                     <br><br>
@@ -160,10 +164,14 @@
 		$lname = $_POST["lname"];
 		$email = $_POST["email"];
 		$phone = $_POST["phone"];
+		$gender = $_POST["gender"];
 		$eventid = $_GET["eventid"];
+        if($gender == "other"){
+            $gender = NULL;
+        }
 		$event = getEvent($_GET["eventid"]);
         if(!checkAttendeeExists($fname, $lname, $email)){
-            $attendee = createAttendee($fname, $lname, $email, $phone);
+            $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
         }
         else{
             $attendee = getAttendeeFromAttributes($fname, $lname, $email);

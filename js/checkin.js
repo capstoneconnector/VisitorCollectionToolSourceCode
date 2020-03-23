@@ -1,6 +1,9 @@
 function verifyUser(userid, email, eventid) {
   console.log(email + userid);
-	let confirmation = confirm("Check in user with email: " + email + "?");
+	let confirmation = confirm("Check in user with email: " + email + "? By selecting “OK” the student and/or guardian agrees that the information provided on the " +
+		"Student Sign In Sheet is true: Student’s name, Guardian’s name, Phone number, Person who drops off the student, " +
+		"Person who will be picking up the student, and relation to the student if not the guardian. " +
+		"Also, if the person picking up the student does change, the student’s guardian will notify the lead instructor for the event prior to pick up.");
 	if(confirmation === true) {
 		let xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
