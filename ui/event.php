@@ -23,7 +23,6 @@
 								<h2>Attendees</h2>
 							</td>
 							<td>&nbsp;</td>
-							
 							<td align = "right">
 								<button id = "btnAddAttendee" class = "btn btn-info" onclick = UpdateAttendee(-1);> Add Attendee </button>
                                 <?php

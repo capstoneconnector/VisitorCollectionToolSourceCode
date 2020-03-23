@@ -35,14 +35,14 @@ function UpdateAttendee() {
 
 function UpdateUser() {
 	var btnAddUsers = document.getElementById("btnAddUsers");
-	var y = document.getElementById("EditUsers");
+	var y = document.getElementById("SearchUsers");
 	var x = document.getElementById("UpdateUser");
 	if (x.style.display === "") {
 		x.style.display = "block";
 		y.style.display = "none";
 		btnAddUsers.disabled = true;
 	} else {
-		x.style.display = "";
+		x.style.display = "none";
 		y.style.display = "block";
 		btnAddUsers.disabled = false;
 	}

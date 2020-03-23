@@ -25,10 +25,7 @@
 							<td>
 								<h2>Users</h2>
 							</td>
-							<td>&nbsp;</td>
-
 							<td align = "right">
-								<button id = "btnEditUsers" class = "btn btn-info" onclick = EditUsers(-1);> Edit </button>
 								<button id = "btnAddUsers" class = "btn btn-info" onclick = UpdateUser (-1);> Add  </button>
 							</td>
 							<td width = "10">&nbsp;</td>
@@ -47,7 +44,7 @@
                     </div>
                 </div>
 			    <div class="col-10">
-				    <form method = "post" id="UpdateUser" class="col-7">
+				    <form method = "post" id="UpdateUser" class="col-7" style="display:none">
                         <label>First Name:</label>
                         <br>
                         <label>
@@ -80,14 +77,14 @@
                         </select>
                         <br><br>
                         <input type = "submit" value = "Save">
-                        <button onclick="UpdateAttendee();">Cancel</button>
+                        <button onclick="UpdateUser();">Cancel</button>
                     </form>
                 </div>
                 <br>
                 <div id = "SearchUsers" class="col-12">
                     <form name = "searchForm" id = "searchForm" method="post">
                         <div class="col-7 float-left">
-                            <label for = "Search" class = "control-label">Search Attendees:</label>
+                            <label for = "Search" class = "control-label">Search Users:</label>
                             <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
                         </div>
                     </form>
@@ -96,7 +93,7 @@
                             <form action="" method="post">
                                 <button name = "reset" class = "btn btn-info">Reset</button>
                             </form>
-                            <br><br>
+                            <br>
                         </div>
                         <button onclick = 'SearchUsers(-1)' class = "btn btn-info">Search</button>
                     </div>
@@ -121,11 +118,11 @@
                         echo "<tbody>";
                         foreach($attendees as $attendee){
                             echo "<tr>";
-                            echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
-                            echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
-                            echo "<td>" . $attendee->getEmail() . "</td>";
-                            echo "<td>" . $attendee->getPhone() . "</td>";
-                            echo "<td>" . $attendee->getGender() . "</td>";
+                            echo "<td contenteditable='true'><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
+                            echo "<td contenteditable='true'><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
+                            echo "<td contenteditable='true'>" . $attendee->getEmail() . "</td>";
+                            echo "<td contenteditable='true'>" . $attendee->getPhone() . "</td>";
+                            echo "<td contenteditable='true'>" . $attendee->getGender() . "</td>";
                             echo "</tr>";
                         }
                         echo "</tbody>";
