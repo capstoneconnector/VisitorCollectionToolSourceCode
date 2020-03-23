@@ -26,7 +26,10 @@
 							
 							<td align = "right">
 								<button id = "btnAddAttendee" class = "btn btn-info" onclick = UpdateAttendee(-1);> Add Attendee </button>
-                                <button id = "btnDeleteEvent" class = "btn btn-info" onclick = DeleteEvent(-1);> Delete Event </button>
+                                <?php
+                                $eventid = $_GET["eventid"];
+                                echo '<button id = "btnDeleteEvent" class = "btn btn-info" onclick = DeleteEvent("' . $eventid . '")> Delete Event </button>';
+                                ?>
                             </td>
 							<td width = "10">&nbsp;</td>
 						</tr>

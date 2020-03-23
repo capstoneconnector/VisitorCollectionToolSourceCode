@@ -70,12 +70,10 @@ class Event extends Entry
     {
         if ($this->id) {
             DbClass::update($this);
-            foreach ($this->attendees as $attendee) {
-
-            }
         } else {
             DbClass::insert($this);
         }
+        return true;
     }
 
     public function delete() {
