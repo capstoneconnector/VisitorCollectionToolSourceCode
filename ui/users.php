@@ -118,11 +118,11 @@
                         echo "<tbody>";
                         foreach($attendees as $attendee){
                             echo "<tr>";
-                            echo "<td contenteditable='true'><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
-                            echo "<td contenteditable='true'><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
-                            echo "<td contenteditable='true'>" . $attendee->getEmail() . "</td>";
-                            echo "<td contenteditable='true'>" . $attendee->getPhone() . "</td>";
-                            echo "<td contenteditable='true'>" . $attendee->getGender() . "</td>";
+                            echo "<td ><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
+                            echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
+                            echo "<td>" . $attendee->getEmail() . "</td>";
+                            echo "<td>" . $attendee->getPhone() . "</td>";
+                            echo "<td>" . $attendee->getGender() . "</td>";
                             echo "</tr>";
                         }
                         echo "</tbody>";

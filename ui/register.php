@@ -47,7 +47,7 @@
             </div>
                                 <td width = "165">
                                 <td>
-                                    <h2>Registration</h2>
+                                    <h2>Register for Event</h2>
                                 </td>
                                 <td width = "30">&nbsp;</td>
                             </tr>

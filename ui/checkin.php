@@ -40,11 +40,11 @@
 										</button>
 										<div class="dropdown-menu">
 											<a class="dropdown-item" href="login.php">Set Up</a>
-											<a class="dropdown-item" href="register.php">Registration</a>
+											<a class="dropdown-item" href="register.php">Register for Event</a>
 										</div>
 									</div>
 								</div>
-				</div>
+                </div>
 							<td width = "110">&nbsp;</td>
 							<td>
 								<h2>Check In</h2>
