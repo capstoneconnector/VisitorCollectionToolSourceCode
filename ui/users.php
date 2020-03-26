@@ -81,23 +81,6 @@
                     </form>
                 </div>
                 <br>
-                <div id = "SearchUsers" class="col-12">
-                    <form name = "searchForm" id = "searchForm" method="post">
-                        <div class="col-7 float-left">
-                            <label for = "Search" class = "control-label">Search Users:</label>
-                            <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
-                        </div>
-                    </form>
-                    <div class="col-5 float-right">
-                        <div class="col-4 float-right">
-                            <form action="" method="post">
-                                <button name = "reset" class = "btn btn-info">Reset</button>
-                            </form>
-                            <br>
-                        </div>
-                        <button onclick = 'SearchUsers(-1)' class = "btn btn-info">Search</button>
-                    </div>
-                </div>
                 <div id = "AttendeeTable" class="col-12">
                     <?php
                     require_once "../php/getAttendeeInfo.php";

@@ -86,24 +86,8 @@
                     <button onclick="UpdateAttendee();">Cancel</button>
 				</form>
             </div>
-			<div id = "SearchAttendee" class="col-9">
-				<form method="post">
-					<div class="col-12">
-						<div class = "col-10 float-left">
-                            <br>
-                                <label for = "Search" class "control-label">Search Attendees:</label>
-                                <input type = "text" class = "form-control" />
-                            <br>
-						</div>
-
-                        <div class = "col-2 float-right">
-                            <br><br>
-							<button type="submit" name="export" class = "btn btn-info"> Export </button>
-						</div>
-					</div>
-				</form>
-            </div>
 		</div>
+            <br><br>
 			<div id = "AttendeeTable" class="col-12">
 			<?php
 				require_once "../php/getEventInfo.php";
@@ -115,7 +99,12 @@
 					unset($_POST["eventid"]);
 				}
 				if (!empty($event)){
-				    echo "<div id = 'header'>" . $event->getName() . " : " . $event->getDate() . "</div>";
+				    echo "<div id = 'header'>" . $event->getName() . " : " . $event->getDate();
+				    echo "<br><br>";
+				    echo "<form method = 'post'>";
+				    echo "<button type='submit' name='export' class = 'btn btn-info'> Export </button>";
+				    echo "</form>";
+				    echo "</div>";
 				    echo "<br>";
 					echo "<table id = 'attendeeTable' class='table'>";
 					echo '<thead class="thead-dark">';

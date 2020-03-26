@@ -20,30 +20,24 @@ function UpdateEvent()
 
 function UpdateAttendee() {
 	var btnAddAttendee = document.getElementById("btnAddAttendee");
-	var y = document.getElementById("SearchAttendee");
 	var x = document.getElementById("UpdateAttendee");
 	if (x.style.display === "none") {
 		x.style.display = "block";
-		y.style.display = "none";
 		btnAddAttendee.disabled = true;
 	} else {
 		x.style.display = "";
-		y.style.display = "block";
 		btnAddAttendee.disabled = false;
 	}
 }
 
 function UpdateUser() {
 	var btnAddUsers = document.getElementById("btnAddUsers");
-	var y = document.getElementById("SearchUsers");
 	var x = document.getElementById("UpdateUser");
 	if (x.style.display === "none") {
 		x.style.display = "block";
-		y.style.display = "none";
 		btnAddUsers.disabled = true;
 	} else {
 		x.style.display = "none";
-		y.style.display = "block";
 		btnAddUsers.disabled = false;
 	}
 }
