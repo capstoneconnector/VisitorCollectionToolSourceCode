@@ -37,7 +37,7 @@ function UpdateUser() {
 	var btnAddUsers = document.getElementById("btnAddUsers");
 	var y = document.getElementById("SearchUsers");
 	var x = document.getElementById("UpdateUser");
-	if (x.style.display === "") {
+	if (x.style.display === "none") {
 		x.style.display = "block";
 		y.style.display = "none";
 		btnAddUsers.disabled = true;

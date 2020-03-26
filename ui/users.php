@@ -26,7 +26,7 @@
 								<h2>Users</h2>
 							</td>
 							<td align = "right">
-								<button id = "btnAddUsers" class = "btn btn-info" onclick = UpdateUser (-1);> Add  </button>
+								<button id = "btnAddUsers" class = "btn btn-info" onclick = "UpdateUser();"> Add  </button>
 							</td>
 							<td width = "10">&nbsp;</td>
 						</tr>
