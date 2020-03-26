@@ -178,12 +178,12 @@
         if(checkRegistration($attendee, $event) == FALSE){
             registerAttendee($attendee, $event, FALSE);
             echo '<script language="javascript">';
-            echo 'window.location=("event.php?eventid='. $eventid . '")';
+            echo 'window.location=("event.php?eventid='. $eventid . '");';
             echo '</script>';
 		}
 		else{
 			echo '<script language="javascript">';
-			echo 'alert("Attendee already registered for this event!"))';
+			echo 'alert("Attendee already registered for this event!");';
 			echo '</script>';
 		}
 	}
