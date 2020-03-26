@@ -145,3 +145,50 @@ function deleteAttendee(attendeeid){
 		xhttp.send();
 	}
 }
+
+function editAttendee(){
+	toggleTableEdit('true');
+}
+
+function saveAttendee(attendeeid){
+	let confirmation = confirm("Save attendee information?");
+	if (confirmation === true) {
+
+		fname = document.getElementById('fname').innerHTML;
+		lname = document.getElementById('lname').innerHTML;
+		email = document.getElementById('email').innerHTML;
+		phone = document.getElementById('phone').innerHTML;
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to manager dashboard
+				alert("Attendee Saved!");
+				toggleTableEdit('false');
+			}
+		};
+		xhttp.open("GET", "/php/saveAttendee.php?userid=" + attendeeid + "&fname=" + fname + "&lname=" + lname + "&email=" + email + "&phone=" + phone, true);
+		xhttp.send();
+	}
+
+
+}
+
+function toggleTableEdit(toggle){
+	const fields = [
+		document.getElementById("fname"),
+		document.getElementById("lname"),
+		document.getElementById('email'),
+		document.getElementById('phone')
+	];
+
+	for(let i = 0; i < fields.length; i++){
+		fields[i].contentEditable = toggle;
+		if(toggle === "true"){
+			fields[i].className = "table-danger";
+			fields[i].border = "5px";
+		}
+		else{
+			fields[i].className = "";
+			fields[i].border = "";
+		}
+	}
+}

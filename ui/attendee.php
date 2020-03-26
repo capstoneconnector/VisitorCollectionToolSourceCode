@@ -24,9 +24,10 @@
                             <h2>Attendee Information</h2>
                         </td>
                         <td align = "right">
-                            <button id = "editAttendee" class = "btn btn-info" onclick = editAttendee(-1);> Edit </button>
+                            <button id = "editAttendee" class = "btn btn-info" onclick = "editAttendee();"> Edit </button>
                             <?php
                             $attendeeId = $_GET["attendeeid"];
+                            echo '<button id = "saveAttendee" class = "btn btn-info" onclick = saveAttendee("' . $attendeeId . '")> Save </button>';
                             echo '<button id = "btnDeleteAttendee" class = "btn btn-info" onclick = deleteAttendee("' . $attendeeId . '")> Delete Attendee </button>';
                             ?>
                         </td>
@@ -69,11 +70,11 @@
                 echo "</thead>";
                 echo "<tbody>";
                 echo "<tr>";
-                echo "<td contenteditable='true'>" . $attendee->getFirstName() . "</td>";
-                echo "<td contenteditable='true'>" . $attendee->getLastName() . "</td>";
-                echo "<td contenteditable='true'>" . $attendee->getEmail() . "</td>";
-                echo "<td contenteditable='true'>" . $attendee->getPhone() . "</td>";
-                echo "<td contenteditable='true'>" . $attendee->getGender() . "</td>";
+                echo "<td id = 'fname' contenteditable='false'>" . $attendee->getFirstName() . "</td>";
+                echo "<td  id = 'lname' contenteditable='false'>" . $attendee->getLastName() . "</td>";
+                echo "<td id = 'email' contenteditable='false'>" . $attendee->getEmail() . "</td>";
+                echo "<td id = 'phone' contenteditable='false'>" . $attendee->getPhone() . "</td>";
+                echo "<td contenteditable='false'>" . $attendee->getGender() . "</td>";
                 echo "</tr>";
                 echo "</tbody>";
                 echo "</table>";
