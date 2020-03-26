@@ -155,21 +155,21 @@
             if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
             {
                 if (createEvent($name, $description, $date)){
-                echo '<script language="javascript">';
-                echo 'window.location=("manager.php")';
-                echo '</script>';
+                    echo '<script language="javascript">';
+                    echo 'window.location=("manager.php");';
+                    echo '</script>';
                 }
-                else
-                {
+            }
+            else
+            {
                 echo '<script language="javascript">';
-                echo 'alert("Date Format Error: YYYY-MM-DD"))';
+                echo 'alert("Date Format Error: YYYY-MM-DD");';
                 echo '</script>';
-                }
             }
                 if (isset($_POST["export"]))
                 {
                     echo '<script language="javascript">';
-                    echo 'exportTableToCSV("event", "event.csv")';
+                    echo 'exportTableToCSV("event", "event.csv");';
                     echo '</script>';
                 }
 		}
