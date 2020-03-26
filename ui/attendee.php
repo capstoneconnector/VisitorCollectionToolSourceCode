@@ -69,11 +69,11 @@
                 echo "</thead>";
                 echo "<tbody>";
                 echo "<tr>";
-                echo "<td>" . $attendee->getFirstName() . "</td>";
-                echo "<td>" . $attendee->getLastName() . "</td>";
-                echo "<td>" . $attendee->getEmail() . "</td>";
-                echo "<td>" . $attendee->getPhone() . "</td>";
-                echo "<td>" . $attendee->getGender() . "</td>";
+                echo "<td contenteditable='true'>" . $attendee->getFirstName() . "</td>";
+                echo "<td contenteditable='true'>" . $attendee->getLastName() . "</td>";
+                echo "<td contenteditable='true'>" . $attendee->getEmail() . "</td>";
+                echo "<td contenteditable='true'>" . $attendee->getPhone() . "</td>";
+                echo "<td contenteditable='true'>" . $attendee->getGender() . "</td>";
                 echo "</tr>";
                 echo "</tbody>";
                 echo "</table>";
