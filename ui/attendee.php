@@ -81,6 +81,41 @@
             }
             ?>
     </div>
+    <br><br>
+    <div class = "row">
+        <h1>Registered Events</h1>
+        <br><br><br>
+        <div class = "col-12">
+            <?php
+            require_once "../php/getEvents.php";
+            $events = getEventsRegisteredFor($_GET['attendeeid']);
+            echo "<div class = 'container'>";
+            echo '<div id = "EventTable" class="col-12">';
+            echo "<table id = 'eventTable' class='table'>";
+            echo '<thead class="thead-dark">';
+            echo "<tr>";
+            echo "<th>Name</th>";
+            echo "<th>Description</th>";
+            echo "<th>Date</th>";
+            echo "<th>Eventid</th>";
+            echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+            foreach($events as $event){
+                echo "<tr>";
+                echo "<td><a href = 'event.php?eventid=".$event->getId()."'>".$event->getName()."</a></td>";
+                echo "<td>".$event->getDescription()."</td>";
+                echo "<td>".$event->getDate()."</td>";
+                echo "<td>".$event->getId()."</td>";
+                echo "</tr>";
+            }
+            echo "</tbody>";
+            echo "</table>";
+            echo "</div>";
+            echo "</div>";
+        ?>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -494,5 +494,18 @@ class DbClass implements DbManagerInterface
         $statement->bindParam(1, $id);
         return $statement->execute();
     }
+
+    public static function getEventsRegisteredFor($attendeeID){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT event.Eventid, Name, Description, Date, Ebid FROM event, attendance WHERE attendance.Attendeeid = ? AND event.Eventid = attendance.Eventid");
+        $statement->bindParam(1, $attendeeID);
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
 }
 
