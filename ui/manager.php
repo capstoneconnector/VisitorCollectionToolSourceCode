@@ -82,21 +82,22 @@
 				    </form>
                 </div>
                 <br>
-                <div id = "SearchEvents" class="col-12">
+            </div>
+            <div class = "row" id = "SearchEvent">
+                <div class="col-12">
                         <form name = "searchForm" id = "searchForm" method="post">
                             <div class="col-7 float-left">
                                 <label for = "Search" class = "control-label">Search Events:</label>
                                 <span><input type = "text" name = "query" id = "query" class = "form-control" /></span>
+                                <br>
                             </div>
                         </form>
-                    <div class="col-5 float-right">
-                        <div class="col-4 float-right">
-                            <form action="" method="post">
-                                <button name = "reset" class = "btn btn-info">Reset</button>
-                            </form>
-                            <br><br>
-                        </div>
-                        <button onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
+                    <br><br>
+                    <div class="col-7 float-left">
+                        <form method="post">
+                            <button type = "submit" name = "reset" class = "btn btn-info">Reset</button>
+                            <button type = "button" onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
+                        </form>
                     </div>
                 </div>
 			</div>
