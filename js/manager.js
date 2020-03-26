@@ -22,7 +22,7 @@ function UpdateAttendee() {
 	var btnAddAttendee = document.getElementById("btnAddAttendee");
 	var y = document.getElementById("SearchAttendee");
 	var x = document.getElementById("UpdateAttendee");
-	if (x.style.display === "") {
+	if (x.style.display === "none") {
 		x.style.display = "block";
 		y.style.display = "none";
 		btnAddAttendee.disabled = true;
