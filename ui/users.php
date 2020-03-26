@@ -134,3 +134,37 @@
         </div>
     </body>
 </html>
+
+<?php
+require_once "../php/registerAttendee.php";
+require_once "../php/checkAttendeeExists.php";
+require_once "../php/createAttendee.php";
+require_once "../php/getAttendeeInfo.php";
+require_once "../php/getEventInfo.php";
+require_once "../php/checkRegistration.php";
+if (!empty($_POST))
+{
+    if (isset($_POST['fname']))
+    {
+        $fname = $_POST["fname"];
+        $lname = $_POST["lname"];
+        $email = $_POST["email"];
+        $phone = $_POST["phone"];
+        $gender = $_POST["gender"];
+        if($gender == "other"){
+            $gender = NULL;
+        }
+        if(!checkAttendeeExists($fname, $lname, $email)){
+            $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
+            echo '<script language="javascript">';
+            echo 'window.location=("users.php");';
+            echo '</script>';
+        }
+        else{
+            echo '<script language="javascript">';
+            echo 'alert("Attendee already exists!");';
+            echo '</script>';
+        }
+    }
+}
+?>
