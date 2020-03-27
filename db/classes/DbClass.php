@@ -402,6 +402,17 @@ class DbClass implements DbManagerInterface
             return NULL;
         }
     }
+    public static function getAttendeeWithGender($eventid){
+        $pdo = newPDO();
+        $statement = $pdo->prepare("SELECT sum(Gender) AS gender FROM attendee, sum(Attended) AS attended FROM attendance WHERE Eventid = ?");
+        $statement->bindParam(1, $eventid);
+        if($statement->execute()) {
+            return $statement->fetch();
+        }
+        else{
+            return NULL;
+        }
+    }
 
     public static function isAttendeeRegistered($attendeeID, $eventID) : bool {
         $pdo       = newPDO();
