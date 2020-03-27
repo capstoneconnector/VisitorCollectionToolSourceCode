@@ -15,6 +15,7 @@
         // draws it.
     <?php
     require_once "../php/getAttendanceInfo.php";
+    require_once "../php/getGenderInfo.php";
     if (isset($_GET["eventid"])) {
         $attendance = getAttendanceProportion($_GET["eventid"]);
         $walkinProportion = $attendance['walkin'] / $attendance['registered'];
@@ -34,15 +35,13 @@
         echo "var chart = new google.visualization.PieChart(document.getElementById('Attendance_Proportions'));";
         echo "chart.draw(data, options);";
         echo "}";
-        unset($_POST["eventid"]);
     }
-/*
-    require_once "../php/getGenderInfo.php";
+
     if (isset($_GET["eventid"])) {
-        $gender = getGender_Differences($_GET["eventid"]);
+        $gender = getGenderDifferences($_GET["eventid"]);
         $femaleProportion = $gender['Female'];
         $maleProportion = $gender['Male'];
-        $otherProportion = $gender['Prefer not to say'];
+        $otherProportion = $gender['Other'];
         echo "function drawChart() {";
         echo "var data = new google.visualization.DataTable();";
         echo "data.addColumn('string', 'Type');";
@@ -59,9 +58,8 @@
         echo "var chart = new google.visualization.ColumnChart(document.getElementById('Gender_Differences'));";
         echo "chart.draw(data, options);";
         echo "}";
-        unset($_POST["eventid"]);
     }
-*/
+
     ?>
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

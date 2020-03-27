@@ -48,9 +48,9 @@ class Attendee extends Entry
             }
 
             if (!empty($attendee["Gender"])) {
-                $this->eventbriteId = $attendee["Gender"];
+                $this->gender = $attendee["Gender"];
             } else {
-                $this->eventbriteId = null;
+                $this->gender = null;
             }
         }
     }
