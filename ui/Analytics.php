@@ -9,41 +9,43 @@
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
         // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawAttendanceChart);
+        google.charts.setOnLoadCallback(drawGenderChart);
         // Callback that creates and populates a data table,
         // instantiates the pie chart, passes in the data and
         // draws it.
     <?php
     require_once "../php/getAttendanceInfo.php";
-    require_once "../php/getGenderInfo.php";
     if (isset($_GET["eventid"])) {
         $attendance = getAttendanceProportion($_GET["eventid"]);
         $walkinProportion = $attendance['walkin'] / $attendance['registered'];
         $attendedProportion = $attendance['attended'] / $attendance['registered'];
-        echo "function drawChart() {";
-        echo "var data = new google.visualization.DataTable();";
+        echo "function drawAttendanceChart() {";
+        echo "let data = new google.visualization.DataTable();";
         echo "data.addColumn('string', 'Type');";
         echo "data.addColumn('number', 'Attendance');";
         echo "data.addRows([";
         echo "['Walk-in', ".$walkinProportion. "],";
         echo "['Attended', ". $attendedProportion."],";
         echo " ]);";
-        echo "var options = {'title':'Attendance Types',";
+        echo "let options = {'title':'Attendance Types',";
         echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
         echo "'width':800,";
         echo "'height':600};";
-        echo "var chart = new google.visualization.PieChart(document.getElementById('Attendance_Proportions'));";
+        echo "let chart = new google.visualization.PieChart(document.getElementById('Attendance_Proportions'));";
         echo "chart.draw(data, options);";
         echo "}";
     }
-
+    ?>
+<?php
+    require_once "../php/getGenderInfo.php";
     if (isset($_GET["eventid"])) {
         $gender = getGenderDifferences($_GET["eventid"]);
         $femaleProportion = $gender['Female'];
         $maleProportion = $gender['Male'];
         $otherProportion = $gender['Other'];
-        echo "function drawChart() {";
-        echo "var data = new google.visualization.DataTable();";
+        echo "function drawGenderChart() {";
+        echo "let data = new google.visualization.DataTable();";
         echo "data.addColumn('string', 'Type');";
         echo "data.addColumn('number', 'Genders');";
         echo "data.addRows([";
@@ -51,15 +53,14 @@
         echo "['Male', ". $maleProportion."],";
         echo "['Prefer not to say', ". $otherProportion."],";
         echo " ]);";
-        echo "var options = {'title':'Gender Types',";
+        echo "let options = {'title':'Gender Types',";
         echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
         echo "'width':800,";
         echo "'height':600};";
-        echo "var chart = new google.visualization.ColumnChart(document.getElementById('Gender_Differences'));";
+        echo "let chart = new google.visualization.ColumnChart(document.getElementById('Gender_Differences'));";
         echo "chart.draw(data, options);";
         echo "}";
     }
-
     ?>
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
