@@ -29,6 +29,8 @@ class DbClassTest extends PHPUnit_Framework_TestCase
             4       => 'bjones@gmail.com',
             'Ebid'  => null,
             5       => null,
+            'Gender'=> 'Male',
+            6       => 'Male'
         );
         $result   = DbClass::readById(new Attendee(), [10000]);
 
@@ -110,8 +112,28 @@ class DbClassTest extends PHPUnit_Framework_TestCase
     function testUpdateEntryThatDoesNotExist()
     {
         $attendee = new Attendee();
-        $attendee->create("Mary", "Ingalls", "mn@good.year");
+        $attendee->create("Mary", "Ingalls", "mn@good.year", "Female");
         $this->assertFalse(DbClass::update($attendee));
     }
 
+    function testReadEventBetweenDates()
+    {
+        $events = DbClass::readAllEventsBetweenDates("1000-01-01", "9999-01-01");
+        $numberOfEvents = sizeof($events);
+        $this->assertSame(4, $numberOfEvents);
+    }
+
+    function testReadEventAfterNow()
+    {
+        $events = DbClass::readAllEventsBetweenDates(date("Y-m-d"), "9999-01-01");
+        $numberOfEvents = sizeof($events);
+        $this->assertSame(3, $numberOfEvents);
+    }
+
+    function testReadEventOnOneDay()
+    {
+        $events = DbClass::readAllEventsBetweenDates("2030-01-01", "2030-01-01");
+        $numberOfEvents = sizeof($events);
+        $this->assertSame(1, $numberOfEvents);
+    }
 }

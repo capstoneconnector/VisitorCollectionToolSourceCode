@@ -50,7 +50,7 @@ class Attendee extends Entry
             if (!empty($attendee["Gender"])) {
                 $this->gender = $attendee["Gender"];
             } else {
-                $this->gender = null;
+                $this->eventbriteId = "";
             }
         }
     }
@@ -71,7 +71,7 @@ class Attendee extends Entry
         $this->lastName     = $lastName;
         $this->email        = strtolower($email);
         $this->phone        = $phone;
-        $this->gender = $gender;
+        $this->gender       = $gender;
         $this->eventbriteId = $eventbriteId;
     }
 

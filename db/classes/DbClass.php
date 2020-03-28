@@ -279,6 +279,19 @@ class DbClass implements DbManagerInterface
         return $values;
     }
 
+    public static function readAllEventsBetweenDates($start, $end) {
+        $statement = newPDO()->prepare("SELECT * FROM event WHERE Date BETWEEN ? AND ?"); //Fetch all events between date dates
+        $statement->bindParam(1, $start);
+        $statement->bindParam(2, $end);
+        $info = array();
+        if($statement->execute()) {
+            while($row = $statement->fetch()) {
+                array_push($info, $row);
+            }
+        }
+        return $info;
+    }
+
     public static function getAllEventsAfterCurrentDate(){
         $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events after current date
         $info = array();
@@ -288,6 +301,12 @@ class DbClass implements DbManagerInterface
             }
         }
         return $info;
+    }
+
+    public static function readAllEventsYesterday() {
+        $yesterday = strtotime("2 days ago");
+        $yesterday = date("Y-m-d", $yesterday);
+        return self::readAllEventsBetweenDates($yesterday, $yesterday);
     }
 
     public static function getAllEvents(){
@@ -402,6 +421,7 @@ class DbClass implements DbManagerInterface
             return NULL;
         }
     }
+
     public static function getAttendeeWithGender($eventid){
         $pdo = newPDO();
         $statement = $pdo->prepare("SELECT sum(Gender) AS gender FROM attendee, sum(Attended) AS attended FROM attendance WHERE Eventid = ?");

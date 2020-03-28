@@ -80,6 +80,7 @@ function importEbEvents(string $oAuthToken)
                 $eventbriteProfile["last_name"],
                 $eventbriteProfile["email"],
                 "",
+                "",
                 $eventbriteAttendee["id"]
             );
 

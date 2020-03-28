@@ -16,20 +16,20 @@ class Attendance extends Entry {
         // idiot proofing
 
         $attendeeAndEventExist = true;
-        /*
+
         if ($attendeeId && $eventId) {
             if (DbClass::readById(new Attendee(), [$attendeeId]) == false) {
                 $attendeeAndEventExist = false;
-                echo "That attendee does not exist in the database!\n";
+                //echo "That attendee does not exist in the database!\n";
             }
             if (DbClass::readById(new Event(), [$eventId]) == false) {
                 $attendeeAndEventExist = false;
-                echo "That event does not exist in the database!\n";
+                //echo "That event does not exist in the database!\n";
             }
         } else {
             $attendeeAndEventExist = false;
         }
-        */
+
 
         if ($attendeeAndEventExist) {
             $attendance = DbClass::readById($this, [$attendeeId, $eventId]);
@@ -64,7 +64,6 @@ class Attendance extends Entry {
     }
 
     public function save() : bool {
-        // TODO: Implement save() method.
         if (DbClass::readById($this, [$this->attendeeId, $this->eventId])) {
             return DbClass::update($this);
         } else {

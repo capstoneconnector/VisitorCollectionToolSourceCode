@@ -1,4 +1,9 @@
 <?php
+require_once "../db/classes/DbClass.php";
+require_once "../php/classes/Event.php";
+require_once "../php/classes/Attendee.php";
+require_once "../php/classes/Attendance.php";
+
 function mailer() {
     /*
      * Set the settings for php.ini and sendmail.ini by watching this video (read description)
@@ -13,14 +18,25 @@ function mailer() {
      * https://www.youtube.com/watch?v=ZsxQenUjt5U
      */
 
-    $to = "ianshepard99@gmail.com";
+    $result = true;
 
-    $subject = "An Automated message";
+    $eventsYesterday = DbClass::readAllEventsYesterday();
+    foreach ($eventsYesterday as $event) {
+        $eventObj = new Event($event["Eventid"]);
+        foreach ($eventObj->getAttendees() as $attendee) {
+            $attendance = new Attendance($attendee->getId(), $eventObj->getId());
+            if ($attendance->getIsAttended()) {
+                $to      = $attendee->getEmail();
+                $subject = "Thank You For Attending";
+                $message = "Hey {$attendee->getFirstName()} {$attendee->getLastName()}, thank you for attending {$eventObj->getName()}. Take a look at the similar upcoming events at <a href='innovationconnector.com/coding-connector'>our website</a>.\n";
+                $headers = "Content-type:text/html;charset=UTF-8" . "\r\n";
+                var_dump($to, $message);
 
-    $msg = "Hi Ian, this is an automated message sent from code!";
-
-    // use wordwrap() so that the lines are no longer than 70 characters
-    $msg = wordwrap($msg, 70);
-
-    return mail($to, $subject, $msg);
+                if (mail($to, $subject, $message, $headers) == false) {
+                    $result = false;
+                }
+            }
+        }
+    }
+    return $result;
 }
