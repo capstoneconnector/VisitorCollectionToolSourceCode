@@ -83,8 +83,8 @@
                 <br>
                 <div id = "AttendeeTable" class="col-12">
                     <?php
-                    require_once "../php/getAttendeeInfo.php";
-                    $attendees = getAllAttendees();
+                    require_once "../php/classes/AttendeeManager.php";
+                    $attendees = AttendeeManager::getAllAttendees();
                     if (!empty($attendees)){
                         echo "<div id = 'header'>Attendees</div>";
                         echo "<br>";
@@ -119,12 +119,8 @@
 </html>
 
 <?php
-require_once "../php/registerAttendee.php";
-require_once "../php/checkAttendeeExists.php";
-require_once "../php/createAttendee.php";
-require_once "../php/getAttendeeInfo.php";
-require_once "../php/getEventInfo.php";
-require_once "../php/checkRegistration.php";
+require_once "../php/classes/AttendeeManager.php";
+
 if (!empty($_POST))
 {
     if (isset($_POST['fname']))
@@ -137,8 +133,8 @@ if (!empty($_POST))
         if($gender == "other"){
             $gender = NULL;
         }
-        if(!checkAttendeeExists($fname, $lname, $email)){
-            $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
+        if(!AttendeeManager::checkAttendeeExists($fname, $lname, $email)){
+            $attendee = AttendeeManager::createAttendee($fname, $lname, $email, $gender, $phone);
             echo '<script language="javascript">';
             echo 'window.location=("users.php");';
             echo '</script>';

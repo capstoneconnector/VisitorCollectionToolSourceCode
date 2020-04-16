@@ -53,8 +53,8 @@
                          </tr>
                     </table>
 					<?php
-                        require_once "../php/getEventInfo.php";
-						$event = getEvent($_SESSION["eventId"]); //Use session var for event name
+                        require_once "../php/classes/EventManager.php";
+						$event = EventManager::getEvent($_SESSION["eventId"]); //Use session var for event name
 						echo "<h2>" . $event->getName() . "</h2>";
 					?>
 					<br>
@@ -71,14 +71,14 @@
 					<br><br><br>
 					<div class="table">
 					<?php
-                        require_once "../php/getEventInfo.php";
-						require_once "../php/findName.php";
+                        require_once "../php/classes/EventManager.php";
+						require_once "../php/classes/AttendanceManager.php";
 						$event = $_SESSION['eventId'];
 						if(!empty($_POST)){
 							if(!empty($_POST["name"])){
 								$name = $_POST["name"];
-								$event = getEvent($_SESSION["eventId"]);
-								$names = findName($name, $event); //Fetch names that match name entered by user
+								$event = EventManager::getEvent($_SESSION["eventId"]);
+								$names = AttendanceManager::findName($name, $event); //Fetch names that match name entered by user
 								if(!empty($names)){ //Only creates table if there is content to write to it
 									echo '<table border = 3>';
 									echo '<th>First Name</th><th>Last Name</th><th>Email</th><th></th>';

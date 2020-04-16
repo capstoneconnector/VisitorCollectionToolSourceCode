@@ -49,10 +49,10 @@
         </div>
         <div class = "col-12">
             <?php
-            require_once "../php/getAttendeeInfo.php";
+            require_once "../php/classes/AttendeeManager.php";
             if (isset($_GET["attendeeid"]))
             {
-                $attendee = getAttendeeInfoByID($_GET["attendeeid"]);
+                $attendee = AttendeeManager::getAttendeeInfoByID($_GET["attendeeid"]);
                 unset($_POST["attendeeid"]);
             }
             if (!empty($attendee)){
@@ -87,8 +87,8 @@
         <br><br><br>
         <div class = "col-12">
             <?php
-            require_once "../php/getEvents.php";
-            $events = getEventsRegisteredFor($_GET['attendeeid']);
+            require_once "../php/classes/EventManager.php";
+            $events = EventManager::getEventsRegisteredFor($_GET['attendeeid']);
             echo "<div class = 'container'>";
             echo '<div id = "EventTable" class="col-12">';
             echo "<table id = 'eventTable' class='table'>";

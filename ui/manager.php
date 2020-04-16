@@ -103,7 +103,7 @@
 			</div>
         </div>
 			<?php
-				require_once "../php/getEvents.php";
+				require_once "../php/classes/EventManager.php";
                 function createEventTable($events){
                     echo "<div class = 'container'>";
                     echo '<div id = "EventTable" class="col-12">';
@@ -130,7 +130,7 @@
                     echo "</div>";
                     echo "</div>";
                 }
-				$events = getAllEvents();
+				$events = EventManager::getAllEvents();
 				if (!empty($events) and $_SESSION['reset'] == TRUE){
 					createEventTable($events);
 				}
@@ -140,8 +140,7 @@
 </html>
 
 <?php
-	require_once "../php/createEvent.php";
-    require_once "../php/getEvents.php";
+	require_once "../php/classes/EventManager.php";
 	if (!empty($_POST))
 	{
         if(isset($_POST['reset'])){
@@ -155,7 +154,7 @@
             $date = $_POST["date"];
             if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
             {
-                if (createEvent($name, $description, $date)){
+                if (EventManager::createEvent($name, $description, $date)){
                     echo '<script language="javascript">';
                     echo 'window.location=("manager.php");';
                     echo '</script>';

@@ -1,5 +1,5 @@
 <?php
-	require_once "../php/getEvents.php";
+	require_once "../php/classes/EventManager.php";
 	session_start();
 	$_SESSION["eventId"] = NULL;
 	if(empty($_SESSION['logged'])){
@@ -45,7 +45,7 @@
             <label for="placeholder"></label><select id = "placeholder" name="event" class="input" required>
 				<option disabled selected> -- Select an event -- </option>
 				<?php
-					$events = getSetupEvents();
+					$events = EventManager::getSetupEvents();
 					foreach($events as $event){
 						echo "<option value='" . $event->getId() . "''>" . $event->getName() . " : " . $event->getDate() . "</option>";
 					}

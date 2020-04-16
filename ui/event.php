@@ -90,12 +90,12 @@
             <br><br>
 			<div id = "AttendeeTable" class="col-12">
 			<?php
-				require_once "../php/getEventInfo.php";
-                require_once "../php/getAttendanceRecord.php";
+				require_once "../php/classes/EventManager.php";
+                require_once "../php/classes/AttendanceManager.php";
 				$attendees = [];
 				if (isset($_GET["eventid"])) 
 				{
-				    $event = getEvent($_GET["eventid"]);
+				    $event = EventManager::getEvent($_GET["eventid"]);
 					unset($_POST["eventid"]);
 				}
 				if (!empty($event)){
@@ -119,7 +119,7 @@
 					echo "</thead>";
 					echo "<tbody>";
 					foreach($event->getAttendees() as $attendee){
-                        $attendance = getAttendanceRecord($event, $attendee);
+                        $attendance = AttendanceManager::getAttendanceRecord($event, $attendee);
                         echo "<tr>";
                         echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
                         echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
@@ -138,12 +138,10 @@
     </body>
 </html>
 <?php
-	require_once "../php/registerAttendee.php";
-    require_once "../php/checkAttendeeExists.php";
-    require_once "../php/createAttendee.php";
-    require_once "../php/getAttendeeInfo.php";
-    require_once "../php/getEventInfo.php";
-    require_once "../php/checkRegistration.php";
+	require_once "../php/classes/AttendeeManager.php";
+    require_once "../php/classes/AttendanceManager.php";
+    require_once "../php/classes/EventManager.php";
+
 	if (!empty($_POST))
 	{
 		if (isset($_POST['fname']))
@@ -157,15 +155,15 @@
         if($gender == "other"){
             $gender = NULL;
         }
-		$event = getEvent($_GET["eventid"]);
-        if(!checkAttendeeExists($fname, $lname, $email)){
-            $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
+		$event = EventManager::getEvent($_GET["eventid"]);
+        if(!AttendeeManager::checkAttendeeExists($fname, $lname, $email)){
+            $attendee = AttendeeManager::createAttendee($fname, $lname, $email, $gender, $phone);
         }
         else{
-            $attendee = getAttendeeFromAttributes($fname, $lname, $email);
+            $attendee = AttendeeManager::getAttendeeFromAttributes($fname, $lname, $email);
         }
-        if(checkRegistration($attendee, $event) == FALSE){
-            registerAttendee($attendee, $event, FALSE);
+        if(AttendanceManager::checkRegistration($attendee, $event) == FALSE){
+            AttendanceManager::registerAttendee($attendee, $event, FALSE);
             echo '<script language="javascript">';
             echo 'window.location=("event.php?eventid='. $eventid . '");';
             echo '</script>';

@@ -78,12 +78,9 @@
 </html>
 
 <?php
-	require_once "../php/checkRegistration.php";
-    require_once "../php/getEventInfo.php";
-    require_once "../php/registerAttendee.php";
-    require_once "../php/checkAttendeeExists.php";
-    require_once "../php/getAttendeeInfo.php";
-    require_once "../php/createAttendee.php";
+	require_once "../php/classes/AttendeeManager.php";
+    require_once "../php/classes/AttendanceManager.php";
+    require_once "../php/classes/EventManager.php";
 
 	if(!empty($_POST)){
 		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
@@ -95,15 +92,15 @@
 			if($gender == "other"){
 			    $gender = NULL;
             }
-            $event = getEvent($_SESSION["eventId"]);
-			if(!checkAttendeeExists($fname, $lname, $email)){
-			    $attendee = createAttendee($fname, $lname, $email, $gender, $phone);
+            $event = EventManager::getEvent($_SESSION["eventId"]);
+			if(!AttendeeManager::checkAttendeeExists($fname, $lname, $email)){
+			    $attendee = AttendeeManager::createAttendee($fname, $lname, $email, $gender, $phone);
             }
 			else{
-			    $attendee = getAttendeeFromAttributes($fname, $lname, $email);
+			    $attendee = AttendeeManager::getAttendeeFromAttributes($fname, $lname, $email);
             }
-			if(checkRegistration($attendee, $event) == FALSE){
-				registerAttendee($attendee, $event, TRUE);
+			if(AttendanceManager::checkRegistration($attendee, $event) == FALSE){
+				AttendanceManager::registerAttendee($attendee, $event, TRUE);
 				echo "<script type='text/javascript'>";
 				echo "alert('Registration Successful!');";
 				echo "window.location = ('checkin.php');";

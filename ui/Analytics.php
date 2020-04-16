@@ -15,9 +15,9 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
     <?php
-    require_once "../php/getAttendanceInfo.php";
+    require_once "../php/classes/AnalyticsManager.php";
     if (isset($_GET["eventid"])) {
-        $attendance = getAttendanceProportion($_GET["eventid"]);
+        $attendance = AnalyticsManager::getAttendanceProportion($_GET["eventid"]);
         $walkinProportion = $attendance['walkin'] / $attendance['registered'];
         $attendedProportion = $attendance['attended'] / $attendance['registered'];
         echo "function drawAttendanceChart() {";
@@ -38,9 +38,9 @@
     }
     ?>
 <?php
-    require_once "../php/getGenderInfo.php";
+    require_once "../php/classes/AnalyticsManager.php";
     if (isset($_GET["eventid"])) {
-        $gender = getGenderDifferences($_GET["eventid"]);
+        $gender = AnalyticsManager::getGenderDifferences($_GET["eventid"]);
         $femaleProportion = $gender['Female'];
         $maleProportion = $gender['Male'];
         $otherProportion = $gender['Other'];
