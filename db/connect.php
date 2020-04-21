@@ -1,7 +1,7 @@
 <?php
 function newPDO()
 {
-    require_once "../php/parseConfig.php";
+    require_once "../businessLogic/parseConfig.php";
     $config = parseConfig();
 
     $hostname = $config["hostname"];

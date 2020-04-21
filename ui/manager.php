@@ -1,8 +1,8 @@
 <?php
 	session_start();
 	if(empty($_SESSION['logged'])){
-		header ('location: login.php');
-	}
+        header('location: login.businessLogic');
+    }
 	if(empty($_SESSION['reset'])){
 	    $_SESSION['reset'] = TRUE;
     }
@@ -108,33 +108,35 @@
                     <br><br>
                     <div class="col-7 float-left">
                         <form method="post">
-                            <button id = "resetBtn" type = "submit" name = "reset" class = "btn btn-info">Reset</button>
-                            <button id = "searchBtn" type = "button" onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
+                            <button id="resetBtn" type="submit" name="reset" class="btn btn-info">Reset</button>
+                            <button id="searchBtn" type="button" onclick='SearchEvents(-1)' class="btn btn-info">
+                                Search
+                            </button>
                         </form>
                     </div>
                 </div>
-			</div>
+            </div>
         </div>
-        <div class = "container">
-			<?php
-				require_once "../php/classes/EventManager.php";
-                function createEventTable($events){
-                    echo "<div class = 'row'>";
-                    echo '<div id = "EventTable" class="col-12">';
-                    echo "<table id = 'eventTable' class='table'>";
-                    echo '<thead class="thead-dark">';
-                    echo "<tr>";
-                    echo "<th>Name</th>";
-                    echo "<th>Description</th>";
-                    echo "<th>Date</th>";
-                    echo "<th>Eventid</th>";
+        <div class="container">
+            <?php
+            require_once "../businessLogic/classes/EventManager.php";
+            function createEventTable($events) {
+                echo "<div class = 'row'>";
+                echo '<div id = "EventTable" class="col-12">';
+                echo "<table id = 'eventTable' class='table'>";
+                echo '<thead class="thead-dark">';
+                echo "<tr>";
+                echo "<th>Name</th>";
+                echo "<th>Description</th>";
+                echo "<th>Date</th>";
+                echo "<th>Eventid</th>";
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
                     foreach($events as $event){
                         echo "<tr>";
-                        echo "<td><a href = 'event.php?eventid=".$event->getId()."'>".$event->getName()."</a></td>";
-                        echo "<td>".$event->getDescription()."</td>";
+                        echo "<td><a href = 'event.businessLogic?eventid=" . $event->getId() . "'>" . $event->getName() . "</a></td>";
+                        echo "<td>" . $event->getDescription() . "</td>";
                         echo "<td>".$event->getDate()."</td>";
                         echo "<td>".$event->getId()."</td>";
                         echo "</tr>";
@@ -144,33 +146,30 @@
                     echo "</div>";
                     echo "</div>";
                 }
-				$events = EventManager::getAllEvents();
-				if (!empty($events) and $_SESSION['reset'] == TRUE){
-					createEventTable($events);
-				}
-			?>
+
+            $events = EventManager::getAllEvents();
+            if (!empty($events) and $_SESSION['reset'] == true) {
+                createEventTable($events);
+            }
+            ?>
         </div>
     </body>
 </html>
 
 <?php
-	require_once "../php/classes/EventManager.php";
-	if (!empty($_POST))
-	{
-        if(isset($_POST['reset'])){
-            $_SESSION['reset'] = TRUE;
-        }
-
-		elseif (isset($_POST['name']))
-		{
-            $name = $_POST["name"];
-            $description = $_POST["description"];
+require_once "../businessLogic/classes/EventManager.php";
+if (!empty($_POST)) {
+    if (isset($_POST['reset'])) {
+        $_SESSION['reset'] = true;
+    } elseif (isset($_POST['name'])) {
+        $name        = $_POST["name"];
+        $description = $_POST["description"];
             $date = $_POST["date"];
             if(preg_match("/\d\d\d\d-[0-1][0-9]-[0-3][0-9]/", $date))
             {
                 if (EventManager::createEvent($name, $description, $date)){
                     echo '<script language="javascript">';
-                    echo 'window.location=("manager.php");';
+                    echo 'window.location=("manager.businessLogic");';
                     echo '</script>';
                 }
             }

@@ -1,12 +1,10 @@
 <?php
-require_once "../php/classes/Event.php";
-require_once "../php/classes/Attendee.php";
+require_once "../businessLogic/classes/Event.php";
+require_once "../businessLogic/classes/Attendee.php";
 
 
-class EventTest extends PHPUnit_Framework_TestCase
-{
-    public function testCreatingAnEventWithoutParametersCreatesEmptyEvent()
-    {
+class EventTest extends PHPUnit_Framework_TestCase {
+    public function testCreatingAnEventWithoutParametersCreatesEmptyEvent() {
         $event = new Event();
 
         //if any varyible is set to a value when an empty event is called, then $varExists will become true.

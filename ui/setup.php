@@ -1,12 +1,12 @@
 <?php
-	require_once "../php/classes/EventManager.php";
-	session_start();
-	$_SESSION["eventId"] = NULL;
-	if(empty($_SESSION['logged'])){
-		header ('location: login.php');
-	}
+require_once "../businessLogic/classes/EventManager.php";
+session_start();
+$_SESSION["eventId"] = null;
+if (empty($_SESSION['logged'])) {
+	header('location: login.businessLogic');
+}
 ?>
-<html lang="php">
+	<html lang="php">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="/css/setup.css">
@@ -64,6 +64,6 @@
 <?php
 	if (!empty($_POST["event"])) {
 		$_SESSION["eventId"] = $_POST["event"];
-		header('location: checkin.php');
+		header('location: checkin.businessLogic');
 	}
 ?>

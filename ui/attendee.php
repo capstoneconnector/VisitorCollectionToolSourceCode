@@ -49,7 +49,7 @@
         </div>
         <div class = "col-12">
             <?php
-            require_once "../php/classes/AttendeeManager.php";
+            require_once "../businessLogic/classes/AttendeeManager.php";
             if (isset($_GET["attendeeid"]))
             {
                 $attendee = AttendeeManager::getAttendeeInfoByID($_GET["attendeeid"]);
@@ -87,7 +87,7 @@
         <br><br><br>
         <div class = "col-12">
             <?php
-            require_once "../php/classes/EventManager.php";
+            require_once "../businessLogic/classes/EventManager.php";
             $events = EventManager::getEventsRegisteredFor($_GET['attendeeid']);
             echo "<div class = 'container'>";
             echo '<div id = "EventTable" class="col-12">';
@@ -103,8 +103,8 @@
             echo "<tbody>";
             foreach($events as $event){
                 echo "<tr>";
-                echo "<td><a href = 'event.php?eventid=".$event->getId()."'>".$event->getName()."</a></td>";
-                echo "<td>".$event->getDescription()."</td>";
+                echo "<td><a href = 'event.businessLogic?eventid=" . $event->getId() . "'>" . $event->getName() . "</a></td>";
+                echo "<td>" . $event->getDescription() . "</td>";
                 echo "<td>".$event->getDate()."</td>";
                 echo "<td>".$event->getId()."</td>";
                 echo "</tr>";

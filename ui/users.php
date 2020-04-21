@@ -83,7 +83,7 @@
                 <br>
                 <div id = "AttendeeTable" class="col-12">
                     <?php
-                    require_once "../php/classes/AttendeeManager.php";
+                    require_once "../businessLogic/classes/AttendeeManager.php";
                     $attendees = AttendeeManager::getAllAttendees();
                     if (!empty($attendees)){
                         echo "<div id = 'header'>Attendees</div>";
@@ -99,10 +99,10 @@
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
-                        foreach($attendees as $attendee){
+                        foreach($attendees as $attendee) {
                             echo "<tr>";
-                            echo "<td ><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
-                            echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
+                            echo "<td ><a href = 'attendee.businessLogic?attendeeid=" . $attendee->getId() . "'>" . $attendee->getFirstName() . "</a></td>";
+                            echo "<td><a href = 'attendee.businessLogic?attendeeid=" . $attendee->getId() . "'>" . $attendee->getLastName() . "</a></td>";
                             echo "<td>" . $attendee->getEmail() . "</td>";
                             echo "<td>" . $attendee->getPhone() . "</td>";
                             echo "<td>" . $attendee->getGender() . "</td>";
@@ -119,7 +119,7 @@
 </html>
 
 <?php
-require_once "../php/classes/AttendeeManager.php";
+require_once "../businessLogic/classes/AttendeeManager.php";
 
 if (!empty($_POST))
 {
@@ -136,7 +136,7 @@ if (!empty($_POST))
         if(!AttendeeManager::checkAttendeeExists($fname, $lname, $email)){
             $attendee = AttendeeManager::createAttendee($fname, $lname, $email, $gender, $phone);
             echo '<script language="javascript">';
-            echo 'window.location=("users.php");';
+            echo 'window.location=("users.businessLogic");';
             echo '</script>';
         }
         else{

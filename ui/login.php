@@ -42,8 +42,8 @@
                         <label>
                             <input type = "password" name = "password" required>
                         </label>
-                        <br><br>
-						<input type = "submit" value = "Login">
+						<br><br>
+						<input type="submit" value="Login">
 					</form>
 				</div>
 			</div>
@@ -52,17 +52,16 @@
 </html>
 
 <?php
-	require_once "../php/verifyLogin.php";
-	if(!empty($_POST)){
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		if(verifyLogin($username, $password)){
-			$_SESSION['logged'] = TRUE;
-			echo "<script type='text/javascript'>";
-			echo "window.location = ('setup.php');";
-			echo "</script>";
-		}
-		else{
+require_once "../businessLogic/verifyLogin.php";
+if (!empty($_POST)) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	if (verifyLogin($username, $password)) {
+		$_SESSION['logged'] = true;
+		echo "<script type='text/javascript'>";
+		echo "window.location = ('setup.businessLogic');";
+		echo "</script>";
+	} else {
 			echo '<script type="text/javascript">';
 			echo 'alert("Login failed, try again!")';
 			echo '</script>';

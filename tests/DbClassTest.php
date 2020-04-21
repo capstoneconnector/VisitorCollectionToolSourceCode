@@ -1,14 +1,12 @@
 <?php
 require_once "../db/classes/DbClass.php";
-require_once "../php/classes/Attendee.php";
-require_once "../php/classes/Event.php";
-require_once "../php/classes/Attendance.php";
+require_once "../businessLogic/classes/Attendee.php";
+require_once "../businessLogic/classes/Event.php";
+require_once "../businessLogic/classes/Attendance.php";
 require_once "../db/connect.php";
 
-class DbClassTest extends PHPUnit_Framework_TestCase
-{
-    function setup()
-    {
+class DbClassTest extends PHPUnit_Framework_TestCase {
+    function setup() {
     }
 
     function teardown() { }

@@ -43,7 +43,7 @@
                                 <li><a href='setup.php'><span>Set Up</span></a></li>
                                 <?php
                                 $eventid = $_GET["eventid"];
-                                echo '<li><a href=Analytics.php?eventid=' . $eventid . '><span>Analytics</span></a></li>'
+                                echo '<li><a href=Analytics.businessLogic?eventid=' . $eventid . '><span>Analytics</span></a></li>'
                                 ?>
                                 <li class='last'><a href='manager.php'><span>Events</span></a></li>
                             </ul>
@@ -82,26 +82,25 @@
                         <option value="other">Prefer not to say</option>
                     </select>
                     <br><br>
-                    <input type = "submit" value = "Save">
+                    <input type="submit" value="Save">
                     <button onclick="UpdateAttendee();">Cancel</button>
-				</form>
+                </form>
             </div>
-		</div>
+            </div>
             <br><br>
-			<div id = "AttendeeTable" class="col-12">
-			<?php
-				require_once "../php/classes/EventManager.php";
-                require_once "../php/classes/AttendanceManager.php";
-				$attendees = [];
-				if (isset($_GET["eventid"])) 
-				{
-				    $event = EventManager::getEvent($_GET["eventid"]);
-					unset($_POST["eventid"]);
-				}
-				if (!empty($event)){
-				    echo "<div id = 'header'>" . $event->getName() . " : " . $event->getDate();
-				    echo "<br><br>";
-				    echo "<form method = 'post'>";
+            <div id="AttendeeTable" class="col-12">
+                <?php
+                require_once "../businessLogic/classes/EventManager.php";
+                require_once "../businessLogic/classes/AttendanceManager.php";
+                $attendees = [];
+                if (isset($_GET["eventid"])) {
+                    $event = EventManager::getEvent($_GET["eventid"]);
+                    unset($_POST["eventid"]);
+                }
+                if (!empty($event)) {
+                    echo "<div id = 'header'>" . $event->getName() . " : " . $event->getDate();
+                    echo "<br><br>";
+                    echo "<form method = 'post'>";
 				    echo "<button type='submit' name='export' class = 'btn btn-info'> Export </button>";
 				    echo "</form>";
 				    echo "</div>";
@@ -118,39 +117,37 @@
 					echo "</tr>";
 					echo "</thead>";
 					echo "<tbody>";
-					foreach($event->getAttendees() as $attendee){
+					foreach($event->getAttendees() as $attendee) {
                         $attendance = AttendanceManager::getAttendanceRecord($event, $attendee);
                         echo "<tr>";
-                        echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getFirstName()."</a></td>";
-                        echo "<td><a href = 'attendee.php?attendeeid=".$attendee->getId()."'>".$attendee->getLastName()."</a></td>";
+                        echo "<td><a href = 'attendee.businessLogic?attendeeid=" . $attendee->getId() . "'>" . $attendee->getFirstName() . "</a></td>";
+                        echo "<td><a href = 'attendee.businessLogic?attendeeid=" . $attendee->getId() . "'>" . $attendee->getLastName() . "</a></td>";
                         echo "<td>" . $attendee->getEmail() . "</td>";
                         echo "<td>" . $attendee->getPhone() . "</td>";
                         echo "<td>" . $attendance->getIsWalkIn() . "</td>";
                         echo "<td>" . $attendance->getIsAttended() . "</td>";
                         echo "</tr>";
                     }
-					echo "</tbody>";
-					echo "</table>";
-				}
-			?>
-			</div>
-			</div>
+                    echo "</tbody>";
+                    echo "</table>";
+                }
+                ?>
+            </div>
+        </div>
     </body>
 </html>
 <?php
-	require_once "../php/classes/AttendeeManager.php";
-    require_once "../php/classes/AttendanceManager.php";
-    require_once "../php/classes/EventManager.php";
+require_once "../businessLogic/classes/AttendeeManager.php";
+require_once "../businessLogic/classes/AttendanceManager.php";
+require_once "../businessLogic/classes/EventManager.php";
 
-	if (!empty($_POST))
-	{
-		if (isset($_POST['fname']))
-		{
-		$fname = $_POST["fname"];
-		$lname = $_POST["lname"];
-		$email = $_POST["email"];
-		$phone = $_POST["phone"];
-		$gender = $_POST["gender"];
+if (!empty($_POST)) {
+    if (isset($_POST['fname'])) {
+        $fname   = $_POST["fname"];
+        $lname   = $_POST["lname"];
+        $email   = $_POST["email"];
+        $phone   = $_POST["phone"];
+        $gender  = $_POST["gender"];
 		$eventid = $_GET["eventid"];
         if($gender == "other"){
             $gender = NULL;
@@ -165,7 +162,7 @@
         if(AttendanceManager::checkRegistration($attendee, $event) == FALSE){
             AttendanceManager::registerAttendee($attendee, $event, FALSE);
             echo '<script language="javascript">';
-            echo 'window.location=("event.php?eventid='. $eventid . '");';
+            echo 'window.location=("event.businessLogic?eventid=' . $eventid . '");';
             echo '</script>';
 		}
 		else{

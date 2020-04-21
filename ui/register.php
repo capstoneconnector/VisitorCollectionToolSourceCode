@@ -1,8 +1,8 @@
 <?php
 	session_start();
 	if(empty($_SESSION['logged'])){
-		header ('location: login.php');
-	}
+        header('location: login.businessLogic');
+    }
 ?>
 
 <html lang="php">
@@ -68,29 +68,29 @@
                         <option value="other">Prefer not to say</option>
                     </select>
                 <br><br>
-				<input class = "submit" type = "submit" value = "Submit">
-			</form>
-			<form method = "post" action = "checkin.php">
-				<button class = "submit">Back</button>
-			</form>
-		</div>
+                <input class="submit" type="submit" value="Submit">
+            </form>
+        <form method="post" action="checkin.php">
+            <button class="submit">Back</button>
+        </form>
+    </div>
     </body>
 </html>
 
 <?php
-	require_once "../php/classes/AttendeeManager.php";
-    require_once "../php/classes/AttendanceManager.php";
-    require_once "../php/classes/EventManager.php";
+require_once "../businessLogic/classes/AttendeeManager.php";
+require_once "../businessLogic/classes/AttendanceManager.php";
+require_once "../businessLogic/classes/EventManager.php";
 
-	if(!empty($_POST)){
-		if(!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])){
-			$fname = $_POST["fname"];
-			$lname = $_POST["lname"];
-			$email = $_POST["email"];
-			$phone = $_POST["phone"];
-			$gender = $_POST["gender"];
-			if($gender == "other"){
-			    $gender = NULL;
+if (!empty($_POST)) {
+    if (!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])) {
+        $fname  = $_POST["fname"];
+        $lname  = $_POST["lname"];
+        $email  = $_POST["email"];
+        $phone  = $_POST["phone"];
+        $gender = $_POST["gender"];
+        if ($gender == "other") {
+            $gender = null;
             }
             $event = EventManager::getEvent($_SESSION["eventId"]);
 			if(!AttendeeManager::checkAttendeeExists($fname, $lname, $email)){
@@ -99,13 +99,13 @@
 			else{
 			    $attendee = AttendeeManager::getAttendeeFromAttributes($fname, $lname, $email);
             }
-			if(AttendanceManager::checkRegistration($attendee, $event) == FALSE){
-				AttendanceManager::registerAttendee($attendee, $event, TRUE);
-				echo "<script type='text/javascript'>";
-				echo "alert('Registration Successful!');";
-				echo "window.location = ('checkin.php');";
-				echo "</script>";
-			}
+			if(AttendanceManager::checkRegistration($attendee, $event) == FALSE) {
+                AttendanceManager::registerAttendee($attendee, $event, true);
+                echo "<script type='text/javascript'>";
+                echo "alert('Registration Successful!');";
+                echo "window.location = ('checkin.businessLogic');";
+                echo "</script>";
+            }
 
 			else{
 				echo '<script type="text/javascript\">';

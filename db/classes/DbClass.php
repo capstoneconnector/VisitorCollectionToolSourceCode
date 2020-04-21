@@ -1,14 +1,12 @@
 <?php
-require_once "../db/connect.php";
-require_once "../db/classes/DbManagerInterface.php";
+require_once "../db/connect.businessLogic";
+require_once "../db/classes/DbManagerInterface.businessLogic";
 require_once "TableSummary.php";
 
-class DbClass implements DbManagerInterface
-{
+class DbClass implements DbManagerInterface {
     private $tableSummaries;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->tableSummaries = TableSummary::getTableSummaries();
     }
 

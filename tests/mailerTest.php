@@ -1,5 +1,5 @@
 <?php
-include_once "../php/mailer.php";
+include_once "../businessLogic/mailer.php";
 
 class mailerTest extends PHPUnit_Framework_TestCase {
 

@@ -1,5 +1,5 @@
 <?php
-require_once "../php/classes/Attendance.php";
+require_once "../businessLogic/classes/Attendance.php";
 require_once "../db/connect.php";
 
 

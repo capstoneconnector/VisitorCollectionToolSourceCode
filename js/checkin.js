@@ -6,13 +6,13 @@ function verifyUser(userid, email, eventid) {
 		"Also, if the person picking up the student does change, the student’s guardian will notify the lead instructor for the event prior to pick up.");
 	if(confirmation === true) {
 		let xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-  		if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to checkin
-    		alert("Check in Successful");
-    		window.location = ("checkin.php");
-		  }
+		xhttp.onreadystatechange = function () {
+			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to checkin
+				alert("Check in Successful");
+				window.location = ("checkin.businessLogic");
+			}
 		};
-		xhttp.open("GET", "/php/checkAttendeeIn.php?userid=" + userid + "&eventid=" + eventid, true); //AJAX call to checkEmail php script
+		xhttp.open("GET", "/businessLogic/checkAttendeeIn.businessLogic?userid=" + userid + "&eventid=" + eventid, true); //AJAX call to checkEmail businessLogic script
 		xhttp.send();
 	}
 }
