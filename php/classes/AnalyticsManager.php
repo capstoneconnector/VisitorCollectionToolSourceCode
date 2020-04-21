@@ -5,7 +5,16 @@ require_once "../php/classes/EventManager.php";
 class AnalyticsManager
 {
     static function getAttendanceProportion($eventid){
-        return DbClass::getAttendanceByEventId($eventid);
+        $attendanceTotals = DbClass::getAttendanceByEventId($eventid);
+        $walkin           = $attendanceTotals["walkin"];
+        $registered       = $attendanceTotals["registered"];
+        $attended         = $attendanceTotals["attended"];
+
+        return $proportions = array(
+            "attended"         => $attended - $walkin,
+            "attendedAsWalkin" => $walkin,
+            "notAttended"      => $registered - $attended,
+        );
     }
 
     static function getGenderDifferences($eventid){

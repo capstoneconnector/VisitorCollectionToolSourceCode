@@ -18,15 +18,16 @@
     require_once "../php/classes/AnalyticsManager.php";
     if (isset($_GET["eventid"])) {
         $attendance = AnalyticsManager::getAttendanceProportion($_GET["eventid"]);
-        $walkinProportion = $attendance['walkin'] / $attendance['registered'];
-        $attendedProportion = $attendance['attended'] / $attendance['registered'];
+        //$walkinProportion = $attendance['walkin'] / $attendance['registered'];
+        //$attendedProportion = $attendance['attended'] / $attendance['registered'];
         echo "function drawAttendanceChart() {";
         echo "let data = new google.visualization.DataTable();";
         echo "data.addColumn('string', 'Type');";
         echo "data.addColumn('number', 'Attendance');";
         echo "data.addRows([";
-        echo "['Walk-in', ".$walkinProportion. "],";
-        echo "['Attended', ". $attendedProportion."],";
+        echo "['Attended as Walk-in', " . $attendance["attendedAsWalkin"] . "],";
+        echo "['Attended', " . $attendance["attended"] . "],";
+        echo "['Not Attened', " . $attendance["notAttended"] . "]";
         echo " ]);";
         echo "let options = {'title':'Attendance Types',";
         echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
