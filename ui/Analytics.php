@@ -15,7 +15,7 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
     <?php
-    require_once "../businessLogic/classes/AnalyticsManager.php";
+    require_once "../backend/classes/AnalyticsManager.php";
     if (isset($_GET["eventid"])) {
         $attendance = AnalyticsManager::getAttendanceProportion($_GET["eventid"]);
         //$walkinProportion = $attendance['walkin'] / $attendance['registered'];
@@ -39,7 +39,7 @@
     }
     ?>
 <?php
-require_once "../businessLogic/classes/AnalyticsManager.php";
+require_once "../backend/classes/AnalyticsManager.php";
     if (isset($_GET["eventid"])) {
         $gender = AnalyticsManager::getGenderDifferences($_GET["eventid"]);
         $femaleProportion = $gender['Female'];

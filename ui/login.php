@@ -52,16 +52,16 @@
 </html>
 
 <?php
-require_once "../businessLogic/verifyLogin.php";
+require_once "../backend/verifyLogin.php";
 if (!empty($_POST)) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	if (verifyLogin($username, $password)) {
-		$_SESSION['logged'] = true;
-		echo "<script type='text/javascript'>";
-		echo "window.location = ('setup.businessLogic');";
-		echo "</script>";
-	} else {
+        $_SESSION['logged'] = true;
+        echo "<script type='text/javascript'>";
+        echo "window.location = ('setup.php');";
+        echo "</script>";
+    } else {
 			echo '<script type="text/javascript">';
 			echo 'alert("Login failed, try again!")';
 			echo '</script>';

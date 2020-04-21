@@ -9,10 +9,10 @@ function verifyUser(userid, email, eventid) {
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to checkin
 				alert("Check in Successful");
-				window.location = ("checkin.businessLogic");
+				window.location = ("checkin.php");
 			}
 		};
-		xhttp.open("GET", "/businessLogic/checkAttendeeIn.businessLogic?userid=" + userid + "&eventid=" + eventid, true); //AJAX call to checkEmail businessLogic script
+		xhttp.open("GET", "/backend/checkAttendeeIn.php?userid=" + userid + "&eventid=" + eventid, true); //AJAX call to checkEmail php script
 		xhttp.send();
 	}
 }

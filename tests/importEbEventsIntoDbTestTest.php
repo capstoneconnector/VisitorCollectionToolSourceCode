@@ -1,5 +1,5 @@
 <?php
-include_once "../businessLogic/ebinterface.php";
+include_once "../backend/ebinterface.php";
 
 class importEbEventIntoDbTest extends PHPUnit_Framework_TestCase { //Run this file with phpunit command from command line
 

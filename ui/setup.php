@@ -1,9 +1,9 @@
 <?php
-require_once "../businessLogic/classes/EventManager.php";
+require_once "../backend/classes/EventManager.php";
 session_start();
 $_SESSION["eventId"] = null;
 if (empty($_SESSION['logged'])) {
-	header('location: login.businessLogic');
+    header('location: login.php');
 }
 ?>
 	<html lang="php">
@@ -63,7 +63,7 @@ if (empty($_SESSION['logged'])) {
 
 <?php
 	if (!empty($_POST["event"])) {
-		$_SESSION["eventId"] = $_POST["event"];
-		header('location: checkin.businessLogic');
-	}
+        $_SESSION["eventId"] = $_POST["event"];
+        header('location: checkin.php');
+    }
 ?>

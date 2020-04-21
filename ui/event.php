@@ -43,7 +43,7 @@
                                 <li><a href='setup.php'><span>Set Up</span></a></li>
                                 <?php
                                 $eventid = $_GET["eventid"];
-                                echo '<li><a href=Analytics.businessLogic?eventid=' . $eventid . '><span>Analytics</span></a></li>'
+                                echo '<li><a href=Analytics.php?eventid=' . $eventid . '><span>Analytics</span></a></li>'
                                 ?>
                                 <li class='last'><a href='manager.php'><span>Events</span></a></li>
                             </ul>
@@ -90,8 +90,8 @@
             <br><br>
             <div id="AttendeeTable" class="col-12">
                 <?php
-                require_once "../businessLogic/classes/EventManager.php";
-                require_once "../businessLogic/classes/AttendanceManager.php";
+                require_once "../backend/classes/EventManager.php";
+                require_once "../backend/classes/AttendanceManager.php";
                 $attendees = [];
                 if (isset($_GET["eventid"])) {
                     $event = EventManager::getEvent($_GET["eventid"]);
@@ -101,7 +101,7 @@
                     echo "<div id = 'header'>" . $event->getName() . " : " . $event->getDate();
                     echo "<br><br>";
                     echo "<form method = 'post'>";
-				    echo "<button type='submit' name='export' class = 'btn btn-info'> Export </button>";
+                    echo "<button type='submit' name='export' class = 'btn btn-info'> Export </button>";
 				    echo "</form>";
 				    echo "</div>";
 				    echo "<br>";
@@ -120,8 +120,8 @@
 					foreach($event->getAttendees() as $attendee) {
                         $attendance = AttendanceManager::getAttendanceRecord($event, $attendee);
                         echo "<tr>";
-                        echo "<td><a href = 'attendee.businessLogic?attendeeid=" . $attendee->getId() . "'>" . $attendee->getFirstName() . "</a></td>";
-                        echo "<td><a href = 'attendee.businessLogic?attendeeid=" . $attendee->getId() . "'>" . $attendee->getLastName() . "</a></td>";
+                        echo "<td><a href = 'attendee.php?attendeeid=" . $attendee->getId() . "'>" . $attendee->getFirstName() . "</a></td>";
+                        echo "<td><a href = 'attendee.php?attendeeid=" . $attendee->getId() . "'>" . $attendee->getLastName() . "</a></td>";
                         echo "<td>" . $attendee->getEmail() . "</td>";
                         echo "<td>" . $attendee->getPhone() . "</td>";
                         echo "<td>" . $attendance->getIsWalkIn() . "</td>";
@@ -137,9 +137,9 @@
     </body>
 </html>
 <?php
-require_once "../businessLogic/classes/AttendeeManager.php";
-require_once "../businessLogic/classes/AttendanceManager.php";
-require_once "../businessLogic/classes/EventManager.php";
+require_once "../backend/classes/AttendeeManager.php";
+require_once "../backend/classes/AttendanceManager.php";
+require_once "../backend/classes/EventManager.php";
 
 if (!empty($_POST)) {
     if (isset($_POST['fname'])) {
@@ -148,8 +148,8 @@ if (!empty($_POST)) {
         $email   = $_POST["email"];
         $phone   = $_POST["phone"];
         $gender  = $_POST["gender"];
-		$eventid = $_GET["eventid"];
-        if($gender == "other"){
+        $eventid = $_GET["eventid"];
+        if ($gender == "other") {
             $gender = NULL;
         }
 		$event = EventManager::getEvent($_GET["eventid"]);
@@ -162,7 +162,7 @@ if (!empty($_POST)) {
         if(AttendanceManager::checkRegistration($attendee, $event) == FALSE){
             AttendanceManager::registerAttendee($attendee, $event, FALSE);
             echo '<script language="javascript">';
-            echo 'window.location=("event.businessLogic?eventid=' . $eventid . '");';
+            echo 'window.location=("event.php?eventid=' . $eventid . '");';
             echo '</script>';
 		}
 		else{

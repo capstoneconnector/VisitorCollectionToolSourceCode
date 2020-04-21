@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if(empty($_SESSION['logged'])){
-        header('location: login.businessLogic');
+        header('location: login.php');
     }
 ?>
 
@@ -78,9 +78,9 @@
 </html>
 
 <?php
-require_once "../businessLogic/classes/AttendeeManager.php";
-require_once "../businessLogic/classes/AttendanceManager.php";
-require_once "../businessLogic/classes/EventManager.php";
+require_once "../backend/classes/AttendeeManager.php";
+require_once "../backend/classes/AttendanceManager.php";
+require_once "../backend/classes/EventManager.php";
 
 if (!empty($_POST)) {
     if (!empty($_POST["fname"]) and !empty($_POST["lname"]) and !empty($_POST["email"])) {
@@ -103,7 +103,7 @@ if (!empty($_POST)) {
                 AttendanceManager::registerAttendee($attendee, $event, true);
                 echo "<script type='text/javascript'>";
                 echo "alert('Registration Successful!');";
-                echo "window.location = ('checkin.businessLogic');";
+                echo "window.location = ('checkin.php');";
                 echo "</script>";
             }
 

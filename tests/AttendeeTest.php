@@ -1,5 +1,5 @@
 <?php
-require_once "../businessLogic/classes/Attendee.php";
+require_once "../backend/classes/Attendee.php";
 
 
 class AttendeeTest extends PHPUnit_Framework_TestCase {

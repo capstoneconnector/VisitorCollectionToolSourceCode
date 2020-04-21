@@ -1,5 +1,5 @@
 <?php
-include_once "../businessLogic/createEvent.businessLogic";
+include_once "../backend/createEvent.php";
 
 class CreateEventTest extends PHPUnit_Framework_TestCase { //Run this file with phpunit command from command line
     public function setUp() {

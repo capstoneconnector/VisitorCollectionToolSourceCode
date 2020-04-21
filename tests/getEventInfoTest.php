@@ -1,5 +1,5 @@
 <?php
-include_once "../businessLogic/getEventInfo.businessLogic";
+include_once "../backend/getEventInfo.php";
 
 class GetEventInfoTest extends PHPUnit_Framework_TestCase { //Run this file with phpunit command from command line
     public function setUp() {

@@ -1,5 +1,5 @@
 <?php
-include_once "../businessLogic/findName.businessLogic";
+include_once "../backend/findName.php";
 
 class FindNameTest extends PHPUnit_Framework_TestCase { //Run this file with phpunit command from command line
     private $event;

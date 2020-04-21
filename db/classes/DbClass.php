@@ -1,6 +1,6 @@
 <?php
-require_once "../db/connect.businessLogic";
-require_once "../db/classes/DbManagerInterface.businessLogic";
+require_once "../db/connect.php";
+require_once "../db/classes/DbManagerInterface.php";
 require_once "TableSummary.php";
 
 class DbClass implements DbManagerInterface {

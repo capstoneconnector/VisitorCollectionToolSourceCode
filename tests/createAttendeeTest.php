@@ -1,5 +1,5 @@
 <?php
-include_once "../businessLogic/createAttendee.businessLogic";
+include_once "../backend/createAttendee.php";
 
 class CreateAttendeeTest extends PHPUnit_Framework_TestCase { //Run this file with phpunit command from command line
     public function setUp() {

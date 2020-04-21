@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if(empty($_SESSION['logged'])){
-        header('location: login.businessLogic');
+        header('location: login.php');
     }
 	if(empty($_SESSION['reset'])){
 	    $_SESSION['reset'] = TRUE;
@@ -119,7 +119,7 @@
         </div>
         <div class="container">
             <?php
-            require_once "../businessLogic/classes/EventManager.php";
+            require_once "../backend/classes/EventManager.php";
             function createEventTable($events) {
                 echo "<div class = 'row'>";
                 echo '<div id = "EventTable" class="col-12">';
@@ -135,7 +135,7 @@
                     echo "<tbody>";
                     foreach($events as $event){
                         echo "<tr>";
-                        echo "<td><a href = 'event.businessLogic?eventid=" . $event->getId() . "'>" . $event->getName() . "</a></td>";
+                        echo "<td><a href = 'event.php?eventid=" . $event->getId() . "'>" . $event->getName() . "</a></td>";
                         echo "<td>" . $event->getDescription() . "</td>";
                         echo "<td>".$event->getDate()."</td>";
                         echo "<td>".$event->getId()."</td>";
@@ -157,7 +157,7 @@
 </html>
 
 <?php
-require_once "../businessLogic/classes/EventManager.php";
+require_once "../backend/classes/EventManager.php";
 if (!empty($_POST)) {
     if (isset($_POST['reset'])) {
         $_SESSION['reset'] = true;
@@ -169,7 +169,7 @@ if (!empty($_POST)) {
             {
                 if (EventManager::createEvent($name, $description, $date)){
                     echo '<script language="javascript">';
-                    echo 'window.location=("manager.businessLogic");';
+                    echo 'window.location=("manager.php");';
                     echo '</script>';
                 }
             }

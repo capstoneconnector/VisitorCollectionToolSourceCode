@@ -1,6 +1,6 @@
 <?php
-require_once "../businessLogic/classes/Event.php";
-require_once "../businessLogic/classes/Attendee.php";
+require_once "../backend/classes/Event.php";
+require_once "../backend/classes/Attendee.php";
 
 
 class EventTest extends PHPUnit_Framework_TestCase {
@@ -9,8 +9,12 @@ class EventTest extends PHPUnit_Framework_TestCase {
 
         //if any varyible is set to a value when an empty event is called, then $varExists will become true.
         $varExists = false;
-        if ($event->getId())            {$varExists = true;}
-        if ($event->getName())          {$varExists = true;}
+        if ($event->getId()) {
+            $varExists = true;
+        }
+        if ($event->getName()) {
+            $varExists = true;
+        }
         if ($event->getDate())          {$varExists = true;}
         if ($event->getDescription())   {$varExists = true;}
         if ($event->getEventbriteId())  {$varExists = true;}

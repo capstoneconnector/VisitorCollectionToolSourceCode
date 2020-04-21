@@ -90,10 +90,10 @@ function PullData() {
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
 				alert("EventBrite Pull Successful");
-				window.location = ("manager.businessLogic");
+				window.location = ("manager.php");
 			}
 		};
-		xhttp.open("GET", "/businessLogic/importEBEvents.businessLogic", true);
+		xhttp.open("GET", "/backend/importEBEvents.php", true);
 		xhttp.send();
 	}
 }
@@ -106,7 +106,7 @@ function SearchEvents() {
 			document.getElementById("eventTable").innerHTML = this.responseText;
 		}
 	};
-	xhttp.open("GET", "/businessLogic/displayQueriedEvents.businessLogic?query=" + query, true); //AJAX call to checkEmail businessLogic script
+	xhttp.open("GET", "/backend/displayQueriedEvents.php?query=" + query, true); //AJAX call to checkEmail php script
 	xhttp.send();
 }
 
@@ -117,10 +117,10 @@ function deleteEvent(eventid){
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to manager dashboard
 				alert("Event Deleted!");
-				window.location = ("manager.businessLogic");
+				window.location = ("manager.php");
 			}
 		};
-		xhttp.open("GET", "/businessLogic/deleteEvent.businessLogic?eventid=" + eventid, true);
+		xhttp.open("GET", "/backend/deleteEvent.php?eventid=" + eventid, true);
 		xhttp.send();
 	}
 }
@@ -132,10 +132,10 @@ function deleteAttendee(attendeeid){
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to manager dashboard
 				alert("Attendee Deleted!");
-				window.location = ("users.businessLogic");
+				window.location = ("users.php");
 			}
 		};
-		xhttp.open("GET", "/businessLogic/deleteAttendee.businessLogic?attendeeid=" + attendeeid, true);
+		xhttp.open("GET", "/backend/deleteAttendee.php?attendeeid=" + attendeeid, true);
 		xhttp.send();
 	}
 }
@@ -159,7 +159,7 @@ function saveAttendee(attendeeid){
 				toggleTableEdit('false');
 			}
 		};
-		xhttp.open("GET", "/businessLogic/saveAttendee.businessLogic?userid=" + attendeeid + "&fname=" + fname + "&lname=" + lname + "&email=" + email + "&phone=" + phone, true);
+		xhttp.open("GET", "/backend/saveAttendee.php?userid=" + attendeeid + "&fname=" + fname + "&lname=" + lname + "&email=" + email + "&phone=" + phone, true);
 		xhttp.send();
 	}
 
@@ -197,7 +197,7 @@ function toggleEmailForm(toggle){
 		document.getElementById("eventTable").style.display = "none";
 	}
 	else {
-		window.location = ("manager.businessLogic");
+		window.location = ("manager.php");
 	}
 }
 
@@ -212,7 +212,7 @@ function showEventsInDateRange(){
 			document.getElementById("sendEmail").style.display = "inline";
 		}
 	};
-	xhttp.open("GET", "/businessLogic/displayEventEmailTable.businessLogic?startDate=" + startDate + "&endDate=" + endDate, true);
+	xhttp.open("GET", "/backend/displayEventEmailTable.php?startDate=" + startDate + "&endDate=" + endDate, true);
 	xhttp.send();
 }
 
@@ -233,7 +233,7 @@ function sendEmails(){
 				alert(this.responseText + " emails sent!")
 			}
 		};
-		xhttp.open("GET", "/businessLogic/createEmailEvents.businessLogic?events=" + eventsJson, true);
+		xhttp.open("GET", "/backend/createEmailEvents.php?events=" + eventsJson, true);
 		xhttp.send();
 	}
 

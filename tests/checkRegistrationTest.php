@@ -1,7 +1,7 @@
 <?php
-require_once "../businessLogic/checkRegistration.businessLogic";
-require_once "../businessLogic/classes/Event.php";
-require_once "../businessLogic/classes/Attendee.php";
+require_once "../backend/checkRegistration.php";
+require_once "../backend/classes/Event.php";
+require_once "../backend/classes/Attendee.php";
 
 class CheckRegistrationTest extends PHPUnit_Framework_TestCase { //Run this file with phpunit command from command line
     private $event, $registeredAttendee, $nonRegisteredAttendee;

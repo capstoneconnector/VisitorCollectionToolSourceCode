@@ -1,8 +1,8 @@
 <?php
 	session_start();
 	if(empty($_SESSION['logged'])){
-		header('location: login.businessLogic');
-	}
+        header('location: login.php');
+    }
 ?>
 <html lang="php">
 	<head>
@@ -43,46 +43,46 @@
 											<a class="dropdown-item" href="register.php">Register for Event</a>
 										</div>
 									</div>
-								</div>
+                                </div>
                 </div>
-							<td width = "110">&nbsp;</td>
-							<td>
-								<h2>Check In</h2>
-							</td>
-							<td width = "35">&nbsp;</td>
-                         </tr>
-                    </table>
-					<?php
-					require_once "../businessLogic/classes/EventManager.php";
-					$event = EventManager::getEvent($_SESSION["eventId"]); //Use session var for event name
-						echo "<h2>" . $event->getName() . "</h2>";
-					?>
-					<br>
-					<form method="post">
-					<span id="prompt">Enter Your Name</span>
-					<br><br>
-						<label>
-							<input class="input" type="text" name="name" required>
-						</label>
-						<br><br>
-						<input class="submit" type="submit" value="Check In">
-						<br><br>
-					</form>
-				<br><br><br>
-				<div class="table">
-					<?php
-					require_once "../businessLogic/classes/EventManager.php";
-					require_once "../businessLogic/classes/AttendanceManager.php";
-					$event = $_SESSION['eventId'];
-					if (!empty($_POST)) {
-						if (!empty($_POST["name"])) {
-							$name  = $_POST["name"];
-							$event = EventManager::getEvent($_SESSION["eventId"]);
-							$names = AttendanceManager::findName($name, $event); //Fetch names that match name entered by user
-							if (!empty($names)) { //Only creates table if there is content to write to it
-								echo '<table border = 3>';
-								echo '<th>First Name</th><th>Last Name</th><th>Email</th><th></th>';
-								for ($i = 0; $i<sizeof($names); $i++) {
+                <td width="110">&nbsp;</td>
+                <td>
+                    <h2>Check In</h2>
+                </td>
+                <td width="35">&nbsp;</td>
+                </tr>
+                </table>
+                <?php
+                require_once "../backend/classes/EventManager.php";
+                $event = EventManager::getEvent($_SESSION["eventId"]); //Use session var for event name
+                echo "<h2>" . $event->getName() . "</h2>";
+                ?>
+                <br>
+                <form method="post">
+                    <span id="prompt">Enter Your Name</span>
+                    <br><br>
+                    <label>
+                        <input class="input" type="text" name="name" required>
+                    </label>
+                    <br><br>
+                    <input class="submit" type="submit" value="Check In">
+                    <br><br>
+                </form>
+                <br><br><br>
+                <div class="table">
+                    <?php
+                    require_once "../backend/classes/EventManager.php";
+                    require_once "../backend/classes/AttendanceManager.php";
+                    $event = $_SESSION['eventId'];
+                    if (!empty($_POST)) {
+                        if (!empty($_POST["name"])) {
+                            $name  = $_POST["name"];
+                            $event = EventManager::getEvent($_SESSION["eventId"]);
+                            $names = AttendanceManager::findName($name, $event); //Fetch names that match name entered by user
+                            if (!empty($names)) { //Only creates table if there is content to write to it
+                                echo '<table border = 3>';
+                                echo '<th>First Name</th><th>Last Name</th><th>Email</th><th></th>';
+                                for ($i = 0; $i<sizeof($names); $i++) {
 										echo '<tr>';
 										echo '<td>' . $names[$i]->getFirstName() . '</td>';
 										echo '<td>' . $names[$i]->getLastName() . '</td>';
