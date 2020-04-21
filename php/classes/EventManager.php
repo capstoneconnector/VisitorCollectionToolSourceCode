@@ -62,4 +62,21 @@ class EventManager
         }
         return $events;
     }
+
+    static function getEventsByDateRange($startDate, $endDate){
+        if($startDate < $endDate) {
+            $dbEvents = DbClass::readAllEventsBetweenDates($startDate, $endDate);
+            $events = array();
+            foreach ($dbEvents as $row) {
+                $event = new Event();
+                $event->createNew($row["Eventid"], $row["Name"], $row["Date"], $row["Description"], $row['Ebid']);
+                $event->populateAttendeeList();
+                array_push($events, $event);
+            }
+            return $events;
+        }
+        else{
+            echo "Wrong dates";
+        }
+    }
 }

@@ -39,6 +39,7 @@
 
 							<td align = "right">
 								<button id = "btnAddEvent" class = "btn btn-info" onclick = UpdateEvent(-1);> Add New Event </button>
+                                <button id = "btnSendEmail" class = "btn btn-info" onclick = toggleEmailForm('true');>Send Email</button>
 								<button id = "btnAddData" class = "btn btn-info" onclick = PullData(-1);> Pull API </button>
 							</td>
 							<td width = "10">&nbsp;</td>
@@ -81,7 +82,19 @@
                         <br><br>
 				    </form>
                 </div>
-                <br>
+                <div class = "col 10" id = "emailForm">
+                    <div class = "col 10">
+                        <br><br>
+                        <label for = "startDate">Start Date: </label>
+                        <input type = "date" id = "startDate" value = "<?php echo date("Y-m-d");?>">
+                        <label for = "endDate">End Date: </label>
+                        <input type = "date" id = "endDate" value = "<?php echo date("Y-m-d");?>">
+                        <button type = "button" class = "btn btn-info" onclick = "showEventsInDateRange();">Find Events</button>
+                        <button type = "button" id = "sendEmail" class = "btn btn-success" onclick = "sendEmails();">Send Emails</button>
+                        <button type = "button" class = "btn btn-danger" onclick = "toggleEmailForm('false');">Cancel</button>
+                        <br><br>
+                    </div>
+                </div>
             </div>
             <div class = "row" id = "SearchEvent">
                 <div class="col-12">
@@ -95,17 +108,18 @@
                     <br><br>
                     <div class="col-7 float-left">
                         <form method="post">
-                            <button type = "submit" name = "reset" class = "btn btn-info">Reset</button>
-                            <button type = "button" onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
+                            <button id = "resetBtn" type = "submit" name = "reset" class = "btn btn-info">Reset</button>
+                            <button id = "searchBtn" type = "button" onclick = 'SearchEvents(-1)' class = "btn btn-info">Search</button>
                         </form>
                     </div>
                 </div>
 			</div>
         </div>
+        <div class = "container">
 			<?php
 				require_once "../php/classes/EventManager.php";
                 function createEventTable($events){
-                    echo "<div class = 'container'>";
+                    echo "<div class = 'row'>";
                     echo '<div id = "EventTable" class="col-12">';
                     echo "<table id = 'eventTable' class='table'>";
                     echo '<thead class="thead-dark">';

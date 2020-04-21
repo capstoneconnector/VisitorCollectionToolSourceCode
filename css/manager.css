@@ -119,5 +119,15 @@ body{
 	margin-right:10px;
 }
 
+#emailForm{
+	display: none;
+	margin: auto;
+}
+
+#sendEmail{
+	display: none;
+	margin: auto;
+}
+
 
 

@@ -1,7 +1,7 @@
 function UpdateEvent()
 	{
 		var btnAddEvent = document.getElementById("btnAddEvent");
-		var y = document.getElementById("SearchEvents");
+		var y = document.getElementById("SearchEvent");
 		var x = document.getElementById("UpdateEvent");
 		if (x.style.display === "")
 		{
@@ -106,7 +106,7 @@ function SearchEvents() {
 			document.getElementById("eventTable").innerHTML = this.responseText;
 		}
 	};
-	xhttp.open("GET", "/php/createEventTable.php?query=" + query, true); //AJAX call to checkEmail php script
+	xhttp.open("GET", "/php/displayQueriedEvents.php?query=" + query, true); //AJAX call to checkEmail php script
 	xhttp.send();
 }
 
@@ -185,4 +185,56 @@ function toggleTableEdit(toggle){
 			fields[i].border = "";
 		}
 	}
+}
+
+function toggleEmailForm(toggle){
+	let x = document.getElementById("emailForm");
+	let y = document.getElementById("SearchEvent");
+
+	if (toggle === 'true') {
+		x.style.display = "block";
+		y.style.display = "none";
+		document.getElementById("eventTable").style.display = "none";
+	}
+	else {
+		window.location = ("manager.php");
+	}
+}
+
+function showEventsInDateRange(){
+	let startDate = document.getElementById("startDate").value;
+	let endDate = document.getElementById("endDate").value;
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to manager dashboard
+			document.getElementById("eventTable").style.display = "block";
+			document.getElementById("eventTable").innerHTML = this.responseText;
+			document.getElementById("sendEmail").style.display = "inline";
+		}
+	};
+	xhttp.open("GET", "/php/displayEventEmailTable.php?startDate=" + startDate + "&endDate=" + endDate, true);
+	xhttp.send();
+}
+
+function sendEmails(){
+	let confirmation = confirm("Send thank you emails?");
+	if (confirmation === true) {
+		let checkboxes = document.getElementsByName("selectedEvents");
+		let events = [];
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked === true) {
+				events.push(checkboxes[i].value);
+			}
+		}
+		let eventsJson = JSON.stringify(events);
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState === 4 && this.status === 200) { //If server returns correctly, callback function sets window back to manager dashboard
+				alert(this.responseText + " emails sent!")
+			}
+		};
+		xhttp.open("GET", "/php/createEmailEvents.php?events=" + eventsJson, true);
+		xhttp.send();
+	}
+
 }
