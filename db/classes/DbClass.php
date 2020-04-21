@@ -292,11 +292,11 @@ class DbClass implements DbManagerInterface
         return $info;
     }
 
-    public static function getAllEventsAfterCurrentDate(){
+    public static function getAllEventsAfterCurrentDate() {
         $statement = newPDO()->prepare("SELECT * FROM event WHERE Date >= DATE(NOW())"); //Fetch all events after current date
-        $info = array();
-        if($statement->execute()) {
-            while($row = $statement->fetch()) {
+        $info      = array();
+        if ($statement->execute()) {
+            while ($row = $statement->fetch()) {
                 array_push($info, $row);
             }
         }
@@ -309,11 +309,11 @@ class DbClass implements DbManagerInterface
         return self::readAllEventsBetweenDates($yesterday, $yesterday);
     }
 
-    public static function getAllEvents(){
+    public static function getAllEvents() {
         $statement = newPDO()->prepare("SELECT * FROM event"); //Fetch all events
-        $info = array();
-        if($statement->execute()) {
-            while($row = $statement->fetch()) {
+        $info      = array();
+        if ($statement->execute()) {
+            while ($row = $statement->fetch()) {
                 array_push($info, $row);
             }
         }

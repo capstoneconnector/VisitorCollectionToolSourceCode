@@ -17,20 +17,20 @@ class DbClassTest extends PHPUnit_Framework_TestCase
     {
         $expected = array
         (
-            'Id'    => '10000',
-            0       => '10000',
-            'Fname' => 'Bob',
-            1       => 'Bob',
-            'Lname' => 'Jones',
-            2       => 'Jones',
-            'Phone' => '555-5555',
-            3       => '555-5555',
-            'Email' => 'bjones@gmail.com',
-            4       => 'bjones@gmail.com',
-            'Ebid'  => null,
-            5       => null,
-            'Gender'=> 'Male',
-            6       => 'Male'
+            'Id'     => '10000',
+            0        => '10000',
+            'Fname'  => 'Bob',
+            1        => 'Bob',
+            'Lname'  => 'Jones',
+            2        => 'Jones',
+            'Phone'  => '555-5555',
+            3        => '555-5555',
+            'Email'  => 'bjones@gmail.com',
+            4        => 'bjones@gmail.com',
+            'Ebid'   => null,
+            5        => null,
+            'Gender' => 'Male',
+            6        => 'Male'
         );
         $result   = DbClass::readById(new Attendee(), [10000]);
 
@@ -109,30 +109,26 @@ class DbClassTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
-    function testUpdateEntryThatDoesNotExist()
-    {
+    function testUpdateEntryThatDoesNotExist() {
         $attendee = new Attendee();
         $attendee->create("Mary", "Ingalls", "mn@good.year", "Female");
         $this->assertFalse(DbClass::update($attendee));
     }
 
-    function testReadEventBetweenDates()
-    {
-        $events = DbClass::readAllEventsBetweenDates("1000-01-01", "9999-01-01");
+    function testReadEventBetweenDates() {
+        $events         = DbClass::readAllEventsBetweenDates("1000-01-01", "9999-01-01");
         $numberOfEvents = sizeof($events);
         $this->assertSame(4, $numberOfEvents);
     }
 
-    function testReadEventAfterNow()
-    {
-        $events = DbClass::readAllEventsBetweenDates(date("Y-m-d"), "9999-01-01");
+    function testReadEventAfterNow() {
+        $events         = DbClass::readAllEventsBetweenDates(date("Y-m-d"), "9999-01-01");
         $numberOfEvents = sizeof($events);
         $this->assertSame(3, $numberOfEvents);
     }
 
-    function testReadEventOnOneDay()
-    {
-        $events = DbClass::readAllEventsBetweenDates("2030-01-01", "2030-01-01");
+    function testReadEventOnOneDay() {
+        $events         = DbClass::readAllEventsBetweenDates("2030-01-01", "2030-01-01");
         $numberOfEvents = sizeof($events);
         $this->assertSame(1, $numberOfEvents);
     }
