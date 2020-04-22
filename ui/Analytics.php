@@ -27,7 +27,7 @@
         echo "data.addRows([";
         echo "['Attended as Walk-in', " . $attendance["attendedAsWalkin"] . "],";
         echo "['Attended', " . $attendance["attended"] . "],";
-        echo "['Not Attened', " . $attendance["notAttended"] . "]";
+        echo "['Not Attended', " . $attendance["notAttended"] . "]";
         echo " ]);";
         echo "let options = {'title':'Attendance Types',";
         echo "vAxis : {format: 'percent', viewWindow : {min : 0}},";
